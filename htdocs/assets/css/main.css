@@ -1,0 +1,194 @@
+/*bootstrap overwritting*/
+.navbar-inner {
+  background-color: #7D7D7D; /* background color will be black for all browsers */
+  background-image: none;
+  background-repeat: no-repeat;
+  filter: none;
+  border: none;
+}
+
+body {
+	font-family: sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: #E2E2E2;
+}
+
+#header {
+  background-color: #7D7D7D;
+  height: 90px;
+}
+
+#header img {
+	margin-top: 15px;
+}
+
+#navlist {
+	padding-top: 45px;
+  padding-left: 50px;
+}
+
+.rightnav {
+  float: right;
+  padding-right: 50px;
+  padding-left: 0px !important;
+}
+
+#navlist li {
+  display: inline;
+  list-style-type: none;
+  border: 1px solid black;
+  float: left;
+  width: 80px;
+  text-align: center;
+  background-color: #287EC1;
+  font-size: 0.9em;
+}
+
+#navlist li.active {
+  background-color: #D9D9D9;
+}
+
+#navlist li.active a {
+  color: black;
+  background-color: #D9D9D9;
+}
+
+#navlist li.hidden {
+  visibility: hidden;
+  width: 300px;
+}
+
+#navlist li.submit {
+  width: 120px;
+  background-color: #959595;
+}
+
+#navlist li a {
+  text-decoration: none;
+  color: white;
+  display: block;
+  padding: 7px 0px;
+  text-shadow: none;
+}
+
+/*#navlist li:hover {
+  color: black;
+  background-color: #D9D9D9;
+}*/
+
+#navlist li a:hover {
+  color: black;
+  background-color: #D9D9D9;
+}
+
+
+#category {
+/*  width: 250px;
+  float: left;*/
+/*  min-height:700px;*/
+  min-width: 250px;
+  background-color: #7D7D7D;
+}
+
+#cattitle {
+  background-color: #555555;
+  font-size: 1.2em;
+  color: white;
+  text-align: center;
+  padding: 5px 0px;
+  height: 25px;
+}
+
+#catbrowser {
+  background-color: #7D7D7D;
+  color: white;
+/*  width: 250px;*/
+}
+
+.jstree li > a > .jstree-icon {  display:none !important; } 
+.jstree li { padding-top: 2px;}
+
+/*#main {
+  margin-left: 100px;
+  min-height: 800px;
+}*/
+
+#right {
+  border-right: 3px solid #287EC1;
+/*  width: 800px;*/
+  background-color: white;
+  margin-left:0px;
+  min-height: 500px;
+}
+
+#resourceinfo {
+  padding-bottom: 10px;
+  border-bottom: 3px solid #287EC1;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+#resourcetitle {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 1.4em;
+  font-weight: bolder;
+}
+
+#search {
+  height: 100px;
+}
+
+#searchform {
+  float: right;
+  background-color: #287EC1;
+}
+
+#searchresultstitle {
+  text-align: center;
+  color: white;
+  padding: 7px 0px;
+  background-color: #287EC1;
+  font-size: 1.1em;
+}
+
+#searchresults {
+  height: 500px;
+}
+
+.admin-bar {
+  background-color: black;
+  padding: 5px;
+  color: white;
+  font-size: 16px;
+}
+
+.static-content-panel {
+  padding: 10px;
+}
+
+#footer {
+/*  position: absolute;
+  left: 0px;
+  bottom: 0px;*/
+  clear: both;
+  background-color: #789;
+  color: #eee;
+  padding: 5px;
+  text-align: center;
+  width: 99.3%;
+  font-size: 11px;
+}
+
+.resource {
+  border: 2px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.resource .title {
+   font-size: 19px;
+   font-weight: bold;
+   margin-bottom: 5px;
+}
