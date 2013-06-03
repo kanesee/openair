@@ -18,7 +18,10 @@
 		<div id="searchresults">
 			<div id="searchresultstitle">Search Results</div>
 			<div id="searchcontrols">
-				
+				<div id="row">
+					<div class="span2">&lt; Previous Page</div>
+					<div class="span8">Page 1 of 1</div>
+					<div class="span2">Next Page &gt;</div>
 			</div>
 <?php
 $query = "";
