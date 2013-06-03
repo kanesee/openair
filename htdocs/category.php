@@ -48,7 +48,7 @@ $resourcetitle = "";
 $resourcedescription = "";
 
 if(empty($cat)) {
-	$resourcetitle = "Main Page";
+	$resourcetitle = "Welcome to the Open AI Resources";
 	$resourcedescription = "This is the main page. Not quite sure what to put in here just yet.";
 	$json = str_replace("OPEN_REPLACE", "", $json);
 }

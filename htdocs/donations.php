@@ -1,5 +1,8 @@
-<?php include "header.php"; ?>
-<div class=static-content-panel>
+<?php include 'header.php'; ?>
+<?php include 'category.php'; ?>
+<div id="right" class="span8">
   <h2>Donations</h2>
   Please help us pay for this site!
 </div>
+
+<?php include 'footer.php'; ?>

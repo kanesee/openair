@@ -1,5 +1,6 @@
-<?php include "header.php"; ?>
-<div class=static-content-panel>
+<?php include 'header.php'; ?>
+<?php include 'category.php'; ?>
+<div id="right" class="span8">
   <h2>Frequently asked questions</h2>
   <ol> 
     <li>Some question.
@@ -10,3 +11,5 @@
     </li>
   </ol>
 </div>
+
+<?php include 'footer.php'; ?>

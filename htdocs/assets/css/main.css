@@ -188,7 +188,24 @@ body {
 }
 
 .resource .title {
-   font-size: 19px;
-   font-weight: bold;
-   margin-bottom: 5px;
+  font-size: 19px;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
+
+.resource .features {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.resource .features td {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.resource .added {
+  font-size: 10px;
+  color: #bbb;
+  margin-top: 5px;
+}
+

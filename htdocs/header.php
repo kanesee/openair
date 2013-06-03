@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
 <?php
 include "utils.php";
 
@@ -19,28 +22,45 @@ if (isAdmin()) {
 $activepage = $_SERVER["REQUEST_URI"];
 ?>
 
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="http://static.jstree.com/v.1.0pre/jquery.jstree.js"></script>
-<script src="js/main.js"></script>
+<!-- Le styles -->
+<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/main.css" type="text/css">
+<!-- <link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet"> -->
 
-<link rel="stylesheet" href="css/main.css" type="text/css">
+</head>
 
-<div id='header'>
-	<img src='img/openailogo.png'/>
-	<div id="navcontainer">
+
+<div class="navbar" id='header'>
+  <div class="navbar-inner">
+    <a class="brand" href="index.php"><img src='assets/img/openailogo.png'/></a>
+    <ul class="nav" id="navlist">
+		<li <?php if($activepage != '/about.php' && $activepage != '/contact.php' && $activepage != '/faq.php' && $activepage != '/donations.php' && $activepage != '/submit.php') { echo "class='active'"; } ?>><a href="index.php" id="current">Home</a></li>
+		<li <?php if($activepage == '/about.php') { echo "class='active'"; } ?>><a href="about.php">About</a></li>
+		<li <?php if($activepage == '/contact.php') { echo "class='active'"; } ?>><a href="contact.php">Contact</a></li>
+		<li <?php if($activepage == '/faq.php') { echo "class='active'"; } ?>><a href="faq.php">FAQ</a></li>
+		<li <?php if($activepage == '/donations.php') { echo "class='active'"; } ?>><a href="donations.php">Donations</a></li>
+    </ul>
+    <ul class="rightnav" id="navlist">
+    	<li class="submit <?php if($activepage == '/submit.php') { echo "active"; } ?>"><a href="submit.php">Submit an Entry</a></li>
+  </div>
+</div>
+
+<!-- <div class='row' id='header'>
+	<div class='span3 offset1'>
+		<img src='assets/img/openailogo.png'/>
+	</div>
+	<div class='span6' id="navcontainer">
 		<ul id="navlist">
 			<li <?php if($activepage != '/about.php' && $activepage != '/contact.php' && $activepage != '/faq.php' && $activepage != '/donations.php' && $activepage != '/submit.php') { echo "class='active'"; } ?>><a href="index.php" id="current">Home</a></li>
 			<li <?php if($activepage == '/about.php') { echo "class='active'"; } ?>><a href="about.php">About</a></li>
 			<li <?php if($activepage == '/contact.php') { echo "class='active'"; } ?>><a href="contact.php">Contact</a></li>
 			<li <?php if($activepage == '/faq.php') { echo "class='active'"; } ?>><a href="faq.php">FAQ</a></li>
 			<li <?php if($activepage == '/donations.php') { echo "class='active'"; } ?>><a href="donations.php">Donations</a></li>
-			<li class="hidden"></a></li>
+		</ul>
+	</div>
+	<div class='span1 offset1' id="navcontainer">
+		<ul id="navlist">
 			<li class="submit <?php if($activepage == '/submit.php') { echo "active"; } ?>"><a href="submit.php">Submit an Entry</a></li>
 		</ul>
 	</div>
-</div>
-
-
-<div id='footer'>
-Copyright &copy; 2013, InferLink Corporation.  All rights reserved.
-</div>
+</div> -->
