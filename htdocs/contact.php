@@ -1,6 +1,6 @@
 <?php include 'header.php'; ?>
 <?php include 'category.php'; ?>
-<div id="right" class="span8">
+<div id="right" class="span7">
 	<h2>Contact Us</h2>
 	<p>If you would like to contact us, please fill out the form below or use the following.</p>
 	<p>

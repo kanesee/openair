@@ -5,11 +5,12 @@ if(isset($_GET['cat'])) { $cat = $_GET['cat']; }
 $MAIN_JSON = '{ 
 		"json_data" : {
 			"data" : [
-				THE_DATA
+				{ "data" : "Artificial Intelligence", "attr": { "id": "0"}, "metadata" : { id : 0 }, "children" : [THE_DATA] }
 			]
 		},
 		"plugins" : [ "themes", "json_data", "ui" ],
-		"ui" : { "initially_select" : [ OPEN_REPLACE ] }
+		"ui" : { "initially_select" : [ OPEN_REPLACE ] },
+		"core": { "initially_open" : [ "0" ] }
 	}';
 
 function createData($row) {
@@ -69,8 +70,9 @@ else {
 echo "<script>var category_json = ".$json.";</script>";
 echo "<script>var cat = \"".$cat."\";</script>";
 ?>
-<div class="row span12">
-	<div id="category" class="span3">
-		<div id='cattitle'>Choose Your Topic</div>
-		<div id='catbrowser'></div>
-	</div>
+<div id="main" class="row-fluid">
+	<div class="span12">
+		<div id="category" class="span3 offset1">
+			<div id='cattitle'>Choose Your Topic</div>
+			<div id='catbrowser'></div>
+		</div>

@@ -44,23 +44,3 @@ $activepage = $_SERVER["REQUEST_URI"];
     	<li class="submit <?php if($activepage == '/submit.php') { echo "active"; } ?>"><a href="submit.php">Submit an Entry</a></li>
   </div>
 </div>
-
-<!-- <div class='row' id='header'>
-	<div class='span3 offset1'>
-		<img src='assets/img/openailogo.png'/>
-	</div>
-	<div class='span6' id="navcontainer">
-		<ul id="navlist">
-			<li <?php if($activepage != '/about.php' && $activepage != '/contact.php' && $activepage != '/faq.php' && $activepage != '/donations.php' && $activepage != '/submit.php') { echo "class='active'"; } ?>><a href="index.php" id="current">Home</a></li>
-			<li <?php if($activepage == '/about.php') { echo "class='active'"; } ?>><a href="about.php">About</a></li>
-			<li <?php if($activepage == '/contact.php') { echo "class='active'"; } ?>><a href="contact.php">Contact</a></li>
-			<li <?php if($activepage == '/faq.php') { echo "class='active'"; } ?>><a href="faq.php">FAQ</a></li>
-			<li <?php if($activepage == '/donations.php') { echo "class='active'"; } ?>><a href="donations.php">Donations</a></li>
-		</ul>
-	</div>
-	<div class='span1 offset1' id="navcontainer">
-		<ul id="navlist">
-			<li class="submit <?php if($activepage == '/submit.php') { echo "active"; } ?>"><a href="submit.php">Submit an Entry</a></li>
-		</ul>
-	</div>
-</div> -->
