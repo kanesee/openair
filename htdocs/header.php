@@ -15,7 +15,7 @@ $db = mysql_select_db("openair", $conn) or die("Could not select examples");
 
 if (isAdmin()) {
   echo "<div class=admin-bar>";
-  echo "Welcome admin. <a href=admin/logout.php>Logout</a>";
+  echo "Welcome admin. <a href=/pending.php>Pending</a>&nbsp;|&nbsp;<a href=admin/logout.php>Logout</a>";
   echo "</div>";
 }
 

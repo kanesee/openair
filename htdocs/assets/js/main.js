@@ -21,9 +21,13 @@ function setImage(imgID, changeTo) {
 var loaded = false;
 
 function categoryClicked(id) {
-	if(cat != id) {
+	if(cat != id && loaded) {
 		window.location.href = "http://ec2-54-243-13-79.compute-1.amazonaws.com/?cat="+id;
 	}
+	else if (loaded && id == '0' && window.location.href.indexOf("cat=0") == -1 ) {
+		window.location.href = "http://ec2-54-243-13-79.compute-1.amazonaws.com/?cat="+id;
+	}
+	loaded = true;
 }
 
 $(document).ready(function(){

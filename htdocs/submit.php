@@ -5,9 +5,9 @@
 <html>
 <body>
 <form action="henry2.php" method="POST">
-	
-Resource Name: <br><input type="text" name="dbname" required="required"><br>
-Link to data website: <br><input type="url" name="link" required="required"><br>
+
+Resource Name: <br><input type="text" name="dbname" required="required">
+<br>Link to data website: <br><input type="url" name="link" required="required"><br>
 Short Description: <br>
 <textarea cols="30" rows="5" wrap="virtual" name="description" required="required">
 </textarea>
@@ -31,6 +31,15 @@ echo "</select>";
 echo "<br>License Type: <br>";
 $result = mysqli_query($con, "SELECT name FROM license_type");
 echo '<select name="license" required="required">';
+echo '<option value="" disabled="disabled" selected="selected">Select</option>';
+while($row = mysqli_fetch_array($result)){
+	echo '<option value = "' . $row['name'] . '">' . $row['name'] . '</option>';
+}
+echo '</select>';
+
+echo "<br>Significance: <br>";
+$result = mysqli_query($con, "SELECT name FROM significance_type");
+echo '<select name="significance" required="required">';
 echo '<option value="" disabled="disabled" selected="selected">Select</option>';
 while($row = mysqli_fetch_array($result)){
 	echo '<option value = "' . $row['name'] . '">' . $row['name'] . '</option>';

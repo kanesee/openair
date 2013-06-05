@@ -10,7 +10,7 @@ $MAIN_JSON = '{
 		},
 		"plugins" : [ "themes", "json_data", "ui" ],
 		"ui" : { "initially_select" : [ OPEN_REPLACE ] },
-		"core": { "initially_open" : [ "0" ] }
+		"core": { "initially_open" : [ OPEN_REPLACE ] }
 	}';
 
 function createData($row) {
@@ -49,9 +49,9 @@ $resourcetitle = "";
 $resourcedescription = "";
 
 if(empty($cat)) {
-	$resourcetitle = "Welcome to the Open AI Resources";
-	$resourcedescription = "This is the main page. Not quite sure what to put in here just yet.";
-	$json = str_replace("OPEN_REPLACE", "", $json);
+	$resourcetitle = "Artificial Intelligence";
+	$resourcedescription = "Artificial Intelligence is pretty awesome.";
+	$json = str_replace("OPEN_REPLACE", "0", $json);
 }
 else {
 	$r = mysql_query("SELECT id, name, description, parent from category where id=".$cat);

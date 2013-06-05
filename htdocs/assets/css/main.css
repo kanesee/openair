@@ -1,6 +1,6 @@
 /*bootstrap overwritting*/
 .navbar {
-  min-width: 1000px;
+  min-width: 1125px;
   margin-bottom: 0px;
 }
 
@@ -105,7 +105,7 @@ body {
 .jstree li { padding-top: 2px;}
 
 #main {
-  min-width: 1000px;
+  min-width: 1125px;
 }
 
 #right {
@@ -116,8 +116,7 @@ body {
 }
 
 #resourceinfo {
-  padding-bottom: 10px;
-  border-bottom: 3px solid #287EC1;
+  padding-bottom: 5px;
   padding-left: 50px;
   padding-right: 50px;
 }
@@ -130,15 +129,14 @@ body {
 }
 
 #search {
-  height: 75px;
   background-color: #287EC1;
   color: white;
+  text-align: center;
+  padding: 5px;
 }
 
 #searchform {
-/*  float: right;*/
-  padding-left: 15px;
-  text-align: center;
+  margin: 0px;  
 }
 
 #searchresultstitle {
@@ -175,7 +173,7 @@ body {
   text-align: center;
 /*  width: 99.3%;*/
   font-size: 11px;
-  min-width: 1000px;
+  min-width: 1125px;
 }
 
 .resource {
