@@ -5,7 +5,7 @@
 }
 
 .navbar-inner {
-  background-color: #7D7D7D; /* background color will be black for all browsers */
+  background-color: #7D7D7D;
   background-image: none;
   background-repeat: no-repeat;
   filter: none;
@@ -81,7 +81,7 @@ body {
 
 
 #category {
-  min-height:500px;
+/*  min-height:500px;*/
   min-width: 250px;
   background-color: #7D7D7D;
 }
@@ -98,11 +98,13 @@ body {
 #catbrowser {
   background-color: #7D7D7D;
   color: white;
+  height: 800px;
+  overflow: auto;
 /*  width: 250px;*/
 }
 
 .jstree li > a > .jstree-icon {  display:none !important; } 
-.jstree li { padding-top: 2px;}
+.jstree li > a:hover { text-decoration: none !important; color: black !important; }
 
 #main {
   min-width: 1125px;
@@ -112,7 +114,18 @@ body {
   border-right: 3px solid #287EC1;
   background-color: white;
   margin-left:0px;
-  min-height: 500px;
+/*  min-height: 500px;*/
+  padding: 0px 10px;
+  height: 835px;
+}
+
+#index {
+  border-right: 3px solid #287EC1;
+  background-color: white;
+  margin-left:0px;
+/*  min-height: 500px;*/
+  padding: 0px;
+  height: 835px;
 }
 
 #resourceinfo {
@@ -128,6 +141,10 @@ body {
   font-weight: bolder;
 }
 
+#resourcedescription {
+  padding-top: 20px;
+}
+
 #search {
   background-color: #287EC1;
   color: white;
@@ -139,16 +156,23 @@ body {
   margin: 0px;  
 }
 
-#searchresultstitle {
-  display: none;
-  text-align: center;
-  color: white;
-  padding: 7px 0px;
-  background-color: #287EC1;
-  font-size: 1.1em;
+#searchresults,
+#pendingresults {
+  padding: 10px;
+  height: 650px;
+  overflow: auto;
 }
 
-#searchresults {
+#pendingresults {
+  height: 720px;
+}
+
+.drilldown-1 {
+  margin-right: 10px;
+}
+
+.drilldown-2 {
+  margin-right: 10px;
 }
 
 .admin-bar {
@@ -160,6 +184,14 @@ body {
 
 .static-content-panel {
   padding: 10px;
+}
+
+#bluedivider {
+  background-color: #287EC1;
+  height: 10px;
+  margin: 0px;
+  margin-top: 40px;
+  margin-bottom: 10px;
 }
 
 #footer {
@@ -204,3 +236,10 @@ body {
   margin-top: 5px;
 }
 
+i:hover {
+  background-color: pink;
+}
+
+#changecategoryform {
+  padding-top: 15px;
+}
