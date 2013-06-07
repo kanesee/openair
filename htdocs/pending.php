@@ -1,8 +1,33 @@
 <?php include "header.php"; ?>
 <?php include 'category.php'; ?>
-<h2>Pending projects</h2>
-<div class=span8>
+
 <?php
+function countResults() {
+  $r=mysql_query("
+    SELECT count(*)
+      FROM resource r, resource_category rc,
+           resource_type rt, license_type lt
+     WHERE r.id=rc.resource_id 
+       AND r.approved_date is null
+       AND r.resource_type=rt.id
+       AND r.license_type=lt.id
+     ");
+  $row = mysql_fetch_row($r);
+  return $row[0];
+}
+
+?>
+
+<?php if (isAdmin()) { ?>
+<div id=index class=span7>
+<h2>Pending projects</h2>
+<?php
+  $MAX_RESULTS = 10;
+  $page = 1;
+  if (isset($_GET['p'])) { $page=$_GET['p']; }
+  $startIdx = ($page-1) * $MAX_RESULTS;
+  $totalPages = floor(countResults() / $MAX_RESULTS);
+
   $r=mysql_query("
     SELECT r.id, r.name, r.description, 
            r.owner,
@@ -14,8 +39,22 @@
        AND r.approved_date is null
        AND r.resource_type=rt.id
        AND r.license_type=lt.id
-       AND rc.category_id=-1
+     LIMIT $startIdx, $MAX_RESULTS
      ");
+
+
+if($totalPages>0) {
+?>
+      <div id="searchcontrols">
+        <div class="row-fluid">
+          <div class="span3 text-right"><?php if ($page > 1) {echo "<a href=pending.php?p=".($page-1).">&lt; Previous Page</a>";} else { echo "&lt; Previous Page";} ?></div>
+          <div class="span6 text-center">Page <?php echo $page." of ". $totalPages; ?> </div>
+          <div class="span3"><?php if ($page < $totalPages) {echo "<a href=pending.php?p=".($page+1).">Next Page &gt;</a>";} else { echo "Next Page &gt;";} ?></div>
+        </div>
+      </div>
+<?php
+}
+   echo "<div id=pendingresults>";
 
    $pc=0;
    while ($row = mysql_fetch_array($r)) {
@@ -37,7 +76,7 @@
      echo "</table>";
      echo "<form method=post action=pending-approve.php>";
      echo "<input type=hidden name=id value=".$row{'id'}." />";
-     echo "<input type=submit value=Approve />";
+     echo "<button type=submit class=btn>Approve</button>";
      echo "</form>";
      echo "<div class=added>Added on ".$row{'approved_date'}."</div>";
      echo "</div>";
@@ -48,4 +87,6 @@
 
 ?>
 </div>
+</div>
+<?php } ?>
 <?php include 'footer.php'; ?>

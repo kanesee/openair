@@ -8,9 +8,10 @@ $MAIN_JSON = '{
 				{ "data" : "Artificial Intelligence", "attr": { "id": "0"}, "metadata" : { id : 0 }, "children" : [THE_DATA] }
 			]
 		},
-		"plugins" : [ "themes", "json_data", "ui" ],
+		"plugins" : [ "themes", "json_data", "ui", "sort" ],
 		"ui" : { "initially_select" : [ OPEN_REPLACE ] },
-		"core": { "initially_open" : [ OPEN_REPLACE ] }
+		"core": { "initially_open" : [ OPEN_REPLACE ] },
+		"sort" : function (a, b) {return this.get_text(a) > this.get_text(b) ? 1 : -1; }
 	}';
 
 function createData($row) {
@@ -20,8 +21,14 @@ function createData($row) {
 	$singleData = str_replace("ID_REPLACE", $id, $singleData);
 
 	$children = "";
-	//Now do the query for the children
-	$r_sub = mysql_query("SELECT id, name, description, parent from category where id > 0 and parent=".$id);
+	$filter_id = 0;
+	$sqlQuery = "SELECT id, name, description, parent from category where parent=".$id;
+	if (!isAdmin()) {
+		$sqlQuery.= " AND id > 0";
+	}
+	$sqlQuery.= " ORDER BY id";
+
+	$r_sub = mysql_query($sqlQuery);
 	while ($row_sub = mysql_fetch_array($r_sub)) {
 		if(!empty($children)) {
 			$children .= ",";
@@ -34,7 +41,13 @@ function createData($row) {
 
 $data = "";
 
-$r = mysql_query("SELECT id, name, description, parent from category where id > 0 and parent=0");
+$sqlQuery = "SELECT id, name, description, parent from category where parent=0";
+if (!isAdmin()) {
+	$sqlQuery.= " AND id > 0";
+}
+$sqlQuery.= " ORDER BY id";
+$r = mysql_query($sqlQuery);
+
 while ($row = mysql_fetch_array($r)) {
 	if(!empty($data)) {
 		$data .= ",";
@@ -51,7 +64,17 @@ $resourcedescription = "";
 if(empty($cat)) {
 	$resourcetitle = "Artificial Intelligence";
 	$resourcedescription = "Artificial Intelligence is pretty awesome.";
-	$json = str_replace("OPEN_REPLACE", "0", $json);
+
+	$opencat = "0";
+	if(isset($_GET['id']) && $_GET['id'] != '') {
+		$r = mysql_query("SELECT category_id from resource_category where resource_id=".$_GET['id']);
+		$row = mysql_fetch_array($r);
+		if(!is_null($row)) {
+			$opencat = "\"".$row{'category_id'}."\"";
+		}
+	}
+
+	$json = str_replace("OPEN_REPLACE", $opencat, $json);
 }
 else {
 	$r = mysql_query("SELECT id, name, description, parent from category where id=".$cat);
@@ -73,6 +96,6 @@ echo "<script>var cat = \"".$cat."\";</script>";
 <div id="main" class="row-fluid">
 	<div class="span12">
 		<div id="category" class="span3 offset1">
-			<div id='cattitle'>Choose Your Topic</div>
+			<div id='cattitle'>Choose Your Topic <?php if(isAdmin()) {echo "<a href='add_category.php'><i class='icon-plus-sign'></i></a>";}?></div>
 			<div id='catbrowser'></div>
 		</div>
