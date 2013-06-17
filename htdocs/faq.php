@@ -15,7 +15,7 @@
 		      <p style="font-weight: normal;">Open AI relies on the contributions of the general public and people in the AI community for its content. To submit a resource, please visit this page and follow the directions listed at the top.</p>
 		    </li>
 		    <li>What if I have trouble accessing the site?
-		      <p style="font-weight: normal;">If you experience any technical difficulties while browsing the directory, please <a href="contact.php">contact us.</a></p>
+		      <p style="font-weight: normal;">If you experience any technical difficulties while browsing the directory, please contact us at CONTACT EMAIL</p>
 		    </li>
 		  </ol>
 		</div>

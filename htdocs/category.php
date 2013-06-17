@@ -1,6 +1,23 @@
 <?php
+
 $cat = "";
 if(isset($_GET['cat'])) { $cat = $_GET['cat']; }
+
+//first get all the categories that we should be searching on
+if(empty($cat)) {$cat = 0;}
+$subcats = getSubCats($cat);
+$subcats[] = $cat;
+$subcatString = "";
+foreach ($subcats as &$value) {
+	if(empty($subcatString)) {
+		$subcatString.="(";
+	}
+	else {
+		$subcatString.=",";
+	}
+	$subcatString.=$value;
+}
+$subcatString.=")";
 
 $MAIN_JSON = '{ 
 		"json_data" : {

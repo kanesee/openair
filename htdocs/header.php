@@ -1,16 +1,24 @@
+<?php ob_start() ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <?php
 include "utils.php";
 
+$activepage = $_SERVER["REQUEST_URI"];
+
 if (isAdmin()) {
+  $adminMessage = "Welcome admin. <a href=/pending.php>Pending</a>&nbsp;|&nbsp;<a href=admin/logout.php>Logout</a>";
+
+  if (!strncmp($activepage, '/pending.php', strlen('/pending.php'))) {
+    $adminMessage = "Welcome admin. <a href=/index.php>Active</a>&nbsp;|&nbsp;<a href=admin/logout.php>Logout</a>";
+  }
+
   echo "<div class=admin-bar>";
-  echo "Welcome admin. <a href=/pending.php>Pending</a>&nbsp;|&nbsp;<a href=admin/logout.php>Logout</a>";
+  echo $adminMessage;
   echo "</div>";
 }
-
-$activepage = $_SERVER["REQUEST_URI"];
 ?>
 
 <!-- Le styles -->

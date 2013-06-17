@@ -4,7 +4,6 @@
   $id=$_GET["id"];
 
    if(isAdmin()) {
-     //TODO do the update statement if drilldown exists in the post
       $drilldown = "";
       $message = "";
       if(isset($_POST['drilldown'])) {
@@ -29,10 +28,11 @@
   $r=mysql_query("
     SELECT r.id, r.name, r.link, r.description, 
            r.owner,
-           rt.name rtname, lt.name ltname,
+           rt.name rtname, lt.name ltname, st.name stname,
            r.approved_date
       FROM resource r, resource_category rc,
-           resource_type rt, license_type lt
+           resource_type rt, license_type lt,
+           significance_type st
      WHERE r.id=rc.resource_id 
        AND r.resource_type=rt.id
        AND r.license_type=lt.id
@@ -41,7 +41,10 @@
 
    $row = mysql_fetch_assoc($r);
 
-   echo "<h2><a href='".$row{'link'}."'>".$row{'name'}."</a></h2>";
+   echo "<h2>".$row{'name'};
+   if(isAdmin()) {echo "<a href='javascript:deleteResource()' ><i class='icon-trash'></i></a>";}
+   echo "</h2>";
+   echo "<div class=resource>";   
    echo "<div class=about>";
    echo $row{'description'};
    echo "</div>";
@@ -51,10 +54,15 @@
    echo "<td><b>License type:</b>&nbsp;".$row{'ltname'}."</td>";
    echo "</tr>";
    echo "<tr>";
+   echo "<td><b>Usage level:</b>&nbsp;".$row{'stname'}."</td>";
    echo "<td><b>Owner:</b>&nbsp;".$row{'owner'}."</td>";
+   echo "</tr>";
+   echo "<tr>";
+   echo "<td><b>Link:</b>&nbsp;<a href='".$row{'link'}."' target='_blank'>".$row{'link'}."</a></td>";
    echo "</tr>";
    echo "</table>";
    echo "<div class=added>Added on ".$row{'approved_date'}."</div>";
+   echo "</div>";
 
    if(isAdmin()) {
 ?>
@@ -74,4 +82,21 @@
 <script type="text/javascript">
   $('select.drilldown').selectHierarchy({ hideOriginal: true });
 </script>
+
+<?php
+//ONLY PRINT THIS JAVASCRIPT IF THEY ARE AN ADMIN
+if(isAdmin()) {
+?>
+<script>
+  function deleteResource() {
+    var r=confirm("Are you sure you want to delete this resource?");
+    if (r==true) {
+      window.location.href = window.location.origin+"/delete_resource.php?id=<?php echo $id; ?>";
+    }
+    else{
+    }
+  }
+</script>
+<?php } ?>
+
 <?php include 'footer.php'; ?>

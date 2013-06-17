@@ -243,3 +243,9 @@ i:hover {
 #changecategoryform {
   padding-top: 15px;
 }
+
+.descriptioneditor {
+  margin: 10px;
+  width: 610px;
+  height: 400px;
+}

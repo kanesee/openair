@@ -10,7 +10,7 @@
         var defaults = {
             separator: ' > ',
             hideOriginal: true,
-            placeholder: '------'
+            placeholder: '-- Select Category --'
         };
         var options = $.extend(defaults, options);
         var obj = $(this);

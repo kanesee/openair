@@ -19,7 +19,7 @@
 	<div id="resourceinfo">
 		<div id="resourcetitle">Editors</div>
 		<div id="resourcedescription">
-			Much of the content on Open AIR has been contributed or managed by our editors below. If you are interested in participating in the editorial work at Open AIR, please contact us at ...
+			Much of the content on Open AIR has been contributed or managed by our editors below. If you are interested in participating in the editorial work at Open AIR, please contact us at CONTACT EMAIL.
 		</div>
 		<div class="row-fluid">
 			<!-- This is where you enter editors! -->

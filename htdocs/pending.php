@@ -2,7 +2,7 @@
 <?php include 'category.php'; ?>
 
 <?php
-function countResults() {
+function countResults($subcatString) {
   $r=mysql_query("
     SELECT count(*)
       FROM resource r, resource_category rc,
@@ -11,6 +11,7 @@ function countResults() {
        AND r.approved_date is null
        AND r.resource_type=rt.id
        AND r.license_type=lt.id
+       AND rc.category_id IN $subcatString
      ");
   $row = mysql_fetch_row($r);
   return $row[0];
@@ -20,13 +21,13 @@ function countResults() {
 
 <?php if (isAdmin()) { ?>
 <div id=index class=span7>
-<h2>Pending projects</h2>
+<h2>Pending projects for <?php echo $resourcetitle; ?></h2>
 <?php
   $MAX_RESULTS = 10;
   $page = 1;
   if (isset($_GET['p'])) { $page=$_GET['p']; }
   $startIdx = ($page-1) * $MAX_RESULTS;
-  $totalPages = floor(countResults() / $MAX_RESULTS);
+  $totalPages = floor(countResults($subcatString) / $MAX_RESULTS);
 
   $r=mysql_query("
     SELECT r.id, r.name, r.description, 
@@ -39,6 +40,7 @@ function countResults() {
        AND r.approved_date is null
        AND r.resource_type=rt.id
        AND r.license_type=lt.id
+       AND rc.category_id IN $subcatString
      LIMIT $startIdx, $MAX_RESULTS
      ");
 
@@ -74,10 +76,14 @@ if($totalPages>0) {
      echo "<td><b>Owner:</b>&nbsp;".$row{'owner'}."</td>";
      echo "</tr>";
      echo "</table>";
+     echo "<div class=row>";
      echo "<form method=post action=pending-approve.php>";
      echo "<input type=hidden name=id value=".$row{'id'}." />";
-     echo "<button type=submit class=btn>Approve</button>";
+     echo "<button type=submit name=approve class='btn span2'>Approve</button>";
+     echo "<button type=submit name=edit class='btn span2'>Edit</button>";
+     echo "<button type=submit name=deny class='btn span2'>Deny</button>";
      echo "</form>";
+     echo "</div>";
      echo "<div class=added>Added on ".$row{'approved_date'}."</div>";
      echo "</div>";
    }

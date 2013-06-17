@@ -4,11 +4,16 @@ if (!window.location.origin)
 var loaded = false;
 
 function categoryClicked(id) {
+	$urlAdd = "";
+	if(window.location.pathname.indexOf("/pending.php") == 0) {
+		$urlAdd = window.location.pathname;
+	}
+
 	if(cat != id && loaded) {
-		window.location.href = window.location.origin+"?cat="+id;
+		window.location.href = window.location.origin + $urlAdd + "?cat="+id;
 	}
 	else if (loaded && id == '0' && window.location.href.indexOf("cat=0") == -1 ) {
-		window.location.href = window.location.origin+"?cat="+id;
+		window.location.href = window.location.origin + $urlAdd +"?cat="+id;
 	}
 	loaded = true;
 }

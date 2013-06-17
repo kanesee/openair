@@ -12,12 +12,7 @@
   }
   if ( 'POST' == $_SERVER['REQUEST_METHOD'] ) {
     if(!empty($catname) && $drilldown != "") {
-      $con = mysqli_connect("ec2-54-243-13-79.compute-1.amazonaws.com","openai","theaiisclosed","openair");
-      if (mysqli_connect_errno($con)){
-        echo "Failed to connect to MySQL: " . mysqli_connect_error();
-      }
-
-      $result = mysqli_query($con, "INSERT INTO category (name, parent) VALUES ('$catname', $drilldown)");
+      $result = mysql_query("INSERT INTO category (name, parent) VALUES ('$catname', $drilldown)");
 
       if($result)
         $message = "<div class='alert alert-success'><strong>Thanks!</strong> " . $catname . " has been added to the Hierarchy.<button type='button' class='close' data-dismiss='alert'>&times;</button></div>";

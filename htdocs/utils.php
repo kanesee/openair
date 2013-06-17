@@ -33,7 +33,7 @@ function getCategoryOptions($catId, $nameprefix) {
 }
 
 function buildCategorySelect($withAI) {
-  $select = "<select class='drilldown' name='drilldown'><option value=''>------</option>";
+  $select = "<select class='drilldown' name='drilldown'><option value=''>-- Select Category --</option>";
   if($withAI) {
     $select.="<option value='0'>Artificial Intelligence</option>";
   }

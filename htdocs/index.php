@@ -51,26 +51,10 @@ $startIdx = ($page-1) * $MAX_RESULTS;
 		</div>
 <?php
 
-//first get all the categories that we should be searching on
-if(empty($cat)) {$cat = 0;}
-$subcats = getSubCats($cat);
-$subcats[] = $cat;
-$subcatString = "";
-foreach ($subcats as &$value) {
-	if(empty($subcatString)) {
-		$subcatString.="(";
-	}
-	else {
-		$subcatString.=",";
-	}
-	$subcatString.=$value;
-}
-$subcatString.=")";
-
 $sqlStatmement="
 SELECT r.id, r.name, r.description, 
-       r.owner,
-       rt.name rtname, lt.name ltname,
+       r.owner, r.link,
+       rt.name rtname, lt.name ltname, st.name stname,
        r.approved_date
   FROM resource r, resource_category rc,
        resource_type rt, license_type lt,
@@ -119,7 +103,11 @@ while ($row = mysql_fetch_array($r)) {
 	echo "<td><b>License type:</b>&nbsp;".$row{'ltname'}."</td>";
 	echo "</tr>";
 	echo "<tr>";
+    echo "<td><b>Usage level:</b>&nbsp;".$row{'stname'}."</td>";
 	echo "<td><b>Owner:</b>&nbsp;".$row{'owner'}."</td>";
+	echo "</tr>";
+	echo "<tr>";
+	echo "<td><b>Link:</b>&nbsp;<a href='".$row{'link'}."' target='_blank'>".$row{'link'}."</a></td>";
 	echo "</tr>";
 	echo "</table>";
 	echo "<div class=added>Added on ".$row{'approved_date'}."</div>";
@@ -127,10 +115,10 @@ while ($row = mysql_fetch_array($r)) {
 }
 if($count==0) {
 	if(empty($query)) {
-		echo "There are no resources in ".$resourcetitle.".";
+		echo "There are no entries in ".$resourcetitle.".";
 	}
 	else {
-	    echo "No results for '".$query."'.";
+	    echo "No results for '".$query."' in the ".$resourcetitle." category.";
 	}
 }
 ?>
