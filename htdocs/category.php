@@ -109,6 +109,8 @@ else {
 
 echo "<script>var category_json = ".$json.";</script>";
 echo "<script>var cat = \"".$cat."\";</script>";
+if(isset($_GET['cat']) && basename($_SERVER['PHP_SELF']) != "edit_category.php" && basename($_SERVER['PHP_SELF']) != "pending.php")
+	echo "<head><title>$resourcetitle</title></head>";
 ?>
 <div id="main" class="row-fluid">
 	<div class="span12">

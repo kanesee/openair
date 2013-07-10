@@ -40,6 +40,7 @@ $(function() {
 		else
 			$message = "<div class='alert alert-failure'>" . $resourcetitle . " description could not be updated.<button type='button' class='close' data-dismiss='alert'>&times;</button></div>";
 	}
+	echo "<head><title>Edit ".$resourcetitle."</title></head>";
 ?>
 
 

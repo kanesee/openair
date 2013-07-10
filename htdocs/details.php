@@ -41,8 +41,13 @@
 
    $row = mysql_fetch_assoc($r);
 
+   echo "<head><title>".$row{'name'}."</title></head>";
+
    echo "<h2>".$row{'name'};
-   if(isAdmin()) {echo "<a href='javascript:deleteResource()' ><i class='icon-trash'></i></a>";}
+   if(isAdmin()) {
+    echo "<a href='javascript:deleteResource()' ><i class='icon-trash'></i></a>";
+    echo "<a href='edit_resource.php?id=$id'><i class='icon-edit'></i></a>";
+   }
    echo "</h2>";
    echo "<div class=resource>";   
    echo "<div class=about>";

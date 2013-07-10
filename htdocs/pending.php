@@ -1,6 +1,10 @@
 <?php include "header.php"; ?>
 <?php include 'category.php'; ?>
 
+<head>
+  <title>Pending Projects in <?php echo $resourcetitle; ?></title>
+</head>
+
 <?php
 function countResults($subcatString) {
   $r=mysql_query("
@@ -19,7 +23,6 @@ function countResults($subcatString) {
 
 ?>
 
-<?php if (isAdmin()) { ?>
 <div id=index class=span7>
 <h2>Pending projects for <?php echo $resourcetitle; ?></h2>
 <?php
@@ -80,8 +83,8 @@ if($totalPages>0) {
      echo "<form method=post action=pending-approve.php>";
      echo "<input type=hidden name=id value=".$row{'id'}." />";
      echo "<button type=submit name=approve class='btn span2'>Approve</button>";
-     echo "<button type=submit name=edit class='btn span2'>Edit</button>";
-     echo "<button type=submit name=deny class='btn span2'>Deny</button>";
+     echo '<button type=button onclick="resourceAction('.$row{'id'}.', \'edit\')" name=edit class="btn span2">Edit</button>';
+     echo '<button type=button onclick="resourceAction('.$row{'id'}.', \'deny\')" name=deny class="btn span2">Deny</button>';
      echo "</form>";
      echo "</div>";
      echo "<div class=added>Added on ".$row{'approved_date'}."</div>";
@@ -94,5 +97,17 @@ if($totalPages>0) {
 ?>
 </div>
 </div>
-<?php } ?>
+<script>
+  function resourceAction(id, action) {
+    if(action == "deny"){
+      var r=confirm("Are you sure you want to delete this resource?");
+      if (r==true) {
+        window.location = window.location.origin+"/delete_resource.php?id="+id;
+      }
+    }
+    else if(action == "edit"){
+      window.location = window.location.origin+"/edit_resource.php?id="+id;
+    }
+  }
+</script>
 <?php include 'footer.php'; ?>

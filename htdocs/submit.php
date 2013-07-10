@@ -1,6 +1,11 @@
 <?php include 'header.php'; ?>
 <?php include 'category.php'; ?>
-<div id="right" class="span7">
+
+<head>
+	<title>Submit Entry</title>
+</head>
+
+<div id="right" class="span7" style="overflow-y:scroll;">
   <h2>Entry Details</h2>
 
 <script>
@@ -68,9 +73,9 @@ function validate(){
 <form name="form" action="insert-resource.php" onsubmit="return validate()" method="POST">
 
 Entry Name: <br><input type="text" name="dbname" required="required"><sup id="namecheck" style="color:red"></sup>
-<br>Link to data website: <br><input type="url" name="link" required="required"><sup id="linkcheck" style="color:red"></sup>
-<br>Short Description: <br>
-<textarea cols="30" rows="5" wrap="virtual" name="description" required="required"></textarea><sup id="disccheck" style="color:red"></sup>
+<br>Link to Entry Website (e.g. http://mahout.apache.org/): <br><input type="url" name="link" required="required"><sup id="linkcheck" style="color:red"></sup>
+<br>Brief Description (2-5 sentences suggested): <br>
+<textarea rows="11" wrap="virtual" name="description" required="required" style="width: 325px;"></textarea><sup id="disccheck" style="color:red"></sup>
 <br>
 
 <?php
@@ -112,9 +117,10 @@ echo buildCategorySelect(false);
 ?>
 
 <br>
+Owner (Creator, Developer, or Organization Responsible): <br><input type="text" name="owner"><br>
+<hr>
 Submitter's Name: <br><input type="text" name="submitter" required="required"><sup id=submcheck style="color:red"></sup><br>
 Email: <br><input type="text" name="email" required="required"><sup id=mailcheck style="color:red"></sup><br>
-Owner: <br><input type="text" name="owner"><br>
 <button type="submit" class="btn">Submit</button>
 
 </form>

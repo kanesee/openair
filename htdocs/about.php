@@ -1,5 +1,8 @@
 <?php include 'header.php'; ?>
 <?php include 'category.php'; ?>
+<head>
+	<title>About</title>
+</head>
 <div id="index" class="span7">
 	<div id="resourceinfo">
 		<div id="resourcetitle">About</div>

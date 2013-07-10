@@ -1,5 +1,8 @@
 <?php include 'header.php'; ?>
 <?php include 'category.php'; ?>
+<head>
+	<title>FAQ</title>
+</head>
 <div id="right" class="span7">
 	<div id="resourceinfo">
 		<div id="resourcetitle">Frequently Asked Questions</div>

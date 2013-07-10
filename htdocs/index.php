@@ -1,6 +1,10 @@
-
 <?php include 'header.php'; ?>
 <?php include 'category.php'; ?>
+
+<head>
+	<title>Open AIR Home</title>
+</head>
+
 <?php
 
 function countResults($subcatString, $query) {

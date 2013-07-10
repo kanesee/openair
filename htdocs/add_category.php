@@ -1,5 +1,7 @@
 <?php include 'header.php'; ?>
-
+<head>
+  <title>Add Category</title>
+</head>
 <?php
   $message = "";
   $catname = "";
