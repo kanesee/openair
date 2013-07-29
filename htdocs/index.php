@@ -125,7 +125,16 @@ if($count==0) {
 	    echo "No results for '".$query."' in the ".$resourcetitle." category.";
 	}
 }
+if($totalPages>0) {
 ?>
+			<div id="searchcontrols">
+				<div class="row-fluid">
+					<div class="span3 text-right"><?php if ($page > 1) {echo "<a href=index.php?p=".($page-1).$urlAdd.">&lt; Previous Page</a>";} else { echo "&lt; Previous Page";} ?></div>
+					<div class="span6 text-center">Page <?php echo $page." of ". $totalPages; ?> </div>
+					<div class="span3"><?php if ($page < $totalPages) {echo "<a href=index.php?p=".($page+1).$urlAdd.">Next Page &gt;</a>";} else { echo "Next Page &gt;";} ?></div>
+				</div>
+			</div>
+<?php } ?>
 		</div>
 	</div>
 

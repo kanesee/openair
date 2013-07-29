@@ -94,7 +94,16 @@ if($totalPages>0) {
      echo "No pending projects.";
    }
 
+if($totalPages>0) {
 ?>
+      <div id="searchcontrols">
+        <div class="row-fluid">
+          <div class="span3 text-right"><?php if ($page > 1) {echo "<a href=pending.php?p=".($page-1).">&lt; Previous Page</a>";} else { echo "&lt; Previous Page";} ?></div>
+          <div class="span6 text-center">Page <?php echo $page." of ". $totalPages; ?> </div>
+          <div class="span3"><?php if ($page < $totalPages) {echo "<a href=pending.php?p=".($page+1).">Next Page &gt;</a>";} else { echo "Next Page &gt;";} ?></div>
+        </div>
+      </div>
+<?php } ?>
 </div>
 </div>
 <script>

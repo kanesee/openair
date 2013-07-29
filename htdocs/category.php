@@ -1,3 +1,4 @@
+<link rel="stylesheet" type="text/css" media="all" href="assets/css/style.css">
 <?php
 
 $cat = "";
@@ -28,7 +29,10 @@ $MAIN_JSON = '{
 		"plugins" : [ "themes", "json_data", "ui", "sort" ],
 		"ui" : { "initially_select" : [ OPEN_REPLACE ] },
 		"core": { "initially_open" : [ OPEN_REPLACE ] },
-		"sort" : function (a, b) {return this.get_text(a) > this.get_text(b) ? 1 : -1; }
+		"sort" : function (a, b) {return this.get_text(a) > this.get_text(b) ? 1 : -1; },
+		"themes" : {
+            "dots" : false
+        }
 	}';
 
 function createData($row) {

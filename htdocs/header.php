@@ -37,15 +37,15 @@ if (isAdmin()) {
 
 
 <div class="navbar" id='header'>
-  <div class="navbar-inner">
-    <a class="brand" href="index.php"><img src='assets/img/openailogo.png'/></a>
-    <ul class="nav" id="navlist">
+  <div class="navbar-inner row-fluid">
+    <div class="span2 offset1"><a class="brand" href="index.php"><img src='assets/img/openailogo.png'/></a></div>
+    <div class=" span5 offset1"><ul class="nav" id="navlist">
 		<li <?php if($activepage != '/about.php' && $activepage != '/contact.php' && $activepage != '/faq.php' && $activepage != '/donations.php' && $activepage != '/submit.php') { echo "class='active'"; } ?>><a href="index.php" id="current">Home</a></li>
 		<li <?php if($activepage == '/about.php') { echo "class='active'"; } ?>><a href="about.php">About</a></li>
 		<li <?php if($activepage == '/faq.php') { echo "class='active'"; } ?>><a href="faq.php">FAQ</a></li>
 		<li <?php if($activepage == '/donations.php') { echo "class='active'"; } ?>><a href="donations.php">Donations</a></li>
-    </ul>
-    <ul class="rightnav" id="navlist">
+    </ul></div>
+    <ul class="rightnav span2" id="navlist">
     	<li class="submit <?php if($activepage == '/submit.php') { echo "active"; } ?>"><a href="submit.php">Submit an Entry</a></li>
   </div>
 </div>
