@@ -271,6 +271,7 @@ body {
 .resource .features td {
   padding-left: 10px;
   padding-right: 10px;
+  width: 50%;
 }
 
 .resource .added {

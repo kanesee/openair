@@ -1,4 +1,11 @@
 <?php include "header.php"; ?>
+
+<?php
+  if(!isAdmin()) {
+    redirect("/not-authorized.php");
+  }
+?>
+
 <?php include 'category.php'; ?>
 
 <head>
@@ -36,13 +43,15 @@ function countResults($subcatString) {
     SELECT r.id, r.name, r.description, 
            r.owner,
            rt.name rtname, lt.name ltname,
-           r.approved_date
+           r.approved_date, c.name cname, c.parent cparent
       FROM resource r, resource_category rc,
-           resource_type rt, license_type lt
+           resource_type rt, license_type lt,
+           category c
      WHERE r.id=rc.resource_id 
        AND r.approved_date is null
        AND r.resource_type=rt.id
        AND r.license_type=lt.id
+       AND rc.category_id=c.id
        AND rc.category_id IN $subcatString
      LIMIT $startIdx, $MAX_RESULTS
      ");
@@ -63,7 +72,15 @@ if($totalPages>0) {
 
    $pc=0;
    while ($row = mysql_fetch_array($r)) {
-     $pc=$pc+1;
+    $pc=$pc+1;
+    $catparent = $row{'cparent'};
+    $catpath = $row{'cname'};
+    while ($catparent != 0) {
+      $rparent = mysql_query("SELECT * FROM category WHERE id = ".$catparent);
+      $rowparent = mysql_fetch_array($rparent);
+      $catpath = $rowparent{'name'}."/".$catpath;
+      $catparent = $rowparent{'parent'};
+    }
      echo "<div class=resource>";
      echo "<div class=title><a href=details.php?id=".$row{'id'}.">";
      echo $row{'name'}."</a></div>";
@@ -77,6 +94,7 @@ if($totalPages>0) {
      echo "</tr>";
      echo "<tr>";
      echo "<td><b>Owner:</b>&nbsp;".$row{'owner'}."</td>";
+     echo "<td><b>Category:</b>&nbsp;".$catpath."</td>";
      echo "</tr>";
      echo "</table>";
      echo "<div class=row>";

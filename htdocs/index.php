@@ -59,21 +59,22 @@ $sqlStatmement="
 SELECT r.id, r.name, r.description, 
        r.owner, r.link,
        rt.name rtname, lt.name ltname, st.name stname,
-       r.approved_date
+       r.approved_date, c.name cname, c.parent cparent
   FROM resource r, resource_category rc,
        resource_type rt, license_type lt,
-       significance_type st
+       significance_type st, category c
  WHERE rc.category_id IN ".$subcatString."
    AND r.id=rc.resource_id 
    AND r.approved_date is not null
    AND r.resource_type=rt.id
    AND r.license_type=lt.id
    AND r.significance_type=st.id
+   AND c.id=rc.category_id
 ";
 
 $urlAdd = "";
 if(!empty($query)) {
-	$sqlStatmement.=" AND r.name like '%".$query."%'";
+	$sqlStatmement.=" AND (r.name like '%".$query."%' OR r.description like '%".$query."%')";
 	$urlAdd = "&q=".$query;
 }
 $sqlStatmement.=" ORDER BY st.order, r.name LIMIT ".$startIdx.", ".$MAX_RESULTS;
@@ -95,6 +96,14 @@ $count = 0;
 $r = mysql_query($sqlStatmement);
 while ($row = mysql_fetch_array($r)) {
 	$count++;
+	$catparent = $row{'cparent'};
+	$catpath = $row{'cname'};
+	while ($catparent != 0) {
+		$rparent = mysql_query("SELECT * FROM category WHERE id = ".$catparent);
+		$rowparent = mysql_fetch_array($rparent);
+		$catpath = $rowparent{'name'}."/".$catpath;
+		$catparent = $rowparent{'parent'};
+	}
 	echo "<div class=resource>";
 	echo "<div class=title><a href=details.php?id=".$row{'id'}.">";
 	echo $row{'name'}."</a></div>";
@@ -112,6 +121,7 @@ while ($row = mysql_fetch_array($r)) {
 	echo "</tr>";
 	echo "<tr>";
 	echo "<td><b>Link:</b>&nbsp;<a href='".$row{'link'}."' target='_blank'>".$row{'link'}."</a></td>";
+	echo "<td><b>Category:</b>&nbsp;".$catpath."</td>";
 	echo "</tr>";
 	echo "</table>";
 	echo "<div class=added>Added on ".$row{'approved_date'}."</div>";

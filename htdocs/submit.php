@@ -12,6 +12,12 @@
 function validate(){
 	var pass = true;
 	var fields = document.forms["form"];
+	if(fields["drilldown"].value==""){
+		pass = false;
+		document.getElementById("catcheck").innerHTML=" *Required";
+	}
+	else
+		document.getElementById("catcheck").innerHTML="";
 	if(fields["dbname"].value==""){
 		pass = false;
 		document.getElementById("namecheck").innerHTML=" *Required";
@@ -85,7 +91,7 @@ Entry Name: <br><input type="text" name="dbname" required="required"><sup id="na
 // }
 
 echo "Entry Type:<br>";
-$result = mysql_query("SELECT name FROM resource_type");
+$result = mysql_query("SELECT name FROM resource_type ORDER BY resource_type.order");
 echo '<select name="resource" required="required">';
 echo '<option value="" disabled="disabled" selected="selected">Select</option>';
 while($row = mysql_fetch_array($result)){
@@ -94,7 +100,7 @@ while($row = mysql_fetch_array($result)){
 echo '</select><sup id=resocheck style="color:red"></sup>';
 
 echo "<br>License Type: <br>";
-$result = mysql_query("SELECT name FROM license_type");
+$result = mysql_query("SELECT name FROM license_type ORDER BY license_type.order");
 echo '<select name="license" required="required">';
 echo '<option value="" disabled="disabled" selected="selected">Select</option>';
 while($row = mysql_fetch_array($result)){
@@ -103,7 +109,7 @@ while($row = mysql_fetch_array($result)){
 echo '</select><sup id=licecheck style="color:red"></sup>';
 
 echo "<br>Significance: <br>";
-$result = mysql_query("SELECT name FROM significance_type");
+$result = mysql_query("SELECT name FROM significance_type ORDER BY significance_type.order");
 echo '<select name="significance" required="required">';
 echo '<option value="" disabled="disabled" selected="selected">Select</option>';
 while($row = mysql_fetch_array($result)){
@@ -112,11 +118,11 @@ while($row = mysql_fetch_array($result)){
 echo '</select><sup id=signcheck style="color:red"></sup>';
 
 // BA ADDED CATEGORY
-echo "<br>Category: <br>";
-echo buildCategorySelect(false);
+echo '<br>Category:<br>';
+echo buildCategorySelect(false, "drilldown").'<sup id=catcheck style="color:red"></sup><br>';
 ?>
-
 <br>
+<div>
 Owner (Creator, Developer, or Organization Responsible): <br><input type="text" name="owner"><br>
 <hr>
 Submitter's Name: <br><input type="text" name="submitter" required="required"><sup id=submcheck style="color:red"></sup><br>
@@ -127,6 +133,6 @@ Email: <br><input type="text" name="email" required="required"><sup id=mailcheck
 </div>
 
 <script type="text/javascript">
-  $('select.drilldown').selectHierarchy({ hideOriginal: true });
+  $('.drilldown').selectHierarchy({ hideOriginal: true });
 </script>
 <?php include 'footer.php'; ?>

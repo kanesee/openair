@@ -84,7 +84,7 @@ $resourcedescription = "";
 
 if(empty($cat)) {
 	$resourcetitle = "Artificial Intelligence";
-	$resourcedescription = "Artificial Intelligence is pretty awesome.";
+	$resourcedescription = "This site contains a community-curated directory of open source code and open access data for AI researchers. You can navigate through the directory via the menu on the left or the search box  below. Please help us grow the directory by using the the \"Submit an Entry\" button (see the upper right corner of this page) to send us information about open AI resources (code or data) that are not listed here. ";
 
 	$opencat = "0";
 	if(isset($_GET['id']) && $_GET['id'] != '') {

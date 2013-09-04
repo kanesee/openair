@@ -60,14 +60,14 @@ if(isAdmin() && isset($_GET['id'])){
 
   	<form name="form" action="update-resource.php" onsubmit="validate()" method="POST">
   		<input type=hidden name=id value=<?php echo $id; ?>>
-  		Entry Name: <br><input type="text" name="dbname" required="required" value=<?php echo $row['name']; ?>><sup id="namecheck" style="color:red"></sup>
+  		Entry Name: <br><input type="text" name="dbname" required="required" value=<?php echo "\"$row[name]\""; ?>><sup id="namecheck" style="color:red"></sup>
   		<br>Link to data website: <br><input type="url" name="link" required="required" value=<?php echo $row['link']; ?>><sup id="linkcheck" style="color:red"></sup>
   		<br>Short Description: <br>
 		<textarea cols="30" rows="5" wrap="virtual" name="description" required="required"><?php echo $row['description']; ?></textarea><sup id="disccheck" style="color:red"></sup><br>
 
 		<?php
 		echo "Entry Type:<br>";
-		$result = mysql_query("SELECT * FROM resource_type");
+		$result = mysql_query("SELECT * FROM resource_type ORDER BY resource_type.order");
 		echo '<select name="resource" required="required">';
 		while($line = mysql_fetch_array($result)){
 			echo '<option value="' . $line['name'] . '"';
@@ -79,7 +79,7 @@ if(isAdmin() && isset($_GET['id'])){
 		echo '</select><br>';
 
 		echo "License Type:<br>";
-		$result = mysql_query("SELECT * FROM license_type");
+		$result = mysql_query("SELECT * FROM license_type ORDER BY license_type.order");
 		echo '<select name="license" required="required">';
 		while($line = mysql_fetch_array($result)){
 			echo '<option value="' . $line['name'] . '"';
@@ -91,7 +91,7 @@ if(isAdmin() && isset($_GET['id'])){
 		echo '</select><br>';
 
 		echo "Significance:<br>";
-		$result = mysql_query("SELECT * FROM significance_type");
+		$result = mysql_query("SELECT * FROM significance_type ORDER BY significance_type.order");
 		echo '<select name="significance" required="required">';
 		while($line = mysql_fetch_array($result)){
 			echo '<option value="' . $line['name'] . '"';
@@ -102,9 +102,9 @@ if(isAdmin() && isset($_GET['id'])){
 		}
 		echo '</select><br>';
 		?>
-	Submitter's Name: <br><input type="text" name="submitter" required="required" value=<?php echo $row['submitters_name'] ?>><sup id=submcheck style="color:red"></sup><br>
+	Submitter's Name: <br><input type="text" name="submitter" required="required" value=<?php echo "\"$row[submitters_name]\"" ?>><sup id=submcheck style="color:red"></sup><br>
 	Email: <br><input type="email" name="email" required="required" value=<?php echo $row['submitters_email'] ?>><sup id=mailcheck style="color:red"></sup><br>
-	Owner: <br><input type="text" name="owner" value=<?php echo $row['owner']; ?>><br>
+	Owner: <br><input type="text" name="owner" value=<?php echo "\"$row[owner]\""; ?>><br>
 	<button type="submit" class="btn">Submit Changes</button>
 	</form>
 	</div>

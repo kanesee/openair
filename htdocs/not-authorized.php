@@ -5,7 +5,7 @@
 </head>
 <div id="index" class="span7">
 	<div id="resourceinfo">
-		<div id="resourcetitle">Sorry, bad deal</div>
+		<div id="resourcetitle">Sorry</div>
 		<div id="resourcedescription">
 You are not authorized to view that page.
 		</div>

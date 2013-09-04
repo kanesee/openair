@@ -28,19 +28,27 @@
   $r=mysql_query("
     SELECT r.id, r.name, r.link, r.description, 
            r.owner,
-           rt.name rtname, lt.name ltname, st.name stname,
-           r.approved_date
+           rt.name rtname, lt.name ltname, st.name stname, c.name cname,
+           r.approved_date, c.parent cparent
       FROM resource r, resource_category rc,
            resource_type rt, license_type lt,
-           significance_type st
+           significance_type st, category c
      WHERE r.id=rc.resource_id 
        AND r.resource_type=rt.id
        AND r.license_type=lt.id
        AND r.id = $id
+       AND rc.category_id=c.id
      ");
 
-   $row = mysql_fetch_assoc($r);
-
+  $row = mysql_fetch_assoc($r);
+  $catparent = $row{'cparent'};
+  $catpath = $row{'cname'};
+  while ($catparent != 0) {
+    $rparent = mysql_query("SELECT * FROM category WHERE id = ".$catparent);
+    $rowparent = mysql_fetch_array($rparent);
+    $catpath = $rowparent{'name'}."/".$catpath;
+    $catparent = $rowparent{'parent'};
+  }
    echo "<head><title>".$row{'name'}."</title></head>";
 
    echo "<h2>".$row{'name'};
@@ -64,6 +72,7 @@
    echo "</tr>";
    echo "<tr>";
    echo "<td><b>Link:</b>&nbsp;<a href='".$row{'link'}."' target='_blank'>".$row{'link'}."</a></td>";
+   echo "<td><b>Category:</b>&nbsp;".$catpath."</td>";
    echo "</tr>";
    echo "</table>";
    echo "<div class=added>Added on ".$row{'approved_date'}."</div>";
