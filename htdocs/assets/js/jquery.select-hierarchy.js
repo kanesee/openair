@@ -10,7 +10,8 @@
         var defaults = {
             separator: ' > ',
             hideOriginal: true,
-            placeholder: '-- Select Category --'
+            placeholder: '-- Select Category --',
+            subCatPlaceholder: '-- Select SubCategory --'
         };
         var options = $.extend(defaults, options);
         var obj = $(this);
@@ -96,7 +97,7 @@
                        
             // Check to see if there's any children, if there are we build another select box;
             if (node && node.children.length > 0) {
-                this_select.after('<select><option value="">' + options.placeholder +'</option></select>');
+                this_select.after('<select><option value="">' + options.subCatPlaceholder +'</option></select>');
 		
                 var next_select = this_select.next();
                 next_select.addClass('drilldown-' + (node.depth + 1));
