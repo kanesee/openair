@@ -3,7 +3,7 @@ include 'utils.php';
 
 if($_POST['dbname'] != '' AND $_POST['link'] != '' AND $_POST['description'] != '' AND $_POST['resource'] != '' 
 AND isset($_POST['license']) AND isset($_POST['significance']) AND isset($_POST['submitter']) AND $_POST['email'] != ''
-AND ($_POST['drilldown1'] != '' OR $_POST['drilldown2'] != '' OR $_POST['drilldown3'] != '')){
+AND ($_POST['drilldown'] != '' OR $_POST['drilldown1'] != '' OR $_POST['drilldown2'] != '' OR $_POST['drilldown3'] != '')){
 	// $con = mysqli_connect("ec2-54-243-13-79.compute-1.amazonaws.com","openai","theaiisclosed","openair");
 	// if (mysqli_connect_errno($con)){
 	// 	echo "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -31,7 +31,9 @@ AND ($_POST['drilldown1'] != '' OR $_POST['drilldown2'] != '' OR $_POST['drilldo
 	VALUES ('$dbname', '$link', '$description', '$resource', '$license', 
 	'$significance', '$submitter', '$email', '$owner')");
 	$resource_id = mysql_insert_id();
-
+	
+	if($_POST['drilldown'] != '')
+		mysql_query("INSERT INTO resource_category (resource_id, category_id) VALUES ($resource_id, $_POST[drilldown])");
 	if($_POST['drilldown1'] != '')
 		mysql_query("INSERT INTO resource_category (resource_id, category_id) VALUES ($resource_id, $_POST[drilldown1])");
 	if($_POST['drilldown2'] != '')
