@@ -43,7 +43,7 @@ AND ($_POST['drilldown'] != '' OR $_POST['drilldown1'] != '' OR $_POST['drilldow
 
 	// mysqli_close($con);
 	if($result)
-		redirect('index.php');
+		redirect('submit-success.php');
 }
 redirect('submit.php');
 ?>
