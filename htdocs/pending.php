@@ -40,17 +40,18 @@ function countResults($subcatString) {
   $totalPages = floor(countResults($subcatString) / $MAX_RESULTS);
 
   $r=mysql_query("
-    SELECT r.id, r.name, r.description, 
+    SELECT r.id, r.name, r.link, r.description, 
            r.owner,
-           rt.name rtname, lt.name ltname,
+           rt.name rtname, lt.name ltname, st.name stname, 
            r.approved_date, c.name cname, c.parent cparent
       FROM resource r, resource_category rc,
            resource_type rt, license_type lt,
-           category c
+           significance_type st, category c
      WHERE r.id=rc.resource_id 
        AND r.approved_date is null
        AND r.resource_type=rt.id
        AND r.license_type=lt.id
+       AND r.significance_type=st.id 
        AND rc.category_id=c.id
        AND rc.category_id IN $subcatString
      LIMIT $startIdx, $MAX_RESULTS
@@ -93,7 +94,11 @@ if($totalPages>0) {
      echo "<td><b>License type:</b>&nbsp;".$row{'ltname'}."</td>";
      echo "</tr>";
      echo "<tr>";
+     echo "<td><b>Usage level:</b>&nbsp;".$row{'stname'}."</td>";
      echo "<td><b>Owner:</b>&nbsp;".$row{'owner'}."</td>";
+     echo "</tr>";
+     echo "<tr>";
+     echo "<td><b>Link:</b>&nbsp;<a href='".$row{'link'}."' target='_blank'>".$row{'link'}."</a></td>";
      echo "<td><b>Category:</b>&nbsp;".$catpath."</td>";
      echo "</tr>";
      echo "</table>";
