@@ -36,6 +36,7 @@
      WHERE r.id=rc.resource_id 
        AND r.resource_type=rt.id
        AND r.license_type=lt.id
+       AND r.significance_type=st.id 
        AND r.id = $id
        AND rc.category_id=c.id
      ");
