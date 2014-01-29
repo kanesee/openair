@@ -79,19 +79,8 @@
    echo "<div class=added>Added on ".$row{'approved_date'}."</div>";
    echo "</div>";
 
-   if(isAdmin()) {
 ?>
-  <div id="changecategoryform">
-    <?php echo $message ?>
-    <form id='change-category' method="POST" >
-      <?php echo buildCategorySelect(false); ?><br>
-      <button type="submit" class="btn">Change Category</button>
-    </form>
-  </div>
-<?php
-   }
 
-?>
 </div>
 
 <script type="text/javascript">
