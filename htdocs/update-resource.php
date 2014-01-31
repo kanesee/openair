@@ -24,6 +24,10 @@ AND isset($_POST['license']) AND isset($_POST['significance']) AND !empty($_POST
 
 	$result = mysql_query("UPDATE resource SET name='$dbname', link='$link', description='$description', resource_type='$resource', license_type='$license', significance_type='$significance', submitters_name='$submitter', submitters_email='$email', owner='$owner' WHERE id='$id'");
 
+	if($_POST['drilldown'] != '') {
+		mysql_query("UPDATE resource_category SET category_id = $_POST[drilldown] where resource_id = '$id'");
+	}
+		
 	$r = mysql_query("SELECT * FROM resource WHERE id ='$id'");
   	$row = mysql_fetch_array($r);
   	if($result && $row['approved_date'] == '')

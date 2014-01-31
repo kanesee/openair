@@ -101,6 +101,20 @@ if(isAdmin() && isset($_GET['id'])){
 			echo '>'.$line['name'].'</option>';
 		}
 		echo '</select><br>';
+		
+        $result = mysql_query("SELECT c.name cname, c.parent cparent FROM resource_category rc, resource r, category c WHERE rc.resource_id = $row[id] AND rc.category_id = c.id");
+        $catrow = mysql_fetch_assoc($result);
+        $catparent = $catrow{'cparent'};
+        $catpath = $catrow{'cname'};
+        while ($catparent != 0) {
+            $rparent = mysql_query("SELECT * FROM category WHERE id = ".$catparent);
+            $rowparent = mysql_fetch_array($rparent);
+            $catpath = $rowparent{'name'}."/".$catpath;
+            $catparent = $rowparent{'parent'};
+        }
+	
+		echo 'Category: '.$catpath;
+		echo '<br>'.buildCategorySelect(false, "drilldown").'<br>';
 		?>
 	Submitter's Name: <br><input type="text" name="submitter" required="required" value=<?php echo "\"$row[submitters_name]\"" ?>><sup id=submcheck style="color:red"></sup><br>
 	Email: <br><input type="email" name="email" required="required" value=<?php echo $row['submitters_email'] ?>><sup id=mailcheck style="color:red"></sup><br>
@@ -115,4 +129,7 @@ else{
 	redirect("index.php");
 }
 ?>
+<script type="text/javascript">
+  $('.drilldown').selectHierarchy({ hideOriginal: true });
+</script>
 <?php include 'footer.php'; ?>
