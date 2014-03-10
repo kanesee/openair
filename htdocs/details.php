@@ -27,7 +27,7 @@
 <?php
   $r=mysql_query("
     SELECT r.id, r.name, r.link, r.description, 
-           r.owner,
+           r.owner, r.submitters_name subname, r.submitters_email subemail,
            rt.name rtname, lt.name ltname, st.name stname, c.name cname,
            r.approved_date, c.parent cparent
       FROM resource r, resource_category rc,
@@ -75,6 +75,12 @@
    echo "<td><b>Link:</b>&nbsp;<a href='".$row{'link'}."' target='_blank'>".$row{'link'}."</a></td>";
    echo "<td><b>Category:</b>&nbsp;".$catpath."</td>";
    echo "</tr>";
+   if(isAdmin()) {
+     echo "<tr>";
+	 echo "<td><b>Submitter:</b>&nbsp;".$row{'subname'}."</td>";
+	 echo "<td><b>Submitter's email:</b>&nbsp;".$row{'subemail'}."</td>";
+	 echo "</tr>";
+   }
    echo "</table>";
    echo "<div class=added>Added on ".$row{'approved_date'}."</div>";
    echo "</div>";
