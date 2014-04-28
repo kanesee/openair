@@ -7,14 +7,14 @@
 	<div id="resourceinfo">
 		<div id="resourcetitle">About</div>
 		<div id="resourcedescription">
-			The Open Artificial Intelligence directory is a community resource that seeks to provide access to all available open source artificial intelligence related software and data. This database was initially compiled by InferLink Corporation in collaboration with our sponsors and now relies on contributions by the AI community. For more information, please feel free to contact us at ...
+			This directory is a community resource that seeks to provide access to all available open source artificial intelligence related software and data. This site was initially developed by InferLink Corporation and we are soliciting contributions by the AI community.  For more information, please feel free to contact us at ...
 		</div>
 	</div>
 	<div id="bluedivider"></div>
 	<div id="resourceinfo">
 		<div id="resourcetitle">Supporting <span style="font-weight: 200;">OPEN</span>AI Resources</div>
 		<div id="resourcedescription">
-			The Open AIR relies on support from community for web hosting, editorial support, and more. We welcome contributions of any amount. Open AIR is a 501 C3 and your contribution *may* be tax advantaged. You can donate by clicking the donate button below.<br><br>
+			<!--The Open AIR relies on support from community for web hosting, editorial support, and more. We welcome contributions of any amount. Open AIR is a 501 C3 and your contribution *may* be tax advantaged. You can donate by clicking the donate button below.-->TBD<br><br>
 			<div class="text-center" ><button type="button" class="btn btn-primary" onclick="javascript:window.location='donations.php';">Donate</button></div>
 		</div>
 	</div>
@@ -49,7 +49,7 @@
 			</div>
 			<div class="row-fluid">
 				<div class="span6">
-					ISI<br>
+					Sponsor Name<br>
 					InferLink<br>
 				</div>
 				<div class="span6">
