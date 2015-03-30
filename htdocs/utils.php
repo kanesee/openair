@@ -1,13 +1,11 @@
 <?php
+include '_secret.php';
 
 session_start();
 
-$username = "root";
-$password = "bitnami";
-$hostname = "localhost"; 
 
 $conn = mysql_connect($hostname, $username, $password) or die("Unable to connect to MySQL");
-$db = mysql_select_db("openair", $conn) or die("Could not select examples");
+$db = mysql_select_db($database, $conn) or die("Could not select examples");
 
 function redirect($url, $permanent = false) {
   if ($permanent) {

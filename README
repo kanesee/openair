@@ -2,4 +2,4 @@ The OpenAIR project is a directory system for open-source AI technologies.
 
 This project requires an installation of PHP with MySQL. Simply move the /htdocs/ folder to your apache home directory and import the most recent data file into your MySQL instance. 
 
-In htdocs/utils.php change lines 5,6 and 7 to reference your MySQL database and all should work well.
+In htdocs/_secret.php change lines 5,6 and 7 to reference your MySQL database and all should work well.
