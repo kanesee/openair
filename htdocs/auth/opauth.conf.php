@@ -57,8 +57,8 @@ $config = array(
 		),
 		
 		'Twitter' => array(
-			'key' => 'qMKXwHYWKbdO1brtrqPDC9ozj',
-			'secret' => 'Scv4ALgUh06Vl34wcox03JPB09Y3Z7pd6Ta56WZoHjaq880N0J'
+			'key' => 'YOUR CONSUMER KEY',
+			'secret' => 'YOUR SECRET KEY'
 		),
 				
 	),
