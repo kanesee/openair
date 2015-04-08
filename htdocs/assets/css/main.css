@@ -19,11 +19,11 @@
 }
 
 #nav ul.navbar-nav > li > a {
-  color: white;
+  color: red;
 }
 
 #nav .active > a {
-  background-color: #494545;
+  background-color: #2B2F76;
 }
 
 /*
@@ -325,3 +325,9 @@ i:hover {
   height: 400px;
 }
 
+
+
+
+#nav .headerProfile {
+  padding: 0;
+}

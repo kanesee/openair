@@ -85,7 +85,7 @@ if (isAdmin()) {
                   <span class="caret"></span>
                 </a>
                 <?php } else { ?>
-                <a href="#" class="show-after-auth dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                <a href="#" class="show-after-auth dropdown-toggle headerProfile" data-toggle="dropdown" role="button" aria-expanded="false">
                   <img class="profileImg" src="<?= $_SESSION['user']['image'] ?>">
                   <span class="profileName"><?= $_SESSION['user']['name'] ?></span>
                   <span class="caret"></span>
@@ -97,6 +97,11 @@ if (isAdmin()) {
                   <li class="hide-after-auth">
                     <a href="/auth/twitter">
                       <img id="twitterLoginBtn" src="/assets/img-3rd/sign-in-twitter.png">
+                    </a>
+                  </li>
+                  <li class="hide-after-auth">
+                    <a href="/auth/facebook">
+                      <img id="facebookLoginBtn" src="/assets/img-3rd/sign-in-facebook.png">
                     </a>
                   </li>
                 <?php } else { ?>

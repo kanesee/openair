@@ -90,11 +90,11 @@ else{
 /**
 * Auth response dump
 */
-/*
-echo "<pre>";
-print_r($response);
-echo "</pre>";
-*/
+
+//echo "<pre>";
+//print_r($response);
+//echo "</pre>";
+
 $_SESSION['user'] = $response['auth']['info'];
 $_SESSION['user_id'] = $response['auth']['uid'];
 
