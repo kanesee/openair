@@ -1,14 +1,43 @@
 /*bootstrap overwritting*/
+/**************************
+ * Header Nav
+ **************************/
+/*
 #header {
   border-bottom: 5px solid #6a6a6a;
   margin-bottom: 20px;
 }
+*/
+#nav {
+  background-image: url('/assets/img/banner.jpg');
+  background-position: -180px 0px;
+  background-size: 100%;
+}
 
+#nav .navbar-brand {
+  padding-top: 8px;
+}
+
+#nav ul.navbar-nav > li > a {
+  color: white;
+}
+
+#nav .active > a {
+  background-color: #494545;
+}
+
+/*
 .navbar {
   min-width: 1125px;
   margin-bottom: 0px;
 }
+*/
 
+.header-spacer {
+  height: 50px;
+}
+
+/*
 .navbar-inner {
   background-color: #7D7D7D;
   background-image: none;
@@ -18,6 +47,8 @@
   border-radius: 0;
   padding:0;
 }
+*/
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -293,5 +324,4 @@ i:hover {
   width: 610px;
   height: 400px;
 }
-
 
