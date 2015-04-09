@@ -30,6 +30,10 @@
   background-color: #2B2F76;
 }
 
+#nav .headerProfile {
+  padding: 0;
+}
+
 /*
 .navbar {
   min-width: 1125px;
@@ -341,22 +345,6 @@ body {
   margin-bottom: 10px;
 }
 
-#footer {
-  /*  position:  absolute;
-      left:  0px;
-      bottom:  0px;     */
-  clear: both;
-  background-color: #789;
-  color: #eee;
-  padding: 5px;
-  text-align: center; 
-  /*  width:  99.3%;    */
-  font-size: 11px;
-/*  min-width: 1125px;*/
-  width: 100%;
-  z-index: 2000;
-}
-
 .resource {
   border: 2px solid #ccc;
   padding: 10px;
@@ -401,9 +389,26 @@ i:hover {
   height: 400px;
 }
 
+/**************************
+ * Footer Nav
+ **************************/
 
 
+#footer-spacer {
+  height: 50px;
+}
 
-#nav .headerProfile {
-  padding: 0;
+#footer {
+  position:  fixed;
+  bottom:  0;
+  clear: both;
+  background-color: #789;
+  color: #eee;
+  padding: 5px;
+  text-align: center; 
+  /*  width:  99.3%;    */
+  font-size: 11px;
+/*  min-width: 1125px;*/
+  width: 100%;
+  z-index: 2000;
 }

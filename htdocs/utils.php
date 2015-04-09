@@ -58,4 +58,26 @@ function getSubCats($catId) {
 
   return $subcats;
 }
+
+function countResults($subcatString, $query) {
+	$sqlStatmement = "SELECT count(*)
+	  FROM resource r, resource_category rc,
+	       resource_type rt, license_type lt,
+	       significance_type st
+	 WHERE rc.category_id IN ".$subcatString."
+	   AND r.id=rc.resource_id 
+	   AND r.approved_date is not null
+	   AND r.resource_type=rt.id
+	   AND r.license_type=lt.id
+	   AND r.significance_type=st.id
+	";
+	if(!empty($query)) {
+		$sqlStatmement.=" AND r.name like '%".$query."%'";
+	}
+
+	$r = mysql_query($sqlStatmement);
+	$row = mysql_fetch_row($r);
+	return $row[0];
+}
+
 ?>
