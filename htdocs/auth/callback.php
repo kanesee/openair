@@ -1,4 +1,6 @@
 <?php
+include "./../utils.php";
+
 /**
  * Callback for Opauth
  * 
@@ -38,6 +40,7 @@ $Opauth = new Opauth( $config, false );
 /**
 * Fetch auth response, based on transport configuration for callback
 */
+$error = null;
 $response = null;
 
 switch($Opauth->env['callback_transport']){	
@@ -61,7 +64,8 @@ switch($Opauth->env['callback_transport']){
  * Check if it's an error callback
  */
 if (array_key_exists('error', $response)){
-	echo '<strong style="color: red;">Authentication error: </strong> Opauth returns error auth response.'."<br>\n";
+	$error = '<strong style="color: red;">Authentication error: </strong> Opauth returns error auth response.'."<br>\n";
+    
 }
 
 /**
@@ -71,14 +75,14 @@ if (array_key_exists('error', $response)){
  * is sent through GET or POST.
  */
 else{
-	if (empty($response['auth']) || empty($response['timestamp']) || empty($response['signature']) || empty($response['auth']['provider']) || empty($response['auth']['uid'])){
-		echo '<strong style="color: red;">Invalid auth response: </strong>Missing key auth response components.'."<br>\n";
-	}
-	elseif (!$Opauth->validate(sha1(print_r($response['auth'], true)), $response['timestamp'], $response['signature'], $reason)){
-		echo '<strong style="color: red;">Invalid auth response: </strong>'.$reason.".<br>\n";
-	}
-	else{
-		echo '<strong style="color: green;">OK: </strong>Auth response is validated.'."<br>\n";
+  if (empty($response['auth']) || empty($response['timestamp']) || empty($response['signature']) || empty($response['auth']['provider']) || empty($response['auth']['uid'])){
+    $error = '<strong style="color: red;">Invalid auth response: </strong>Missing key auth response components.'."<br>\n";
+  }
+  elseif (!$Opauth->validate(sha1(print_r($response['auth'], true)), $response['timestamp'], $response['signature'], $reason)){
+    $error = '<strong style="color: red;">Invalid auth response: </strong>'.$reason.".<br>\n";
+  }
+  else{
+//    echo '<strong style="color: green;">OK: </strong>Auth response is validated.'."<br>\n";
 
 		/**
 		 * It's all good. Go ahead with your application-specific authentication logic
@@ -95,7 +99,20 @@ else{
 //print_r($response);
 //echo "</pre>";
 
-$_SESSION['user'] = $response['auth']['info'];
-$_SESSION['user_id'] = $response['auth']['uid'];
+if( $error == null ) {
+//  print_r($response);
+  
+  $user = loginUser($response);
+  
+  echo "<p>";
+  print_r($user);
 
-header( 'Location: /' ) ;
+  $_SESSION['user'] = $user;
+//  $_SESSION['user'] = $response['auth']['info'];
+//  $_SESSION['user_id'] = $response['auth']['uid'];
+  
+
+  header( 'Location: /' ) ;
+} else {
+  echo $error;
+}

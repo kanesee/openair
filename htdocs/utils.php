@@ -80,4 +80,39 @@ function countResults($subcatString, $query) {
 	return $row[0];
 }
 
+/***************
+ * Inserts user into user table if not exist.
+ * Otherwise, just updates lastLogin time.
+ * Returns user along with privilege level.
+ **************/
+function loginUser($response) {
+  if( $response['auth']['info'] ) {
+    $id = $response['auth']['uid'];
+    $provider = $response['auth']['provider'];
+    $now = date(DATE_ATOM );
+
+    $user = new stdClass;
+    $user->id = $id;
+    $user->login_type = $provider;
+    $user->name = $response['auth']['info']['name'];
+    $user->image = $response['auth']['info']['image'];
+
+    $r = mysql_query("SELECT * FROM user WHERE id = ".$id." AND login_type = '".$provider."'");
+    if($row = mysql_fetch_array($r)) {
+      // if exists, update it
+      mysql_query("UPDATE user SET"
+                  ." name = '".$user->name."', "
+                  ." image_url = '".$user->image."', "
+                  ." lastLogin = '".$now."'");
+    } else {
+      mysql_query("INSERT INTO user(id, login_type, name, image_url, privilege, lastLogin)"
+                  ." VALUES('".$id."','".$provider."','".$user->name."','".$user->image."','user','".$now."')");
+    }
+
+    return $user;
+  } else {
+    return null;
+  }
+}
+
 ?>

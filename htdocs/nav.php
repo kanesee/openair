@@ -47,8 +47,8 @@
                 </a>
                 <?php } else { ?>
                 <a href="#" class="show-after-auth dropdown-toggle headerProfile" data-toggle="dropdown" role="button" aria-expanded="false">
-                  <img class="profileImg" src="<?= $_SESSION['user']['image'] ?>">
-                  <span class="profileName"><?= $_SESSION['user']['name'] ?></span>
+                  <img class="profileImg" src="<?= $_SESSION['user']->image ?>">
+                  <span class="profileName"><?= $_SESSION['user']->name ?></span>
                   <span class="caret"></span>
                 </a>
                 <?php } ?>
