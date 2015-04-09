@@ -1,8 +1,5 @@
 <?php ob_start() ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
 <?php
 include "utils.php";
 
@@ -24,6 +21,7 @@ if (isAdmin()) {
 <!-- Le styles -->
 <!-- <link href="/assets/css/bootstrap.min.css" rel="stylesheet"> -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" media="all" href="assets/css/style.css">
 <link rel="stylesheet" href="/assets/css/main.css" type="text/css">
 <!-- <link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet"> -->
 
@@ -35,87 +33,143 @@ if (isAdmin()) {
 <script src="/assets/js/jquery.select-hierarchy.js"></script>
 <script src="/assets/js/main.js"></script>
 
-</head>
+<?php
+//ONLY PRINT THIS JAVASCRIPT IF THEY ARE AN ADMIN
+if(isAdmin()) {
+?>
+<script>
+	function deleteCategory() {
+		var r=confirm("Are you sure you want to delete <?php echo $resourcetitle; ?> and all of the child categories beneath it?");
+		if (r==true) {
+			window.location.href = window.location.origin+"/delete_category.php?cat="+cat;
+		}
+		else{
+		}
+	}
+</script>
 
-<!--
-<div class="navbar" id='header'>
-  <div class="navbar-inner row-fluid">
-    <div class="span2 offset1"><a class="brand" href="/index.php"><img src='/assets/img/openailogo.png'/></a></div>
-    <div class="span5 offset1">
-      <ul class="nav" id="navlist">
-    		<li <?php if($activepage != '/about.php' && $activepage != '/contact.php' && $activepage != '/faq.php' && $activepage != '/donations.php' && $activepage != '/submit.php') { echo "class='active'"; } ?>><a href="/index.php" id="current">Home</a></li>
-    		<li <?php if($activepage == '/about.php') { echo "class='active'"; } ?>><a href="/about.php">About</a></li>
-    		<li <?php if($activepage == '/faq.php') { echo "class='active'"; } ?>><a href="/faq.php">FAQ</a></li>
-    		<li <?php if($activepage == '/donations.php') { echo "class='active'"; } ?>><a href="/donations.php">Donations</a></li>
-      </ul>
-    </div>
-    <ul class="rightnav span2" id="navlist">
-    	<li class="submit <?php if($activepage == '/submit.php') { echo "active"; } ?>"><a href="/submit.php">Submit an Entry</a></li>
-    </ul>
+<?php
+}
+?>
 
-  </div>
-</div>
--->
 
-    <nav id="nav" class="navbar navbar-default navbar-fixed-top" role="navigation">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/"><img src='/assets/img/openairlogo.png'/></a>
-        </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Home</a></li>
-            <li><a href="about.php">About</a></li>
-            <li><a href="faq.php">FAQ</a></li>
-          </ul>
+<!-- ################ Category related headers ###################-->
+<?php
 
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-              <?php if( !$_SESSION['user'] ) { ?>
-                <a href="#" class="hide-after-auth dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                  <span>Sign In</span>
-                  <span class="caret"></span>
-                </a>
-                <?php } else { ?>
-                <a href="#" class="show-after-auth dropdown-toggle headerProfile" data-toggle="dropdown" role="button" aria-expanded="false">
-                  <img class="profileImg" src="<?= $_SESSION['user']['image'] ?>">
-                  <span class="profileName"><?= $_SESSION['user']['name'] ?></span>
-                  <span class="caret"></span>
-                </a>
-                <?php } ?>
+$cat = "";
+if(isset($_GET['cat'])) { $cat = $_GET['cat']; }
 
-              <ul class="inverse-dropdown dropdown-menu" role="menu">
-                <?php if( !$_SESSION['user'] ) { ?>
-                  <li class="hide-after-auth">
-                    <a href="/auth/twitter">
-                      <img id="twitterLoginBtn" src="/assets/img-3rd/sign-in-twitter.png">
-                    </a>
-                  </li>
-                  <li class="hide-after-auth">
-                    <a href="/auth/facebook">
-                      <img id="facebookLoginBtn" src="/assets/img-3rd/sign-in-facebook.png">
-                    </a>
-                  </li>
-                <?php } else { ?>
-                  <li class="show-after-auth">
-                    <a href="/logout">
-                      Log Off
-                    </a>
-                  </li>
-                <?php } ?>
-                </ul>              
-            </li>
-          </ul>
+//first get all the categories that we should be searching on
+if(empty($cat)) {$cat = 0;}
+$subcats = getSubCats($cat);
+$subcats[] = $cat;
+$subcatString = "";
+foreach ($subcats as &$value) {
+	if(empty($subcatString)) {
+		$subcatString.="(";
+	}
+	else {
+		$subcatString.=",";
+	}
+	$subcatString.=$value;
+}
+$subcatString.=")";
 
-        </div>
-      </div>
-    </nav>
-    <div class="header-spacer"></div>
+$MAIN_JSON = '{ 
+		"json_data" : {
+			"data" : [
+				{ "data" : "Artificial Intelligence", "attr": { "id": "0"}, "metadata" : { id : 0 }, "children" : [THE_DATA] }
+			]
+		},
+		"plugins" : [ "themes", "json_data", "ui", "sort" ],
+		"ui" : { "initially_select" : [ OPEN_REPLACE ] },
+		"core": { "initially_open" : [ OPEN_REPLACE ] },
+		"sort" : function (a, b) {return this.get_text(a) > this.get_text(b) ? 1 : -1; },
+		"themes" : {
+            "dots" : false
+        }
+	}';
+
+function createData($row) {
+	$id = $row{'id'};
+	$name = $row{'name'};
+	$singleData = str_replace("NAME_REPLACE", $name, '{ "data" : "NAME_REPLACE", "attr": { "id": "ID_REPLACE"}, "metadata" : { id : ID_REPLACE }, "children" : [ CHILDREN_REPLACE ] }');
+	$singleData = str_replace("ID_REPLACE", $id, $singleData);
+
+	$children = "";
+	$filter_id = 0;
+	$sqlQuery = "SELECT id, name, description, parent from category where parent=".$id;
+	if (!isAdmin()) {
+		$sqlQuery.= " AND id > 0";
+	}
+	$sqlQuery.= " ORDER BY id";
+
+	$r_sub = mysql_query($sqlQuery);
+	while ($row_sub = mysql_fetch_array($r_sub)) {
+		if(!empty($children)) {
+			$children .= ",";
+		}
+		$children .= createData($row_sub);
+	}
+
+	return str_replace("CHILDREN_REPLACE", $children, $singleData);
+}
+
+$data = "";
+
+$sqlQuery = "SELECT id, name, description, parent from category where parent=0";
+if (!isAdmin()) {
+	$sqlQuery.= " AND id > 0";
+}
+$sqlQuery.= " ORDER BY id";
+$r = mysql_query($sqlQuery);
+
+while ($row = mysql_fetch_array($r)) {
+	if(!empty($data)) {
+		$data .= ",";
+	}
+	$singleData = createData($row);
+	$data .= $singleData;
+}
+
+$json = str_replace("THE_DATA", $data, $MAIN_JSON);
+
+$resourcetitle = "";
+$resourcedescription = "";
+
+if(empty($cat)) {
+	$resourcetitle = "Artificial Intelligence";
+	$resourcedescription = "This site contains a community-curated directory of open source code and open access data for AI researchers. You can navigate through the directory via the menu on the left or the search box  below. Please help us grow the directory by using the the \"Submit an Entry\" button (see the upper right corner of this page) to send us information about open AI resources (code or data) that are not listed here. ";
+
+	$opencat = "0";
+	if(isset($_GET['id']) && $_GET['id'] != '') {
+		$r = mysql_query("SELECT category_id from resource_category where resource_id=".$_GET['id']);
+		$row = mysql_fetch_array($r);
+		if(!is_null($row)) {
+			$opencat = "\"".$row{'category_id'}."\"";
+		}
+	}
+
+	$json = str_replace("OPEN_REPLACE", $opencat, $json);
+}
+else {
+	$r = mysql_query("SELECT id, name, description, parent from category where id=".$cat);
+	$row = mysql_fetch_array($r);
+	if(is_null($row)) {
+		$resourcedescription = "The category does not exist.";
+	}
+	else {
+		$resourcetitle = $row{'name'};
+		$resourcedescription = $row{'description'};
+	}
+
+	$json = str_replace("OPEN_REPLACE", "\"".$cat."\"", $json);
+}
+
+echo "<script>var category_json = ".$json.";</script>";
+echo "<script>var cat = \"".$cat."\";</script>";
+
+
+if(isset($_GET['cat']) && basename($_SERVER['PHP_SELF']) != "edit_category.php" && basename($_SERVER['PHP_SELF']) != "pending.php")
+	echo "<head><title>$resourcetitle</title></head>";
+?>
