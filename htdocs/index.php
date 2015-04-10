@@ -16,21 +16,34 @@ $page = 1;
 if (isset($_GET['p'])) { $page=$_GET['p']; }
 $startIdx = ($page-1) * $MAX_RESULTS;
 
+//$sqlStatmement="
+//SELECT r.id, r.name, r.description, 
+//       r.owner, r.link,
+//       rt.name rtname, lt.name ltname, st.name stname,
+//       r.approved_date, c.name cname, c.parent cparent
+//  FROM resource r, resource_category rc,
+//       resource_type rt, license_type lt,
+//       significance_type st, category c
+// WHERE rc.category_id IN ".$subcatString."
+//   AND r.id=rc.resource_id 
+//   AND r.approved_date is not null
+//   AND r.resource_type=rt.id
+//   AND r.license_type=lt.id
+//   AND r.significance_type=st.id
+//   AND c.id=rc.category_id
+//";
 $sqlStatmement="
-SELECT r.id, r.name, r.description, 
+SELECT DISTINCT r.id, r.name, r.description, 
        r.owner, r.link,
        rt.name rtname, lt.name ltname, st.name stname,
-       r.approved_date, c.name cname, c.parent cparent
-  FROM resource r, resource_category rc,
-       resource_type rt, license_type lt,
-       significance_type st, category c
- WHERE rc.category_id IN ".$subcatString."
-   AND r.id=rc.resource_id 
-   AND r.approved_date is not null
-   AND r.resource_type=rt.id
-   AND r.license_type=lt.id
-   AND r.significance_type=st.id
-   AND c.id=rc.category_id
+       r.approved_date
+  FROM resource r
+LEFT JOIN resource_type rt ON r.resource_type=rt.id
+LEFT JOIN license_type lt ON r.license_type=lt.id
+LEFT JOIN significance_type st ON r.significance_type=st.id
+LEFT JOIN resource_category rc ON r.id=rc.resource_id
+WHERE r.approved_date is not null
+AND rc.category_id IN ".$subcatString."
 ";
 
 $urlAdd = "";
@@ -95,17 +108,22 @@ if($totalPages>0) {
 <?php
 // ########## print search results
 $count = 0;
-$r = mysql_query($sqlStatmement);
-while ($row = mysql_fetch_array($r)) {
+$rs = mysql_query($sqlStatmement);
+while ($row = mysql_fetch_array($rs)) {
 	$count++;
-	$catparent = $row{'cparent'};
-	$catpath = $row{'cname'};
-	while ($catparent != 0) {
-		$rparent = mysql_query("SELECT * FROM category WHERE id = ".$catparent);
-		$rowparent = mysql_fetch_array($rparent);
-		$catpath = $rowparent{'name'}."/".$catpath;
-		$catparent = $rowparent{'parent'};
-	}
+  
+    $catStmt="
+    SELECT c.id, c.name FROM resource_category rc
+    LEFT JOIN category c ON rc.category_id = c.id
+    WHERE rc.resource_id = ".$row{'id'};
+  
+    $catRs = mysql_query($catStmt);
+
+    $catPath = '';
+    while($catRow = mysql_fetch_array($catRs)) {
+      if( !empty($catPath) ) { $catPath .= " | "; }
+      $catPath .= '<a href="/?cat='.$catRow{'id'}.'">'.$catRow{'name'}.'</a>';
+    }
 ?>
 
             <div class=resource>
@@ -127,7 +145,7 @@ while ($row = mysql_fetch_array($r)) {
                 </tr>
                 <tr>
                   <td><b>Link:</b>&nbsp;<a href="<?=$row{'link'}?>" target='_blank'><?=$row{'link'}?></a></td>
-                  <td><b>Category:</b>&nbsp;<?=$catpath?></td>
+                  <td><b>Categories:</b>&nbsp;<?=$catPath?></td>
                 </tr>
               </table>
               <div class=added>Added on <?=$row{'approved_date'}?></div>
