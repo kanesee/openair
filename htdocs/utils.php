@@ -87,26 +87,32 @@ function countResults($subcatString, $query) {
  **************/
 function loginUser($response) {
   if( $response['auth']['info'] ) {
-    $id = $response['auth']['uid'];
-    $provider = $response['auth']['provider'];
+    $provider_id = $response['auth']['uid'];
+    $provider_type = $response['auth']['provider'];
     $now = date(DATE_ATOM );
 
     $user = new stdClass;
-    $user->id = $id;
-    $user->login_type = $provider;
+    $user->provider_id = $provider_id;
+    $user->provider_type = $provider_type;
     $user->name = $response['auth']['info']['name'];
     $user->image = $response['auth']['info']['image'];
 
-    $r = mysql_query("SELECT * FROM user WHERE id = ".$id." AND login_type = '".$provider."'");
+    $r = mysql_query("SELECT * FROM user WHERE provider_id = '".$provider_id."'"
+                     ." AND provider_type = '".$provider_type."'");
     if($row = mysql_fetch_array($r)) {
-      // if exists, update it
+      // if exists, update fields that may have changed along with lastLogin
       mysql_query("UPDATE user SET"
                   ." name = '".$user->name."', "
                   ." image_url = '".$user->image."', "
-                  ." lastLogin = '".$now."'");
+                  ." lastLogin = '".$now."'"
+                  ." WHERE provider_id = '".$provider_id."'"
+                  ." AND provider_type = '".$provider_type."'");
+      $user->id = $row{'id'};
     } else {
-      mysql_query("INSERT INTO user(id, login_type, name, image_url, privilege, lastLogin)"
-                  ." VALUES('".$id."','".$provider."','".$user->name."','".$user->image."','user','".$now."')");
+      mysql_query("INSERT INTO user(provider_id, provider_type, name, image_url, privilege, lastLogin)"
+                  ." VALUES('".$provider_id."','".$provider_type."','".$user->name."','"
+                  .$user->image."','user','".$now."')");
+      $user->id = mysql_insert_id();
     }
 
     return $user;
