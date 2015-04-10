@@ -21,7 +21,7 @@ if (isAdmin()) {
 <!-- Le styles -->
 <!-- <link href="/assets/css/bootstrap.min.css" rel="stylesheet"> -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" media="all" href="assets/css/style.css">
+<link rel="stylesheet" type="text/css" media="all" href="/assets/css/style.css">
 <link rel="stylesheet" href="/assets/css/main.css" type="text/css">
 <!-- <link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet"> -->
 

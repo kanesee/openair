@@ -16,7 +16,10 @@ function redirect($url, $permanent = false) {
 }
 
 function isAdmin() {
-  return isset($_SESSION["auth"]);
+  if( isset($_SESSION["user"]) ) {
+    return ($_SESSION["user"]->privilege == 'admin');
+  }
+  return false;
 }
 
 function getCategoryOptions($catId, $nameprefix) {
@@ -101,6 +104,21 @@ function countResults($subcatString, $query) {
 	return $row[0];
 }
 
+function countPendingResults($subcatString) {
+  $r=mysql_query("
+    SELECT count(*)
+      FROM resource r, resource_category rc,
+           resource_type rt, license_type lt
+     WHERE r.id=rc.resource_id 
+       AND r.approved_date is null
+       AND r.resource_type=rt.id
+       AND r.license_type=lt.id
+       AND rc.category_id IN $subcatString
+     ");
+  $row = mysql_fetch_row($r);
+  return $row[0];
+}
+
 /***************
  * Inserts user into user table if not exist.
  * Otherwise, just updates lastLogin time.
@@ -108,6 +126,7 @@ function countResults($subcatString, $query) {
  **************/
 function loginUser($response) {
   if( $response['auth']['info'] ) {
+    $default_privilege = 'user';
     $provider_id = $response['auth']['uid'];
     $provider_type = $response['auth']['provider'];
     $now = date(DATE_ATOM );
@@ -129,11 +148,13 @@ function loginUser($response) {
                   ." WHERE provider_id = '".$provider_id."'"
                   ." AND provider_type = '".$provider_type."'");
       $user->id = $row{'id'};
+      $user->privilege = $row{'privilege'};
     } else {
       mysql_query("INSERT INTO user(provider_id, provider_type, name, image_url, privilege, lastLogin)"
                   ." VALUES('".$provider_id."','".$provider_type."','".$user->name."','"
-                  .$user->image."','user','".$now."')");
+                            .$user->image."','".$default_privilege."','".$now."')");
       $user->id = mysql_insert_id();
+      $user->privilege = $default_privilege;
     }
 
     return $user;

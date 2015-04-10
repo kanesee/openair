@@ -13,20 +13,6 @@
 </head>
 
 <?php
-function countResults($subcatString) {
-  $r=mysql_query("
-    SELECT count(*)
-      FROM resource r, resource_category rc,
-           resource_type rt, license_type lt
-     WHERE r.id=rc.resource_id 
-       AND r.approved_date is null
-       AND r.resource_type=rt.id
-       AND r.license_type=lt.id
-       AND rc.category_id IN $subcatString
-     ");
-  $row = mysql_fetch_row($r);
-  return $row[0];
-}
 
 ?>
 
@@ -37,7 +23,7 @@ function countResults($subcatString) {
   $page = 1;
   if (isset($_GET['p'])) { $page=$_GET['p']; }
   $startIdx = ($page-1) * $MAX_RESULTS;
-  $totalPages = floor(countResults($subcatString) / $MAX_RESULTS);
+  $totalPages = ceil(countPendingResults($subcatString) / $MAX_RESULTS);
 
   $r=mysql_query("
     SELECT r.id, r.name, r.link, r.description, 

@@ -45,7 +45,7 @@ $response = null;
 
 switch($Opauth->env['callback_transport']){	
 	case 'session':
-		session_start();
+		if(!isset($_SESSION)){session_start();}	
 		$response = $_SESSION['opauth'];
 		unset($_SESSION['opauth']);
 		break;
