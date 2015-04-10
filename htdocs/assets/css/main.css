@@ -219,7 +219,7 @@ body {
 
 
 /***********************************
- * RESOURCES CSS
+ * MAIN SECTION CSS
  ***********************************/
 
 #main {
@@ -391,6 +391,16 @@ i:hover {
   width: 610px;
   height: 400px;
 }
+
+/***********************************
+ * RESOURCES CSS
+ ***********************************/
+
+.about {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  background-color: #C1C8D5;
+}
+
 
 /**************************
  * Footer Nav

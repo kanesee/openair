@@ -16,42 +16,10 @@ $page = 1;
 if (isset($_GET['p'])) { $page=$_GET['p']; }
 $startIdx = ($page-1) * $MAX_RESULTS;
 
-//$sqlStatmement="
-//SELECT r.id, r.name, r.description, 
-//       r.owner, r.link,
-//       rt.name rtname, lt.name ltname, st.name stname,
-//       r.approved_date, c.name cname, c.parent cparent
-//  FROM resource r, resource_category rc,
-//       resource_type rt, license_type lt,
-//       significance_type st, category c
-// WHERE rc.category_id IN ".$subcatString."
-//   AND r.id=rc.resource_id 
-//   AND r.approved_date is not null
-//   AND r.resource_type=rt.id
-//   AND r.license_type=lt.id
-//   AND r.significance_type=st.id
-//   AND c.id=rc.category_id
-//";
-$sqlStatmement="
-SELECT DISTINCT r.id, r.name, r.description, 
-       r.owner, r.link,
-       rt.name rtname, lt.name ltname, st.name stname,
-       r.approved_date
-  FROM resource r
-LEFT JOIN resource_type rt ON r.resource_type=rt.id
-LEFT JOIN license_type lt ON r.license_type=lt.id
-LEFT JOIN significance_type st ON r.significance_type=st.id
-LEFT JOIN resource_category rc ON r.id=rc.resource_id
-WHERE r.approved_date is not null
-AND rc.category_id IN ".$subcatString."
-";
-
 $urlAdd = "";
 if(!empty($query)) {
-	$sqlStatmement.=" AND (r.name like '%".$query."%' OR r.description like '%".$query."%')";
-	$urlAdd = "&q=".$query;
+  $urlAdd = "&q=".$query;
 }
-$sqlStatmement.=" ORDER BY st.order, r.name LIMIT ".$startIdx.", ".$MAX_RESULTS;
 
 $totalPages = ceil(countResults($subcatString, $query) / $MAX_RESULTS);
 ?>
@@ -108,7 +76,9 @@ if($totalPages>0) {
 <?php
 // ########## print search results
 $count = 0;
-$rs = mysql_query($sqlStatmement);
+$sqlStatement = getResourceSearchSQL($subcatString, $query, $startIdx, $MAX_RESULTS);
+
+$rs = mysql_query($sqlStatement);
 while ($row = mysql_fetch_array($rs)) {
 	$count++;
   
@@ -130,22 +100,27 @@ while ($row = mysql_fetch_array($rs)) {
               <div class=title>
                 <a href="details.php?id=<?=$row{'id'}?>"><?=$row{'name'}?></a>
               </div>
-
-              <div class=about>
-                <?=$row{'description'}?>
+              <div class="link">
+                <b>Project</b>: </b><a href="<?=$row{'link'}?>" target='_blank'><?=$row{'link'}?></a>
+              </div>
+              <div class="paper-link">
+                <b>Paper</b>: <a href="<?=$row{'paper_url'}?>" target='_blank'><?=$row{'paper_url'}?></a>
+              </div>
+              
+              <div class="">
+                <pre class="about"><?=htmlspecialchars($row{'description'})?></pre>
               </div>
               <table class=features>
                 <tr>
-                  <td><b>Resource type:</b>&nbsp;<?=$row{'rtname'}?></td>
-                  <td><b>License type:</b>&nbsp;<?=$row{'ltname'}?></td>
+                  <td><b>Resource type:</b>&nbsp;<?=$row{'resource_type'}?></td>
+                  <td><b>License type:</b>&nbsp;<?=$row{'license_type'}?></td>
                 </tr>
                 <tr>
-                  <td><b>Usage level:</b>&nbsp;<?=$row{'stname'}?></td>
+                  <td><b>Categories:</b>&nbsp;<?=$catPath?></td>
                   <td><b>Owner:</b>&nbsp;<?=$row{'owner'}?></td>
                 </tr>
                 <tr>
-                  <td><b>Link:</b>&nbsp;<a href="<?=$row{'link'}?>" target='_blank'><?=$row{'link'}?></a></td>
-                  <td><b>Categories:</b>&nbsp;<?=$catPath?></td>
+                  <td><b>Author:</b>&nbsp;<?=$row{'author'}?></td>
                 </tr>
               </table>
               <div class=added>Added on <?=$row{'approved_date'}?></div>

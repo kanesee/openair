@@ -59,6 +59,27 @@ function getSubCats($catId) {
   return $subcats;
 }
 
+function getResourceSearchSQL($subcatString, $query, $startIdx, $MAX_RESULTS) {
+
+  $sqlStatement="
+  SELECT DISTINCT r.id, r.name, r.description, 
+         r.owner, r.link, r.paper_url,
+         r.license_type, r.resource_type,
+         r.author, r.approved_date
+    FROM resource r
+  LEFT JOIN resource_category rc ON r.id=rc.resource_id
+  WHERE r.approved_date IS NOT NULL
+  AND rc.category_id IN ".$subcatString."
+  ";
+
+  if(!empty($query)) {
+      $sqlStatement.=" AND (r.name like '%".$query."%' OR r.description like '%".$query."%')";
+  }
+  $sqlStatement.=" ORDER BY r.name LIMIT ".$startIdx.", ".$MAX_RESULTS;
+  
+  return $sqlStatement;
+}
+
 function countResults($subcatString, $query) {
 	$sqlStatmement = "SELECT count(*)
 	  FROM resource r, resource_category rc,
