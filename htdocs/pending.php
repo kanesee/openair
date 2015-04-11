@@ -1,20 +1,23 @@
-<?php include "header.php"; ?>
-
-<?php
-  if(!isAdmin()) {
-    redirect("/not-authorized.php");
-  }
-?>
-
-<?php include 'category.php'; ?>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
+
   <title>Pending Projects in <?php echo $resourcetitle; ?></title>
-</head>
+  <?php include "header.php"; ?>
 
 <?php
-
+if(!isAdmin()) {
+  redirect("/not-authorized.php");
+}
 ?>
+
+</head>
+  
+<body>
+
+  <?php include 'nav.php'; ?>
+
+  <?php include 'category.php'; ?>
 
 <div id=index class=span7>
 <h2>Pending projects for <?php echo $resourcetitle; ?></h2>
@@ -128,4 +131,9 @@ if($totalPages>0) {
     }
   }
 </script>
+  
 <?php include 'footer.php'; ?>
+</body>
+</html>
+
+<?php ob_flush() ?>
