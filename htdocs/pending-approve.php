@@ -1,4 +1,11 @@
-<?php include "header.php"; ?>
+<?php include "utils.php"; ?>
+
+<?php
+if(!isAdmin()) {
+  redirect("/not-authorized.php");
+}
+?>
+
 <?php
 	if(isset($_POST['approve'])){
 	  $id=$_POST['id'];
@@ -11,4 +18,3 @@
   	redirect("/pending.php");
 
 ?>
-<?php include 'footer.php'; ?>

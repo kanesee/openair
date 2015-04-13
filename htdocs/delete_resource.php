@@ -18,13 +18,13 @@ if (isAdmin()) {
 
     //First delete from the resource_category table
 	$r = mysql_query("DELETE FROM resource_category WHERE resource_id = ".$id);
-	if(!$result) {
+	if(!$r) {
 		echo("ERROR running UPDATE");
 	}
 
     //Then delete this actual entry
 	$r = mysql_query("DELETE FROM resource WHERE id = ".$id);
-	if(!$result) {
+	if(!$r) {
 		echo("ERROR running UPDATE");
 	}
   }

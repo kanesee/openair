@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 
-  <title>Open AIR Home</title>
   <?php include 'header.php'; ?>
+  <title>Open AIR Home</title>
 
 <?php
 
@@ -92,7 +92,7 @@ while ($row = mysql_fetch_array($rs)) {
     $catPath = '';
     while($catRow = mysql_fetch_array($catRs)) {
       if( !empty($catPath) ) { $catPath .= " | "; }
-      $catPath .= '<a href="/?cat='.$catRow{'id'}.'">'.$catRow{'name'}.'</a>';
+      $catPath .= '<a href="?cat='.$catRow{'id'}.'">'.$catRow{'name'}.'</a>';
     }
 ?>
 

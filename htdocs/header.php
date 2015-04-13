@@ -33,26 +33,6 @@ if (isAdmin()) {
 <script src="/assets/js/jquery.select-hierarchy.js"></script>
 <script src="/assets/js/main.js"></script>
 
-<?php
-//ONLY PRINT THIS JAVASCRIPT IF THEY ARE AN ADMIN
-if(isAdmin()) {
-?>
-<script>
-	function deleteCategory() {
-		var r=confirm("Are you sure you want to delete <?php echo $resourcetitle; ?> and all of the child categories beneath it?");
-		if (r==true) {
-			window.location.href = window.location.origin+"/delete_category.php?cat="+cat;
-		}
-		else{
-		}
-	}
-</script>
-
-<?php
-}
-?>
-
-
 <!-- ################ Category related headers ###################-->
 <?php
 
@@ -172,4 +152,23 @@ echo "<script>var cat = \"".$cat."\";</script>";
 
 if(isset($_GET['cat']) && basename($_SERVER['PHP_SELF']) != "edit_category.php" && basename($_SERVER['PHP_SELF']) != "pending.php")
 	echo "<head><title>$resourcetitle</title></head>";
+?>
+
+<?php
+//ONLY PRINT THIS JAVASCRIPT IF THEY ARE AN ADMIN
+if(isAdmin()) {
+?>
+<script>
+	function deleteCategory() {
+		var r=confirm("Are you sure you want to delete <?php echo $resourcetitle; ?> and all of the child categories beneath it?");
+		if (r==true) {
+			window.location.href = window.location.origin+"/delete_category.php?cat="+cat;
+		}
+		else{
+		}
+	}
+</script>
+
+<?php
+}
 ?>
