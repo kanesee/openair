@@ -6,8 +6,11 @@
   <title>Open AIR Home</title>
 
 <?php
-
-
+$json = buildJSTreeJson($cat, true);
+echo "<script>var category_json = ".$json.";</script>";
+?>
+  
+<?php
 $query = "";
 if(isset($_GET['q'])) { $query = $_GET['q']; }
 
@@ -22,8 +25,31 @@ if(!empty($query)) {
 }
 
 $totalPages = ceil(countResults($subcatString, $query) / $MAX_RESULTS);
+
+$catTitle = getCategoryTitle($cat);
+$catdescription = getCategoryDesc($cat);
+
 ?>
-  
+
+<?php
+//ONLY PRINT THIS JAVASCRIPT IF THEY ARE AN ADMIN
+if(isAdmin()) {
+?>
+<script>
+	function deleteCategory() {
+		var r=confirm("Are you sure you want to delete <?= $catTitle; ?> and all of the child categories beneath it?");
+		if (r==true) {
+			window.location.href = window.location.origin+"/delete_category.php?cat="+cat;
+		}
+		else{
+		}
+	}
+</script>
+
+<?php
+}
+?>
+
 </head>
   
 <body>
@@ -39,10 +65,12 @@ $totalPages = ceil(countResults($subcatString, $query) / $MAX_RESULTS);
       <div id="index" class="span7">
         <div id="resourceinfo">
           <div id="resourcetitle">
-            <?php echo $resourcetitle ?> <?php if(isAdmin() && $cat>0 ) {echo "<a href='javascript:deleteCategory()' ><i class='icon-trash'></i></a>";}?>
+            <?php echo $catTitle ?>
+            <?php if(isAdmin() && $cat>0 ) {echo "<a href='javascript:deleteCategory()' ><i class='icon-trash'></i></a>";}?>
           </div>
           <div id="resourcedescription">
-            <?php echo $resourcedescription ?><?php if(isAdmin() && $cat>0 ) {echo "<a href='edit_category.php?cat=$cat'><i class='icon-edit'></i></a>";}?>
+            <?= $catdescription ?>
+            <?php if(isAdmin() && $cat>0 ) {echo "<a href='edit_category.php?cat=$cat'><i class='icon-edit'></i></a>";}?>
           </div>
         </div>
 
@@ -50,7 +78,7 @@ $totalPages = ceil(countResults($subcatString, $query) / $MAX_RESULTS);
           <form id="searchform" class="form-search form-group" method="GET" action=".">
             <div class="input-append">
               <input name='cat' type='hidden' value="<?php echo $cat ?>"></input>
-              <input type="text" class="search-query input-xxlarge form-control" name='q' value="<?php echo $query ?>" placeholder="Search within <?php echo $resourcetitle ?>">
+              <input type="text" class="search-query input-xxlarge form-control" name='q' value="<?= $query ?>" placeholder="Search within <?= $catTitle ?>">
               <button type="submit" class="btn">Search</button>
             </div>
           </form>
@@ -133,10 +161,10 @@ while ($row = mysql_fetch_array($rs)) {
 // ########## If no search results
 if($count==0) {
 	if(empty($query)) {
-		echo "There are no entries in ".$resourcetitle.".";
+		echo "There are no entries in ".$catTitle.".";
 	}
 	else {
-	    echo "No results for '".$query."' in the ".$resourcetitle." category.";
+	    echo "No results for '".$query."' in the ".$catTitle." category.";
 	}
 }
 ?>

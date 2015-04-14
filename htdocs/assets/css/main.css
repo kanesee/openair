@@ -402,8 +402,14 @@ i:hover {
 }
 
 /**************************
- * Edit Page
+ * Edit Resource
  **************************/
+
+#categoryInput {
+  background-color: #eee;
+  min-height: 34px;
+  height: auto;
+}
 
 /*
 .submitter {
@@ -412,7 +418,7 @@ i:hover {
 */
 
 /**************************
- * Footer Nav
+ * Footer CSS
  **************************/
 
 

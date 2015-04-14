@@ -3,12 +3,11 @@
 <head>
 
   <?php include "header.php"; ?>
-  <title>Pending Projects in <?php echo $resourcetitle; ?></title>
+  <?php include "admin-required.php"; ?>
 
 <?php
-if(!isAdmin()) {
-  redirect("/not-authorized.php");
-}
+ $json = buildJSTreeJson($cat, true);
+ echo "<script>var category_json = ".$json.";</script>";
 ?>
 
 <?php
@@ -17,8 +16,13 @@ if(!isAdmin()) {
   if (isset($_GET['p'])) { $page=$_GET['p']; }
   $startIdx = ($page-1) * $MAX_RESULTS;
   $totalPages = ceil(countPendingResults($subcatString) / $MAX_RESULTS);
+
+  $catTitle = getCategoryTitle($cat);
+
 ?>
   
+  <title>Pending Projects in <?= $catTitle ?></title>
+
 </head>
   
 <body>
@@ -32,7 +36,7 @@ if(!isAdmin()) {
     <?php include 'category.php'; ?>
 
     <div id="main" class="col-xs-12 col-sm-9">
-      <h2>Pending projects for <?php echo $resourcetitle; ?></h2>
+      <h2>Pending projects for <?= $catTitle ?></h2>
 
 <?php
 if($totalPages>0) {

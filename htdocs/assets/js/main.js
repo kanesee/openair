@@ -3,7 +3,7 @@ if (!window.location.origin)
 
 var loaded = false;
 
-function categoryClicked(id) {
+function categoryClicked(id, name) {
 	$urlAdd = "";
 	if(window.location.pathname.indexOf("/pending.php") == 0) {
 		$urlAdd = window.location.pathname;
@@ -18,6 +18,14 @@ function categoryClicked(id) {
 	loaded = true;
 }
 
+function initialize() {
+	$("#catbrowser").jstree(category_json).bind("select_node.jstree",
+      function (e, data) {
+        categoryClicked(data.rslt.obj.data("id"),
+                        data.rslt.obj.data("name"));
+    });  
+}
+
 $(document).ready(function(){
-	$("#catbrowser").jstree(category_json).bind("select_node.jstree", function (e, data) { categoryClicked(data.rslt.obj.data("id")); });
+  initialize();
 });

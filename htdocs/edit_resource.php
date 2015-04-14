@@ -3,66 +3,37 @@
 <head>
 
   <?php include 'header.php'; ?>
+  <?php include 'admin-required.php'; ?>
+  <script src="/assets/js/select-categories.js"></script>
+
+<?php
+$json = buildJSTreeJson($cat, false);
+echo "<script>var category_json = ".$json.";</script>";
+?>
+
 <?php
 $pending = false;
-if(!isAdmin() || !isset($_GET['id'])) {
-  redirect("/not-authorized.php");
-}
   
 $id = $_GET['id'];
 
 $r = mysql_query("SELECT * FROM resource WHERE id = ".$id);
 $resource = mysql_fetch_array($r);
 
-
-?>  
+?>
+  
+  <script>
+    function preprocessForm() {
+      var catIds = '';
+      $('.category').each(function(i, cat) {
+        if( catIds ) catIds += ',';
+        catIds += $(cat).attr('data-catid');
+      });
+      $('#categories').val(catIds);
+      return true; 
+    }
+  </script>
   <title>Edit <?= $resource['name'] ?></title>
   
-
-<script>
-function validate(){
-	var pass = true;
-	var fields = document.forms["form"];
-	if(fields["dbname"].value==""){
-		pass = false;
-		document.getElementById("namecheck").innerHTML=" *Required";
-	}
-	else
-		document.getElementById("namecheck").innerHTML="";
-	if(fields["link"].value==""){
-		pass = false;
-		document.getElementById("linkcheck").innerHTML=" *Required";
-	}
-	else
-		document.getElementById("linkcheck").innerHTML="";
-	if(fields["description"].value==""){
-		pass = false;
-		document.getElementById("disccheck").innerHTML=" *Required";
-	}
-	else
-		document.getElementById("disccheck").innerHTML="";
-	if(fields["submitter"].value==""){
-		pass = false;
-		document.getElementById("submcheck").innerHTML=" *Required";
-	}
-	else
-		document.getElementById("submcheck").innerHTML="";
-	var atpos=fields["email"].value.indexOf("@");
-	var dotpos=fields["email"].value.lastIndexOf(".");
-	if (atpos<1 || dotpos<atpos+2 || dotpos+2>=fields["email"].length){
-		document.getElementById("mailcheck").innerHTML=" *Not a valid e-mail address";
-		pass = false;
-	}
-	else
-		document.getElementById("mailcheck").innerHTML="";
-	if(fields["email"].value==""){
-		pass = false;
-		document.getElementById("mailcheck").innerHTML=" *Required";
-	}
-	return pass;
-}
-</script>
-
   </head>
   
 <body>
@@ -72,31 +43,28 @@ function validate(){
 
 <div class="container">
   <div class="row row-offcanvas row-offcanvas-left">
-  	<h2>Edit <?php echo $resource['name']; ?></h2>
+  	<h2>Edit <?= $resource['name']; ?></h2>
 
-  	<form name="form" action="update-resource.php" onsubmit="validate()" method="POST">
+  	<form name="form" action="update-resource.php" method="POST" onsubmit="return preprocessForm();">
       <input type=hidden name="id" value="<?= $id ?>">
       
       <div class="form-group">
         <label for="dbname">Resource Name:</label>
         <input type="text" class="form-control" name="dbname" required="required" value="<?= $resource['name'] ?>">
-        <sup id="namecheck" style="color:red"></sup>
       </div>
       
       <div class="row">
         <div class="col-sm-6">
           <div class="form-group">
             <label for="prog_lang">Programming Language:<br></label>
-            <input type="text" class="form-control" name="prog_lang" required="required" value="<?= $resource['programming_lang'] ?>">
-            <sup id="prog_langcheck" style="color:red"></sup>
+            <input type="text" class="form-control" name="prog_lang" value="<?= $resource['programming_lang'] ?>">
           </div>
         </div>
 
         <div class="col-sm-6">
            <div class="form-group">
             <label for="dataformat">Data Format:<br></label>
-            <input type="text" class="form-control" name="dataformat" required="required" value="<?= $resource['data_format'] ?>">
-            <sup id="dataformatcheck" style="color:red"></sup>
+            <input type="text" class="form-control" name="dataformat" value="<?= $resource['data_format'] ?>">
           </div>
         </div>
       </div>
@@ -106,7 +74,6 @@ function validate(){
           <div class="form-group">
             <label for="type">Entry Type:<br></label>
             <input type="text" class="form-control" name="type" required="required" value="<?= $resource['resource_type'] ?>">
-            <sup id="typecheck" style="color:red"></sup>
           </div>
         </div>
 
@@ -114,7 +81,6 @@ function validate(){
           <div class="form-group">
             <label for="license">License Type:<br></label>
             <input type="text" class="form-control" name="license" required="required" value="<?= $resource['license_type'] ?>">
-            <sup id="licensecheck" style="color:red"></sup>
           </div>
         </div>
       </div>
@@ -124,7 +90,23 @@ function validate(){
         <textarea class="form-control" rows="5" wrap="virtual" name="description" required="required">
           <?= $resource['description'] ?>
         </textarea>
-        <sup id="disccheck" style="color:red"></sup>
+      </div>
+      
+<?php
+  $categories = '';
+  $rs = mysql_query("SELECT c.* FROM resource_category rc ".
+                    "LEFT JOIN category c ON rc.category_id=c.id ".
+                    "WHERE rc.resource_id = " . $resource['id'] );
+  while ($cat = mysql_fetch_array($rs)) {
+    $categories .= '<a class="category" data-catid="'.$cat['id'].'" onclick="return removeMe(this);">'
+                   .'['.$cat['name'].'] </a>';
+  }
+?>
+      <div class="form-group">
+        <label for="categories">Select one or more Categories:</label>
+        <input id="categories" type="hidden" name="categories">
+        <div id='catbrowser'></div>
+        <div id="categoryInput" class="form-control"><?= $categories ?></div>
       </div>
 
       <h2>References</h2>
@@ -133,13 +115,11 @@ function validate(){
       <div class="form-group">
         <label for="link">Link to data website:</label>
         <input type="url" class="form-control" name="link" required="required" value="<?= $resource['link'] ?>">
-        <sup id="linkcheck" style="color:red"></sup>
       </div>
 
       <div class="form-group">
         <label for="paperurl">Link to paper:</label>
-        <input type="url" class="form-control" name="paperurl" required="required" value="<?= $resource['paper_url'] ?>">
-        <sup id="paperurlcheck" style="color:red"></sup>
+        <input type="url" class="form-control" name="paperurl" value="<?= $resource['paper_url'] ?>">
       </div>
 
 
@@ -148,14 +128,12 @@ function validate(){
 
        <div class="form-group">
         <label for="author">Author:<br></label>
-        <input type="text" class="form-control" name="author" required="required" value="<?= $resource['author'] ?>">
-        <sup id="authorcheck" style="color:red"></sup>
+        <input type="text" class="form-control" name="author" value="<?= $resource['author'] ?>">
       </div>
 
       <div class="form-group">
         <label for="owner">Owner:<br></label>
-        <input type="text" class="form-control" name="owner" required="required" value="<?= $resource['owner'] ?>">
-        <sup id="ownercheck" style="color:red"></sup>
+        <input type="text" class="form-control" name="owner" value="<?= $resource['owner'] ?>">
       </div>
 
 <?php
@@ -179,7 +157,7 @@ function validate(){
 <?php include 'footer.php'; ?>
   
 <script type="text/javascript">
-  $('.drilldown').selectHierarchy({ hideOriginal: true });
+//  $('.drilldown').selectHierarchy({ hideOriginal: true });
 </script>
 
   </body>
