@@ -1,5 +1,23 @@
-<?php include "header.php"; ?>
-<?php include 'category.php'; ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <?php include 'header.php'; ?>
+<?php
+$pending = false;
+if(!isAdmin() || !isset($_GET['id'])) {
+  redirect("/not-authorized.php");
+}
+  
+$id = $_GET['id'];
+
+$r = mysql_query("SELECT * FROM resource WHERE id = ".$id);
+$resource = mysql_fetch_array($r);
+
+
+?>  
+  <title>Edit <?= $resource['name'] ?></title>
+  
 
 <script>
 function validate(){
@@ -45,91 +63,126 @@ function validate(){
 }
 </script>
 
-<?php
-$pending = false;
-if(isAdmin() && isset($_GET['id'])){
-	$id = $_GET['id'];
+  </head>
+  
+<body>
 
-  	$r = mysql_query("SELECT * FROM resource WHERE id = ".$id);
-  	$row = mysql_fetch_array($r);
-  	echo "<head><title>Edit ".$row['name']."</title></head>";
+<?php include 'nav.php'; ?>
 
-  	?>
-  	<div id="right" class="span7">
-  	<h2>Edit <?php echo $row['name']; ?></h2>
+
+<div class="container">
+  <div class="row row-offcanvas row-offcanvas-left">
+  	<h2>Edit <?php echo $resource['name']; ?></h2>
 
   	<form name="form" action="update-resource.php" onsubmit="validate()" method="POST">
-  		<input type=hidden name=id value=<?php echo $id; ?>>
-  		Entry Name: <br><input type="text" name="dbname" required="required" value=<?php echo "\"$row[name]\""; ?>><sup id="namecheck" style="color:red"></sup>
-  		<br>Link to data website: <br><input type="url" name="link" required="required" value=<?php echo $row['link']; ?>><sup id="linkcheck" style="color:red"></sup>
-  		<br>Short Description: <br>
-		<textarea cols="30" rows="5" wrap="virtual" name="description" required="required"><?php echo $row['description']; ?></textarea><sup id="disccheck" style="color:red"></sup><br>
+      <input type=hidden name="id" value="<?= $id ?>">
+      
+      <div class="form-group">
+        <label for="dbname">Resource Name:</label>
+        <input type="text" class="form-control" name="dbname" required="required" value="<?= $resource['name'] ?>">
+        <sup id="namecheck" style="color:red"></sup>
+      </div>
+      
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="prog_lang">Programming Language:<br></label>
+            <input type="text" class="form-control" name="prog_lang" required="required" value="<?= $resource['programming_lang'] ?>">
+            <sup id="prog_langcheck" style="color:red"></sup>
+          </div>
+        </div>
 
-		<?php
-		echo "Entry Type:<br>";
-		$result = mysql_query("SELECT * FROM resource_type ORDER BY resource_type.order");
-		echo '<select name="resource" required="required">';
-		while($line = mysql_fetch_array($result)){
-			echo '<option value="' . $line['name'] . '"';
-			if($line['id'] == $row['resource_type']){
-				echo ' selected="selected"';
-			}
-			echo '>'.$line['name'].'</option>';
-		}
-		echo '</select><br>';
+        <div class="col-sm-6">
+           <div class="form-group">
+            <label for="dataformat">Data Format:<br></label>
+            <input type="text" class="form-control" name="dataformat" required="required" value="<?= $resource['data_format'] ?>">
+            <sup id="dataformatcheck" style="color:red"></sup>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="type">Entry Type:<br></label>
+            <input type="text" class="form-control" name="type" required="required" value="<?= $resource['resource_type'] ?>">
+            <sup id="typecheck" style="color:red"></sup>
+          </div>
+        </div>
 
-		echo "License Type:<br>";
-		$result = mysql_query("SELECT * FROM license_type ORDER BY license_type.order");
-		echo '<select name="license" required="required">';
-		while($line = mysql_fetch_array($result)){
-			echo '<option value="' . $line['name'] . '"';
-			if($line['id'] == $row['license_type']){
-				echo ' selected="selected"';
-			}
-			echo '>'.$line['name'].'</option>';
-		}
-		echo '</select><br>';
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="license">License Type:<br></label>
+            <input type="text" class="form-control" name="license" required="required" value="<?= $resource['license_type'] ?>">
+            <sup id="licensecheck" style="color:red"></sup>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="description">Short Description:</label>
+        <textarea class="form-control" rows="5" wrap="virtual" name="description" required="required">
+          <?= $resource['description'] ?>
+        </textarea>
+        <sup id="disccheck" style="color:red"></sup>
+      </div>
 
-		echo "Significance:<br>";
-		$result = mysql_query("SELECT * FROM significance_type ORDER BY significance_type.order");
-		echo '<select name="significance" required="required">';
-		while($line = mysql_fetch_array($result)){
-			echo '<option value="' . $line['name'] . '"';
-			if($line['id'] == $row['significance_type']){
-				echo ' selected="selected"';
-			}
-			echo '>'.$line['name'].'</option>';
-		}
-		echo '</select><br>';
-		
-        $result = mysql_query("SELECT c.name cname, c.parent cparent FROM resource_category rc, resource r, category c WHERE rc.resource_id = $row[id] AND rc.category_id = c.id");
-        $catrow = mysql_fetch_assoc($result);
-        $catparent = $catrow{'cparent'};
-        $catpath = $catrow{'cname'};
-        while ($catparent != 0) {
-            $rparent = mysql_query("SELECT * FROM category WHERE id = ".$catparent);
-            $rowparent = mysql_fetch_array($rparent);
-            $catpath = $rowparent{'name'}."/".$catpath;
-            $catparent = $rowparent{'parent'};
-        }
-	
-		echo 'Category: '.$catpath;
-		echo '<br>'.buildCategorySelect(false, "drilldown").'<br>';
-		?>
-	Submitter's Name: <br><input type="text" name="submitter" required="required" value=<?php echo "\"$row[submitters_name]\"" ?>><sup id=submcheck style="color:red"></sup><br>
-	Email: <br><input type="email" name="email" required="required" value=<?php echo $row['submitters_email'] ?>><sup id=mailcheck style="color:red"></sup><br>
-	Owner: <br><input type="text" name="owner" value=<?php echo "\"$row[owner]\""; ?>><br>
-	<button type="submit" class="btn">Submit Changes</button>
-	</form>
-	</div>
-  	<?php
-}
+      <h2>References</h2>
+      <hr>
+      
+      <div class="form-group">
+        <label for="link">Link to data website:</label>
+        <input type="url" class="form-control" name="link" required="required" value="<?= $resource['link'] ?>">
+        <sup id="linkcheck" style="color:red"></sup>
+      </div>
 
-else{
-	redirect("index.php");
-}
+      <div class="form-group">
+        <label for="paperurl">Link to paper:</label>
+        <input type="url" class="form-control" name="paperurl" required="required" value="<?= $resource['paper_url'] ?>">
+        <sup id="paperurlcheck" style="color:red"></sup>
+      </div>
+
+
+      <h2>Attribution</h2>
+      <hr>
+
+       <div class="form-group">
+        <label for="author">Author:<br></label>
+        <input type="text" class="form-control" name="author" required="required" value="<?= $resource['author'] ?>">
+        <sup id="authorcheck" style="color:red"></sup>
+      </div>
+
+      <div class="form-group">
+        <label for="owner">Owner:<br></label>
+        <input type="text" class="form-control" name="owner" required="required" value="<?= $resource['owner'] ?>">
+        <sup id="ownercheck" style="color:red"></sup>
+      </div>
+
+<?php
+  $submitter = 'N/A';
+  $rs = mysql_query("SELECT * FROM user WHERE id = " . $resource['submitter_id'] );
+  $user = mysql_fetch_array($rs);
+  if( $user ) {
+    $submitter = '<div>'.$user['name'].'</div>'.'<img src="'.$user['image_url'].'">';
+  }
 ?>
+      <div class="form-group">
+        <label for="submitter">Submitter:<br></label>
+        <br><?= $submitter ?>
+      </div>
+
+      <button type="submit" class="btn">Submit Changes</button>
+    </form>
+  </div> <!-- class=row -->  
+</div> <!-- class=container -->
+  
+<?php include 'footer.php'; ?>
+  
 <script type="text/javascript">
   $('.drilldown').selectHierarchy({ hideOriginal: true });
 </script>
-<?php include 'footer.php'; ?>
+
+  </body>
+</html>
+
+<?php ob_flush() ?>

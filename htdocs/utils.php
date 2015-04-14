@@ -15,6 +15,10 @@ function redirect($url, $permanent = false) {
   exit();
 }
 
+function isLoggedIn() {
+  return isset($_SESSION["user"]);
+}
+
 function isAdmin() {
   if( isset($_SESSION["user"]) ) {
     return ($_SESSION["user"]->privilege == 'admin');
