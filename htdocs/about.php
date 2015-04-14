@@ -1,9 +1,17 @@
-<?php include 'header.php'; ?>
-<?php include 'category.php'; ?>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<title>About</title>
+
+  <?php include "header.php"; ?>
+
+  <title>About</title>
 </head>
-<div id="index" class="span7">
+  
+<body>
+
+<?php include 'nav.php'; ?>
+
+  <div id="index" class="span7">
 	<div id="resourceinfo">
 		<div id="resourcetitle">About</div>
 		<div id="resourcedescription">
@@ -20,45 +28,50 @@
 	</div>
 	<div id="bluedivider"></div>
 	<div id="resourceinfo">
-		<div id="resourcetitle">Editors</div>
-		<div id="resourcedescription">
-			Much of the content on Open AIR has been contributed or managed by our editors below. If you are interested in participating in the editorial work at Open AIR, please contact us at CONTACT EMAIL.
-		</div>
-		<div class="row-fluid">
-			<!-- This is where you enter editors! -->
-			<div class="span3 offset1">
-				Jon Smith<br>
-				Billy Squire<br>
-			</div>
-			<div class="span3 offset1">
-				Jon Smith<br>
-				Billy Squire<br>
-			</div>
-			<div class="span3 offset1">
-				Jon Smith<br>
-				Billy Squire<br>
-			</div>
+      <div id="resourcetitle">Editors</div>
+      <div id="resourcedescription">
+          Much of the content on Open AIR has been contributed or managed by our editors below. If you are interested in participating in the editorial work at Open AIR, please contact us at CONTACT EMAIL.
+      </div>
+      <div class="row-fluid">
+          <!-- This is where you enter editors! -->
+          <div class="span3 offset1">
+              Jon Smith<br>
+              Billy Squire<br>
+          </div>
+          <div class="span3 offset1">
+              Jon Smith<br>
+              Billy Squire<br>
+          </div>
+          <div class="span3 offset1">
+              Jon Smith<br>
+              Billy Squire<br>
+          </div>
 
-		</div>
+      </div>
 	</div>
 	<div id="bluedivider"></div>
-		<div id="resourceinfo">
-			<div id="resourcetitle" class="row-fluid">
-				<div class="span6">Sponsors</div>
-				<div class="span6">Links</div>
-			</div>
-			<div class="row-fluid">
-				<div class="span6">
-					Sponsor Name<br>
-					InferLink<br>
-				</div>
-				<div class="span6">
-					<a href="http://www.aaai.org/" target="_blank">AAAI</a><br>
-					<a href="http://www.jair.org/" target="_blank">JAIR</a><br>
-					<a href="http://www.inferlink.com/" target="_blank">InferLink</a><br>
-				</div>
-			</div>
-		</div>
-</div>
+    <div id="resourceinfo">
+        <div id="resourcetitle" class="row-fluid">
+            <div class="span6">Sponsors</div>
+            <div class="span6">Links</div>
+        </div>
+        <div class="row-fluid">
+            <div class="span6">
+                Sponsor Name<br>
+                InferLink<br>
+            </div>
+            <div class="span6">
+                <a href="http://www.aaai.org/" target="_blank">AAAI</a><br>
+                <a href="http://www.jair.org/" target="_blank">JAIR</a><br>
+                <a href="http://www.inferlink.com/" target="_blank">InferLink</a><br>
+            </div>
+        </div>
+    </div>
+  </div>
 
 <?php include 'footer.php'; ?>
+
+</body>
+</html>
+
+<?php ob_flush() ?>

@@ -306,6 +306,19 @@ function getPendingResourceSQL($subcatString, $startIdx, $MAX_RESULTS) {
   return $sqlStatement;
 }
 
+function getResourceSQL($resource_id) {
+
+  $sqlStatement="
+  SELECT DISTINCT r.id, r.name, r.description, 
+         r.owner, r.link, r.paper_url,
+         r.license_type, r.resource_type,
+         r.author, r.approved_date
+    FROM resource r
+  WHERE r.id = '$resource_id'";
+  
+  return $sqlStatement;
+}
+
 function countResults($subcatString, $query) {
 	$sqlStatmement = "SELECT count(*)
 	  FROM resource r, resource_category rc,

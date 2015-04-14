@@ -19,11 +19,13 @@ function categoryClicked(id, name) {
 }
 
 function initialize() {
+  if( typeof category_json !== 'undefined' ) {
 	$("#catbrowser").jstree(category_json).bind("select_node.jstree",
       function (e, data) {
         categoryClicked(data.rslt.obj.data("id"),
                         data.rslt.obj.data("name"));
     });  
+  }
 }
 
 $(document).ready(function(){

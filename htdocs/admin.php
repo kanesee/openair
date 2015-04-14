@@ -2,16 +2,12 @@
 <html lang="en">
 <head>
 
-  <title>Open AIR Admin</title>
   <?php include "header.php"; ?>
+  <?php include "admin-required.php"; ?>
 
-<?php
-if(!isAdmin()) {
-  redirect("/not-authorized.php");
-}
-?>
 
-  </head>
+  <title>Open AIR Admin</title>
+</head>
   
 <body>
 

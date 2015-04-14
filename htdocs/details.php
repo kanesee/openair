@@ -1,96 +1,112 @@
-<?php include "header.php"; ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <?php include "header.php"; ?>
+  <?php include "admin-required.php"; ?>
 
 <?php
-  $id=$_GET["id"];
-
-   if(isAdmin()) {
-      $drilldown = "";
-      $message = "";
-      if(isset($_POST['drilldown'])) {
-        $drilldown = $_POST['drilldown'];
-      }
-
-      if(!empty($drilldown)) {
-        $result = mysql_query("UPDATE resource_category SET category_id=$drilldown WHERE resource_id=$id");
-        if($result) {
-          $message = "<div class='alert alert-success'><strong>Update successful!</strong><button type='button' class='close' data-dismiss='alert'>&times;</button></div>";
-        }
-        else {
-          $message = "<div class='alert alert-failure'><strong>Update failed!</strong><button type='button' class='close' data-dismiss='alert'>&times;</button></div>";
-        }
-      }
-    }
-?>
-
-<?php include 'category.php'; ?>
-<div id="right" class="span7">
-<?php
-  $r=mysql_query("
-    SELECT r.id, r.name, r.link, r.description, 
-           r.owner, r.submitters_name subname, r.submitters_email subemail,
-           rt.name rtname, lt.name ltname, st.name stname, c.name cname,
-           r.approved_date, c.parent cparent
-      FROM resource r, resource_category rc,
-           resource_type rt, license_type lt,
-           significance_type st, category c
-     WHERE r.id=rc.resource_id 
-       AND r.resource_type=rt.id
-       AND r.license_type=lt.id
-       AND r.significance_type=st.id 
-       AND r.id = $id
-       AND rc.category_id=c.id
-     ");
+  $r=mysql_query(getResourceSQL($id));
 
   $row = mysql_fetch_assoc($r);
-  $catparent = $row{'cparent'};
-  $catpath = $row{'cname'};
-  while ($catparent != 0) {
-    $rparent = mysql_query("SELECT * FROM category WHERE id = ".$catparent);
-    $rowparent = mysql_fetch_array($rparent);
-    $catpath = $rowparent{'name'}."/".$catpath;
-    $catparent = $rowparent{'parent'};
-  }
-   echo "<head><title>".$row{'name'}."</title></head>";
 
-   echo "<h2>".$row{'name'};
-   if(isAdmin()) {
-    echo "<a href='javascript:deleteResource()' ><i class='icon-trash'></i></a>";
-    echo "<a href='edit_resource.php?id=$id'><i class='icon-edit'></i></a>";
-   }
-   echo "</h2>";
-   echo "<div class=resource>";   
-   echo "<div class=about>";
-   echo $row{'description'};
-   echo "</div>";
-   echo "<table class=features>";
-   echo "<tr>";
-   echo "<td><b>Resource type:</b>&nbsp;".$row{'rtname'}."</td>";
-   echo "<td><b>License type:</b>&nbsp;".$row{'ltname'}."</td>";
-   echo "</tr>";
-   echo "<tr>";
-   echo "<td><b>Usage level:</b>&nbsp;".$row{'stname'}."</td>";
-   echo "<td><b>Owner:</b>&nbsp;".$row{'owner'}."</td>";
-   echo "</tr>";
-   echo "<tr>";
-   echo "<td><b>Link:</b>&nbsp;<a href='".$row{'link'}."' target='_blank'>".$row{'link'}."</a></td>";
-   echo "<td><b>Category:</b>&nbsp;".$catpath."</td>";
-   echo "</tr>";
-   if(isAdmin()) {
-     echo "<tr>";
-	 echo "<td><b>Submitter:</b>&nbsp;".$row{'subname'}."</td>";
-	 echo "<td><b>Submitter's email:</b>&nbsp;".$row{'subemail'}."</td>";
-	 echo "</tr>";
-   }
-   echo "</table>";
-   echo "<div class=added>Added on ".$row{'approved_date'}."</div>";
-   echo "</div>";
+    $catStmt="
+    SELECT c.id, c.name FROM resource_category rc
+    LEFT JOIN category c ON rc.category_id = c.id
+    WHERE rc.resource_id = ".$row{'id'};
+  
+    $catRs = mysql_query($catStmt);
+
+    $catPath = '';
+    while($catRow = mysql_fetch_array($catRs)) {
+      if( !empty($catPath) ) { $catPath .= " | "; }
+      $catPath .= '<a href="/?cat='.$catRow{'id'}.'">'.$catRow{'name'}.'</a>';
+    }
+
+?>
+   
+  <title>Open Air</title>
+</head>
+  
+<body>
+
+<?php include 'nav.php'; ?>
+
+  <div id="main" class="container">
+    <div class="row">
+
+            <div class=resource>
+              <div class=title>
+                <a href="details.php?id=<?=$row{'id'}?>"><?=$row{'name'}?></a>
+              </div>
+              <div class="link">
+                <b>Project</b>: </b><a href="<?=$row{'link'}?>" target='_blank'><?=$row{'link'}?></a>
+              </div>
+              <div class="paper-link">
+                <b>Paper</b>: <a href="<?=$row{'paper_url'}?>" target='_blank'><?=$row{'paper_url'}?></a>
+              </div>
+              
+              <div class="">
+                <pre class="about"><?=htmlspecialchars($row{'description'})?></pre>
+              </div>
+              <table class=features>
+                <tr>
+                  <td><b>Resource type:</b>&nbsp;<?=$row{'resource_type'}?></td>
+                  <td><b>License type:</b>&nbsp;<?=$row{'license_type'}?></td>
+                </tr>
+                <tr>
+                  <td><b>Categories:</b>&nbsp;<?=$catPath?></td>
+                  <td><b>Owner:</b>&nbsp;<?=$row{'owner'}?></td>
+                </tr>
+                <tr>
+                  <td><b>Author:</b>&nbsp;<?=$row{'author'}?></td>
+                </tr>
+              </table>
+              <div class=added>Added on <?=$row{'approved_date'}?></div>
+            </div>
+<?php
+//   echo "<head><title>".$row{'name'}."</title></head>";
+//
+//   echo "<h2>".$row{'name'};
+//   if(isAdmin()) {
+//    echo "<a href='javascript:deleteResource()' ><i class='icon-trash'></i></a>";
+//    echo "<a href='edit_resource.php?id=$id'><i class='icon-edit'></i></a>";
+//   }
+//   echo "</h2>";
+//   echo "<div class=resource>";   
+//   echo "<div class=about>";
+//   echo $row{'description'};
+//   echo "</div>";
+//   echo "<table class=features>";
+//   echo "<tr>";
+//   echo "<td><b>Resource type:</b>&nbsp;".$row{'rtname'}."</td>";
+//   echo "<td><b>License type:</b>&nbsp;".$row{'ltname'}."</td>";
+//   echo "</tr>";
+//   echo "<tr>";
+//   echo "<td><b>Usage level:</b>&nbsp;".$row{'stname'}."</td>";
+//   echo "<td><b>Owner:</b>&nbsp;".$row{'owner'}."</td>";
+//   echo "</tr>";
+//   echo "<tr>";
+//   echo "<td><b>Link:</b>&nbsp;<a href='".$row{'link'}."' target='_blank'>".$row{'link'}."</a></td>";
+//   echo "<td><b>Category:</b>&nbsp;".$catpath."</td>";
+//   echo "</tr>";
+//   if(isAdmin()) {
+//     echo "<tr>";
+//	 echo "<td><b>Submitter:</b>&nbsp;".$row{'subname'}."</td>";
+//	 echo "<td><b>Submitter's email:</b>&nbsp;".$row{'subemail'}."</td>";
+//	 echo "</tr>";
+//   }
+//   echo "</table>";
+//   echo "<div class=added>Added on ".$row{'approved_date'}."</div>";
+//   echo "</div>";
 
 ?>
 
-</div>
+    </div> <!-- class=row -->
+  </div> <!-- class=container -->
 
 <script type="text/javascript">
-  $('select.drilldown').selectHierarchy({ hideOriginal: true });
+//  $('select.drilldown').selectHierarchy({ hideOriginal: true });
 </script>
 
 <?php
@@ -109,4 +125,9 @@ if(isAdmin()) {
 </script>
 <?php } ?>
 
-<?php include 'footer.php'; ?>
+<?php include "footer.php"; ?>
+
+</body>
+</html>
+
+<?php ob_flush() ?>

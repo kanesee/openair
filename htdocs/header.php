@@ -37,6 +37,9 @@ $activepage = $_SERVER["REQUEST_URI"];
 <!-- ################ Category related headers ###################-->
 <?php
 
+$id = "";
+if(isset($_GET['id'])) { $id = $_GET['id']; }
+
 $cat = "";
 if(isset($_GET['cat'])) { $cat = $_GET['cat']; }
 
