@@ -320,40 +320,45 @@ function getResourceSQL($resource_id) {
 }
 
 function countResults($subcatString, $query) {
-	$sqlStatmement = "SELECT count(*)
-	  FROM resource r, resource_category rc,
-	       resource_type rt, license_type lt,
-	       significance_type st
-	 WHERE rc.category_id IN ".$subcatString."
-	   AND r.id=rc.resource_id 
-	   AND r.approved_date is not null
-	   AND r.resource_type=rt.id
-	   AND r.license_type=lt.id
-	   AND r.significance_type=st.id
-	";
-	if(!empty($query)) {
-		$sqlStatmement.=" AND r.name like '%".$query."%'";
-	}
+  $sqlStatement = "
+    SELECT count(*)
+      FROM resource r
+    LEFT JOIN resource_category rc ON r.id=rc.resource_id
+    WHERE r.approved_date IS NOT NULL
+    AND rc.category_id IN $subcatString
+    ";
+  if(!empty($query)) {
+    $sqlStatement.=" AND r.name like '%".$query."%'";
+  }
 
-	$r = mysql_query($sqlStatmement);
-	$row = mysql_fetch_row($r);
-	return $row[0];
+  $r = mysql_query($sqlStatement);
+  $row = mysql_fetch_row($r);
+  return $row[0];
 }
 
 function countPendingResults($subcatString) {
   $r=mysql_query("
     SELECT count(*)
-      FROM resource r, resource_category rc,
-           resource_type rt, license_type lt
-     WHERE r.id=rc.resource_id 
-       AND r.approved_date is null
-       AND r.resource_type=rt.id
-       AND r.license_type=lt.id
-       AND rc.category_id IN $subcatString
+      FROM resource r
+    LEFT JOIN resource_category rc ON r.id=rc.resource_id
+    WHERE r.approved_date IS NULL
+    AND rc.category_id IN $subcatString
      ");
   $row = mysql_fetch_row($r);
   return $row[0];
 }
 
+/****************************************
+ * Meta-Resource stuff
+ ****************************************/
+
+function incrementViewCount($resource_id) {
+  $updateSql =
+    "UPDATE resource SET"
+    ." num_views=num_views+1"
+    ." WHERE id=$resource_id";
+
+  $result = mysql_query($updateSql);
+}
 
 ?>

@@ -2,26 +2,27 @@
 <html lang="en">
 <head>
 
-  <?php include "./includes/header.php"; ?>
-  <?php include "./services/admin-required.php"; ?>
+  <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/header.php'); ?>
 
 <?php
+  incrementViewCount($id);
+    
   $r=mysql_query(getResourceSQL($id));
 
   $row = mysql_fetch_assoc($r);
 
-    $catStmt="
-    SELECT c.id, c.name FROM resource_category rc
-    LEFT JOIN category c ON rc.category_id = c.id
-    WHERE rc.resource_id = ".$row{'id'};
-  
-    $catRs = mysql_query($catStmt);
+  $catStmt="
+  SELECT c.id, c.name FROM resource_category rc
+  LEFT JOIN category c ON rc.category_id = c.id
+  WHERE rc.resource_id = ".$row{'id'};
 
-    $catPath = '';
-    while($catRow = mysql_fetch_array($catRs)) {
-      if( !empty($catPath) ) { $catPath .= " | "; }
-      $catPath .= '<a href="/?cat='.$catRow{'id'}.'">'.$catRow{'name'}.'</a>';
-    }
+  $catRs = mysql_query($catStmt);
+
+  $catPath = '';
+  while($catRow = mysql_fetch_array($catRs)) {
+    if( !empty($catPath) ) { $catPath .= " | "; }
+    $catPath .= '<a href="/?cat='.$catRow{'id'}.'">'.$catRow{'name'}.'</a>';
+  }
 
 ?>
    
@@ -30,7 +31,7 @@
   
 <body>
 
-<?php include './includes/nav.php'; ?>
+  <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/nav.php'); ?>
 
   <div id="main" class="container">
     <div class="row">
@@ -105,6 +106,8 @@
     </div> <!-- class=row -->
   </div> <!-- class=container -->
 
+  <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/footer.php'); ?>
+
 <script type="text/javascript">
 //  $('select.drilldown').selectHierarchy({ hideOriginal: true });
 </script>
@@ -125,7 +128,6 @@ if(isAdmin()) {
 </script>
 <?php } ?>
 
-<?php include "./includes/footer.php"; ?>
 
 </body>
 </html>

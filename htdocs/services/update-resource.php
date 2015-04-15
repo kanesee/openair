@@ -70,9 +70,21 @@ if( !empty($_POST['id'])
   		redirect("/pending.php");
 	else if($result)
 		redirect("/details.php?id=".$id);
+} else {
+  
+  if( empty($_POST['id']) ) echo '<br>Requires id.';
+  if( empty($_POST['dbname']) ) echo '<br>Requires dbname.';
+  if( empty($_POST['link']) ) echo '<br>Requires link.';
+  if( empty($_POST['description']) ) echo '<br>Requires description.';
+  if( empty($_POST['categories']) ) echo '<br>Requires categories.';
+  if( empty($_POST['type'])  ) echo '<br>Requires type.';
+  if( empty($_POST['license']) ) echo '<br>Requires license.';
+  
+  $backLink = '/index.php';
+  if(isset($_POST['id'])){
+    $backLink = "/edit_resource.php?id=".$_POST['id'];
+  }
+  
+  echo '<p>Click <a href="'.$backLink.'">here</a> to try again';
 }
-if(isset($_POST['id'])){
-	redirect("/edit_resource.php?id=".$_POST['id']);
-}
-redirect("/index.php");
 ?>

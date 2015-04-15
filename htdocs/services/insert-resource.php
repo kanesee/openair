@@ -10,38 +10,47 @@ if( !empty($_POST['dbname'])
 &&  !empty($_POST['license'])
 ) {
 
-	$dbname = addslashes($_POST['dbname']);
-	$prog_lang = addslashes($_POST['prog_lang']);
-	$dataformat = addslashes($_POST['dataformat']);
-	$type = addslashes($_POST['type']);
-	$license = addslashes($_POST['license']);
-	$description = addslashes($_POST['description']);
-	$link = addslashes($_POST['link']);
-	$paperurl = addslashes($_POST['paperurl']);  
-	$author = addslashes($_POST['author']);
-	$owner = addslashes($_POST['owner']);
-    $user_id = $_SESSION["user"]->id;
+  $dbname = addslashes($_POST['dbname']);
+  $prog_lang = addslashes($_POST['prog_lang']);
+  $dataformat = addslashes($_POST['dataformat']);
+  $type = addslashes($_POST['type']);
+  $license = addslashes($_POST['license']);
+  $description = addslashes($_POST['description']);
+  $link = addslashes($_POST['link']);
+  $paperurl = addslashes($_POST['paperurl']);  
+  $author = addslashes($_POST['author']);
+  $owner = addslashes($_POST['owner']);
+  $user_id = $_SESSION["user"]->id;
 
-    $insertSql = "INSERT INTO resource (name, link, description, resource_type, license_type, 
-	submitter_id, programming_lang, data_format, paper_url, owner, author) 
-	VALUES ('$dbname', '$link', '$description', '$type', '$license', 
-	$user_id, '$prog_lang', '$dataformat', '$paperurl', '$owner', '$author')";
+  $insertSql = "INSERT INTO resource (name, link, description, resource_type, license_type, 
+  submitter_id, programming_lang, data_format, paper_url, owner, author) 
+  VALUES ('$dbname', '$link', '$description', '$type', '$license', 
+  $user_id, '$prog_lang', '$dataformat', '$paperurl', '$owner', '$author')";
+
+  $result = mysql_query($insertSql);
+
+  $id = mysql_insert_id();
+
+  // Manage resource categories
+  $categories = addslashes($_POST['categories']);  
+  $catPieces = explode(',', $categories);
+  foreach($catPieces as $cat) {
+    mysql_query("INSERT INTO resource_category(resource_id,category_id)"
+               ." VALUES($id,'$cat')");
+  }
+
+  // mysqli_close($con);
+  if($result)
+    redirect('/submit-success.php');
+} else {
   
-	$result = mysql_query($insertSql);
+  if( empty($_POST['dbname']) ) echo '<br>Requires dbname.';
+  if( empty($_POST['link']) ) echo '<br>Requires link.';
+  if( empty($_POST['description']) ) echo '<br>Requires description.';
+  if( empty($_POST['categories']) ) echo '<br>Requires categories.';
+  if( empty($_POST['type'])  ) echo '<br>Requires type.';
+  if( empty($_POST['license']) ) echo '<br>Requires license.';
   
-	$id = mysql_insert_id();
-	
-    // Manage resource categories
-  	$categories = addslashes($_POST['categories']);  
-    $catPieces = explode(',', $categories);
-    foreach($catPieces as $cat) {
-      mysql_query("INSERT INTO resource_category(resource_id,category_id)"
-                 ." VALUES($id,'$cat')");
-    }
-    
-	// mysqli_close($con);
-	if($result)
-		redirect('/submit-success.php');
+  echo '<p>Click <a href="/submit.php">here</a> to try again';
 }
-redirect('/submit.php');
 ?>
