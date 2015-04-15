@@ -27,8 +27,13 @@ $resource = mysql_fetch_array($r);
         if( catIds ) catIds += ',';
         catIds += $(cat).attr('data-catid');
       });
-      $('#categories').val(catIds);
-      return true; 
+      if( catIds ) {
+        $('#categories').val(catIds);
+        return true;
+      } else {
+        $('#categoryInput').css('border','1px solid red');
+        return false;
+      }
     }
   </script>
   <title>Edit <?= $resource['name'] ?></title>
@@ -86,9 +91,7 @@ $resource = mysql_fetch_array($r);
       
       <div class="form-group">
         <label for="description">Short Description:</label>
-        <textarea class="form-control" rows="5" wrap="virtual" name="description" required="required">
-          <?= $resource['description'] ?>
-        </textarea>
+        <textarea class="form-control" rows="5" wrap="virtual" name="description" required="required"><?= $resource['description'] ?></textarea>
       </div>
       
 <?php

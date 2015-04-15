@@ -48,7 +48,7 @@
                   </li>
                 <?php } else { ?>
                   <li class="show-after-auth">
-                    <a href="/logout">
+                    <a href="/services/logout">
                       Log Off
                     </a>
                   </li>

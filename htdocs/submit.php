@@ -19,8 +19,13 @@ echo "<script>var category_json = ".$json.";</script>";
         if( catIds ) catIds += ',';
         catIds += $(cat).attr('data-catid');
       });
-      $('#categories').val(catIds);
-      return true; 
+      if( catIds ) {
+        $('#categories').val(catIds);
+        return true;
+      } else {
+        $('#categoryInput').css('border','1px solid red');
+        return false;
+      }
     }
   </script>
 
@@ -78,8 +83,7 @@ echo "<script>var category_json = ".$json.";</script>";
       
       <div class="form-group">
         <label for="description">Short Description:</label>
-        <textarea class="form-control" rows="5" wrap="virtual" name="description" required="required">
-        </textarea>
+        <textarea class="form-control" rows="5" wrap="virtual" name="description" required="required"></textarea>
       </div>
       
       <div class="form-group">
