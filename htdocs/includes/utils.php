@@ -1,5 +1,5 @@
 <?php
-include '_secret/mysql_pass.php';
+include($_SERVER['DOCUMENT_ROOT'].'/_secret/mysql_pass.php');
 
 session_start();
 

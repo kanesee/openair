@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 
-  <?php include "header.php"; ?>
-  <?php include "admin-required.php"; ?>
+  <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/header.php'); ?>
+  <?php include ($_SERVER['DOCUMENT_ROOT'].'/services/admin-required.php'); ?>
 
 <?php
  $json = buildJSTreeJson($cat, true);
@@ -27,13 +27,13 @@
   
 <body>
 
-<?php include 'nav.php'; ?>
+<?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/nav.php'); ?>
 
 
 <div class="container">
   <div class="row row-offcanvas row-offcanvas-left">
 
-    <?php include 'category.php'; ?>
+    <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/category.php'); ?>
 
     <div id="main" class="col-xs-12 col-sm-9">
       <h2>Pending projects for <?= $catTitle ?></h2>
@@ -102,7 +102,7 @@ if($totalPages>0) {
                 </tr>
               </table>
               <div class=added>Added on <?=$row{'approved_date'}?></div>
-              <form method=post action=pending-approve.php>
+              <form method=post action=./services/pending-approve.php>
                 <input type=hidden name=id value="<?= $row{'id'} ?>" />
                 <button type=submit name=approve class='btn span2'>Approve</button>
                 <button type=button onclick="resourceAction('<?=$row{'id'}?>', 'edit')" name=edit class="btn span2">Edit</button>
@@ -144,7 +144,7 @@ if($totalPages>0) {
     if(action == "deny"){
       var r=confirm("Are you sure you want to delete this resource?");
       if (r==true) {
-        window.location = window.location.origin+"/delete_resource.php?id="+id;
+        window.location = window.location.origin+"./services/delete_resource.php?id="+id;
       }
     }
     else if(action == "edit"){
@@ -153,7 +153,7 @@ if($totalPages>0) {
   }
 </script>
   
-<?php include 'footer.php'; ?>
+<?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/footer.php'); ?>
 </body>
 </html>
 

@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 
-  <?php include "header.php"; ?>
-  <?php include "admin-required.php"; ?>
+  <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/header.php'); ?>
+  <?php include ($_SERVER['DOCUMENT_ROOT'].'/services/admin-required.php'); ?>
 
 
   <title>Open AIR Admin</title>
@@ -11,10 +11,10 @@
   
 <body>
 
-<?php include 'nav.php'; ?>
+<?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/nav.php'); ?>
 
 
-<div id="" class="container">
+<div class="container">
   <div class="row">
 	<h2>Welcome Admin</h2>
 	<div class="row-fluid">
@@ -24,7 +24,7 @@
   </div>
 </div>
 
-<?php include "footer.php"; ?>
+<?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/footer.php'); ?>
 
 </body>
 </html>

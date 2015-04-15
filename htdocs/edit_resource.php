@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
 
-  <?php include 'header.php'; ?>
-  <?php include 'admin-required.php'; ?>
+  <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/header.php'); ?>
+  <?php include ($_SERVER['DOCUMENT_ROOT'].'/services/admin-required.php'); ?>
+  
   <script src="/assets/js/select-categories.js"></script>
 
 <?php
@@ -12,8 +13,6 @@ echo "<script>var category_json = ".$json.";</script>";
 ?>
 
 <?php
-$pending = false;
-  
 $id = $_GET['id'];
 
 $r = mysql_query("SELECT * FROM resource WHERE id = ".$id);
@@ -38,14 +37,14 @@ $resource = mysql_fetch_array($r);
   
 <body>
 
-<?php include 'nav.php'; ?>
+<?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/nav.php'); ?>
 
 
 <div class="container">
   <div class="row row-offcanvas row-offcanvas-left">
   	<h2>Edit <?= $resource['name']; ?></h2>
 
-  	<form name="form" action="update-resource.php" method="POST" onsubmit="return preprocessForm();">
+  	<form name="form" action="./services/update-resource.php" method="POST" onsubmit="return preprocessForm();">
       <input type=hidden name="id" value="<?= $id ?>">
       
       <div class="form-group">
@@ -154,7 +153,7 @@ $resource = mysql_fetch_array($r);
   </div> <!-- class=row -->  
 </div> <!-- class=container -->
   
-<?php include 'footer.php'; ?>
+<?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/footer.php'); ?>
   
 <script type="text/javascript">
 //  $('.drilldown').selectHierarchy({ hideOriginal: true });

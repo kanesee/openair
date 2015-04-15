@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
 
-  <?php include "header.php"; ?>
+  <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/header.php'); ?>
 
   <title>About</title>
 </head>
   
 <body>
 
-<?php include 'nav.php'; ?>
+<?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/nav.php'); ?>
 
   <div id="index" class="span7">
 	<div id="resourceinfo">
@@ -69,7 +69,7 @@
     </div>
   </div>
 
-<?php include 'footer.php'; ?>
+<?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/footer.php'); ?>
 
 </body>
 </html>

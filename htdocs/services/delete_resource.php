@@ -1,5 +1,5 @@
 <?php
-include "utils.php";
+include ($_SERVER['DOCUMENT_ROOT'].'/includes/utils.php');
 
 $pending = false;
 
@@ -31,11 +31,11 @@ if (isAdmin()) {
 }
 //Redirect to pending page if resource was pending
 if($pending){
-	header('location: pending.php');
+	header('location: /pending.php');
 }
 
 //Otherwise redirect to index
 else{
-	header('Location: index.php');
+	header('Location: /index.php');
 }
 ?>

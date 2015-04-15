@@ -1,5 +1,5 @@
 <?php
-include "utils.php";
+include ($_SERVER['DOCUMENT_ROOT'].'/includes/utils.php');
 
 if (isAdmin()) {
   //TODO now we can delete this category (and redirect to index anyway)
@@ -40,5 +40,5 @@ if (isAdmin()) {
 }
 
 // No matter what redirect at the end
-header('Location: index.php');
+header('Location: /index.php');
 ?>

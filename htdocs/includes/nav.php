@@ -16,7 +16,7 @@
             <li class="active"><a href="/">Home</a></li>
             <li><a href="about.php">About</a></li>
             <li><a href="faq.php">FAQ</a></li>
-            <?php if(isLoggedIn()) { ?><li><a href="faq.php">Add Resource</a></li><?php } ?>
+            <?php if(isLoggedIn()) { ?><li><a href="submit.php">Add Resource</a></li><?php } ?>
           </ul>
 
           <ul class="nav navbar-nav navbar-right">

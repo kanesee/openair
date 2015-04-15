@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 
-  <?php include "header.php"; ?>
-  <?php include "admin-required.php"; ?>
+  <?php include "./includes/header.php"; ?>
+  <?php include "./services/admin-required.php"; ?>
 
 <?php
   $r=mysql_query(getResourceSQL($id));
@@ -30,7 +30,7 @@
   
 <body>
 
-<?php include 'nav.php'; ?>
+<?php include './includes/nav.php'; ?>
 
   <div id="main" class="container">
     <div class="row">
@@ -125,7 +125,7 @@ if(isAdmin()) {
 </script>
 <?php } ?>
 
-<?php include "footer.php"; ?>
+<?php include "./includes/footer.php"; ?>
 
 </body>
 </html>

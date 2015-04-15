@@ -1,7 +1,7 @@
 <?php ob_start() ?>
 
 <?php
-include "utils.php";
+include ($_SERVER['DOCUMENT_ROOT']."/includes/utils.php");
 
 $activepage = $_SERVER["REQUEST_URI"];
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 
-  <?php include 'header.php'; ?>
+  <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/header.php'); ?>
   <title>Open AIR Home</title>
 
 <?php
@@ -54,12 +54,12 @@ if(isAdmin()) {
   
 <body>
 
-<?php include 'nav.php'; ?>
+<?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/nav.php'); ?>
 
 <div class="container">
   <div class="row row-offcanvas row-offcanvas-left">
     
-    <?php include 'category.php'; ?>
+    <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/category.php'); ?>
 
     <div id="main" class="col-xs-12 col-sm-9">
       <div id="index" class="span7">
@@ -190,7 +190,7 @@ if($totalPages>0) {
       </div> <!-- id=main -->
     </div> <!-- class=row -->
   </div> <!-- class=container -->
-  <?php include 'footer.php'; ?>
+  <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/footer.php'); ?>
   
 </body>
 </html>

@@ -1,6 +1,6 @@
 <?php
-include 'utils.php';
-include 'admin-required.php';
+include ($_SERVER['DOCUMENT_ROOT'].'/includes/utils.php');
+include ($_SERVER['DOCUMENT_ROOT'].'/services/admin-required.php');
 
 if( !empty($_POST['id'])
 &&  !empty($_POST['dbname'])
@@ -67,12 +67,12 @@ if( !empty($_POST['id'])
 	$r = mysql_query("SELECT * FROM resource WHERE id ='$id'");
   	$row = mysql_fetch_array($r);
   	if($result && $row['approved_date'] == '')
-  		redirect("pending.php");
+  		redirect("/pending.php");
 	else if($result)
-		redirect("details.php?id=".$id);
+		redirect("/details.php?id=".$id);
 }
 if(isset($_POST['id'])){
-	redirect("edit_resource.php?id=".$_POST['id']);
+	redirect("/edit_resource.php?id=".$_POST['id']);
 }
-redirect("index.php");
+redirect("/index.php");
 ?>

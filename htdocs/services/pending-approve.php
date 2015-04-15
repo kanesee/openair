@@ -1,10 +1,6 @@
-<?php include "utils.php"; ?>
+<?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/utils.php'); ?>
+<?php include ($_SERVER['DOCUMENT_ROOT'].'/services/admin-required.php'); ?>
 
-<?php
-if(!isAdmin()) {
-  redirect("/not-authorized.php");
-}
-?>
 
 <?php
 	if(isset($_POST['approve'])){
