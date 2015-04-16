@@ -273,7 +273,8 @@ function getResourceSearchSQL($subcatString, $query, $startIdx, $MAX_RESULTS) {
   SELECT DISTINCT r.id, r.name, r.description, 
          r.owner, r.link, r.paper_url,
          r.license_type, r.resource_type,
-         r.author, r.approved_date
+         r.author, r.approved_date,
+         r.num_views, r.num_likes, r.num_comments
     FROM resource r
   LEFT JOIN resource_category rc ON r.id=rc.resource_id
   WHERE r.approved_date IS NOT NULL

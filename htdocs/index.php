@@ -110,17 +110,30 @@ $rs = mysql_query($sqlStatement);
 while ($row = mysql_fetch_array($rs)) {
 	$count++;
   
-    $catStmt="
-    SELECT c.id, c.name FROM resource_category rc
-    LEFT JOIN category c ON rc.category_id = c.id
-    WHERE rc.resource_id = ".$row{'id'};
-  
-    $catRs = mysql_query($catStmt);
+    $catRs = mysql_query("
+      SELECT c.id, c.name FROM resource_category rc
+      LEFT JOIN category c ON rc.category_id = c.id
+      WHERE rc.resource_id = ".$row{'id'});
 
     $catPath = '';
     while($catRow = mysql_fetch_array($catRs)) {
       if( !empty($catPath) ) { $catPath .= " | "; }
       $catPath .= '<a href="?cat='.$catRow{'id'}.'">'.$catRow{'name'}.'</a>';
+    }
+  
+    $likedClass = '';
+    if( isLoggedIn() ) {
+      $user_id = $_SESSION["user"]->id;
+
+      $likedRs = mysql_query("
+        SELECT COUNT(*) as cnt FROM resource_likes
+        WHERE resource_id=".$row{'id'}."
+        AND user_id=$user_id
+        ");
+      $likedRow = mysql_fetch_array($likedRs);
+      if( $likedRow{'cnt'} > 0 ) {
+        $likedClass='liked';
+      }
     }
 ?>
 
@@ -152,6 +165,9 @@ while ($row = mysql_fetch_array($rs)) {
                 </tr>
               </table>
               <div class=added>Added on <?=$row{'approved_date'}?></div>
+              <div class="action-list">
+                <span class="glyphicon glyphicon-thumbs-up like <?=$likedClass?>" aria-hidden="true" data-resource-id="<?=$row{'id'}?>"><?=$row{'num_likes'}?></span>
+              </div>
             </div>
 <?php
 } // end while

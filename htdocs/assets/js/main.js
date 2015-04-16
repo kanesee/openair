@@ -2,7 +2,6 @@ if (!window.location.origin)
 	window.location.origin = window.location.protocol+"//"+window.location.host;
 
 var loaded = false;
-
 function categoryClicked(id, name) {
 	$urlAdd = "";
 	if(window.location.pathname.indexOf("/pending.php") == 0) {
@@ -18,6 +17,41 @@ function categoryClicked(id, name) {
 	loaded = true;
 }
 
+function attachEvents() {
+  $('.like').on('click', function() {
+    var resource_id = $(this).attr('data-resource-id');
+    if( resource_id ) {
+      var numLikes = parseInt($(this).text());
+//      console.log(resource_id + ': ' + numLikes);
+      
+      var that = this;
+      $.ajax({
+        url: '/services/increment-like-count.php?resource_id='+resource_id,
+        type: 'GET',
+        statusCode: {
+          200: function() {
+//            console.log('submitted Like');
+            numLikes++;
+            $(that).text(numLikes);
+            $(that).addClass('liked');
+          },
+          304: function() {
+            // do nothing when Like already submitted by this user
+            alert('You already Liked this resource before');
+          },
+          400: function() {
+            // Something went terribly wrong
+            alert('Sorry, could not submit your Like. Please contact Admin.');
+          },
+          401: function() {
+            alert('You must be Signed In to Like a resource');
+          }
+        }
+      });    
+    }
+  });
+}
+
 function initialize() {
   if( typeof category_json !== 'undefined' ) {
 	$("#catbrowser").jstree(category_json).bind("select_node.jstree",
@@ -30,4 +64,6 @@ function initialize() {
 
 $(document).ready(function(){
   initialize();
+  
+  attachEvents();
 });
