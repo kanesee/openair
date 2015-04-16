@@ -278,13 +278,13 @@ function getResourceSearchSQL($subcatString, $query, $startIdx, $MAX_RESULTS) {
     FROM resource r
   LEFT JOIN resource_category rc ON r.id=rc.resource_id
   WHERE r.approved_date IS NOT NULL
-  AND rc.category_id IN ".$subcatString."
-  ";
+  AND rc.category_id IN $subcatString";
 
   if(!empty($query)) {
       $sqlStatement.=" AND (r.name like '%".$query."%' OR r.description like '%".$query."%')";
   }
-  $sqlStatement.=" ORDER BY r.name LIMIT ".$startIdx.", ".$MAX_RESULTS;
+  $sqlStatement.=" ORDER BY r.num_likes DESC, r.name
+                  LIMIT ".$startIdx.", ".$MAX_RESULTS;
   
   return $sqlStatement;
 }

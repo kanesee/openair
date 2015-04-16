@@ -13,10 +13,11 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Home</a></li>
+            <li><a href="/">Home</a></li>
             <li><a href="about.php">About</a></li>
             <li><a href="faq.php">FAQ</a></li>
             <?php if(isLoggedIn()) { ?><li><a href="submit.php">Add Resource</a></li><?php } ?>
+            <?php if(isAdmin()) { ?><li><a href="admin.php">Admin</a></li><?php } ?>
           </ul>
 
           <ul class="nav navbar-nav navbar-right">

@@ -207,7 +207,7 @@ while ($row = mysql_fetch_array($rs)) {
     $date = $affcom['date'];
 ?>
                 <div class="cmt-cnt">
-                  <img src="<?= $commenter_img; ?>" />
+                  <img src="<?= $commenter_img ?>" />
                   <div class="thecom">
                     <h5><?= $commenter_name; ?></h5>
                     <span data-utime="1371248446" class="com-dt"><?php echo $date; ?></span>
