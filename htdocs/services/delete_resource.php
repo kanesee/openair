@@ -11,7 +11,7 @@ if (isAdmin()) {
   
   if(!empty($id)) {
   	//Find out if this is a pending resource
-  	$r = mysql_query("SELECT FROM resource WHERE resource_id = ".$id);
+  	$r = mysql_query("SELECT approved_date FROM resource WHERE id = ".$id);
   	$row = mysql_fetch_array($r);
   	if($row['approved_date'] == ''){
   		$pending = true;

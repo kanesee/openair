@@ -57,6 +57,11 @@
             <div class="resource">
               <div class=title>
                 <a href="details.php?id=<?=$row{'id'}?>"><?=$row{'name'}?></a>
+<?php if( isAdmin() ) { ?>
+                <a href='javascript:deleteResource()' >
+                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                </a>
+<?php } ?>
               </div>
               <div class="link">
                 <b>Project</b>: </b><a href="<?=$row{'link'}?>" target='_blank'><?=$row{'link'}?></a>

@@ -43,7 +43,7 @@ if(isAdmin()) {
 	function deleteCategory() {
 		var r=confirm("Are you sure you want to delete <?= $catTitle; ?> and all of the child categories beneath it?");
 		if (r==true) {
-			window.location.href = window.location.origin+"/delete_category.php?cat="+cat;
+			window.location.href = window.location.origin+"/services/delete_category.php?cat="+cat;
 		}
 		else{
 		}
