@@ -1,5 +1,6 @@
 <?php
 include ($_SERVER['DOCUMENT_ROOT'].'/includes/utils.php');
+//include ($_SERVER['DOCUMENT_ROOT'].'/services/admin-required.php');
 
 $pending = false;
 
@@ -29,13 +30,11 @@ if (isAdmin()) {
 	}
   }
 }
+
 //Redirect to pending page if resource was pending
 if($pending){
 	header('location: /pending.php');
-}
-
-//Otherwise redirect to index
-else{
+} else { //Otherwise redirect to index
 	header('Location: /index.php');
 }
 ?>

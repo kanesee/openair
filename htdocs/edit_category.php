@@ -1,26 +1,31 @@
-<?php include 'header.php'; ?>
-<?php include 'category.php'; ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
-<script type="text/javascript" src="assets/js/jwysiwyg/jquery.wysiwyg.js"></script>
-<script type="text/javascript" src="assets/js/jwysiwyg/plugins/autoload/jquery.autoload.js"></script>
-<script type="text/javascript" src="assets/js/jwysiwyg/plugins/wysiwyg.autoload.js"></script>
-<script type="text/javascript" src="assets/js/jwysiwyg/controls/wysiwyg.image.js"></script>
-<script type="text/javascript" src="assets/js/jwysiwyg/controls/wysiwyg.link.js"></script>
-<script type="text/javascript" src="assets/js/jwysiwyg/controls/wysiwyg.table.js"></script>
+  <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/header.php'); ?>
+  <?php include ($_SERVER['DOCUMENT_ROOT'].'/services/admin-required.php'); ?>
 
-<link rel="stylesheet" href="assets/js/jwysiwyg/jquery.wysiwyg.css" type="text/css" />
-<script type="text/javascript">
-$(function() {
-  $("#wysiwyg").wysiwyg({
-  	plugins: { autoload: true },
-  	initialContent: ""
+  <script type="text/javascript" src="assets/js/jwysiwyg/jquery.wysiwyg.js"></script>
+  <script type="text/javascript" src="assets/js/jwysiwyg/plugins/autoload/jquery.autoload.js"></script>
+  <script type="text/javascript" src="assets/js/jwysiwyg/plugins/wysiwyg.autoload.js"></script>
+  <script type="text/javascript" src="assets/js/jwysiwyg/controls/wysiwyg.image.js"></script>
+  <script type="text/javascript" src="assets/js/jwysiwyg/controls/wysiwyg.link.js"></script>
+  <script type="text/javascript" src="assets/js/jwysiwyg/controls/wysiwyg.table.js"></script>
+
+  <link rel="stylesheet" href="assets/js/jwysiwyg/jquery.wysiwyg.css" type="text/css" />
+  <script type="text/javascript">
+  $(function() {
+    $("#wysiwyg").wysiwyg({
+      plugins: { autoload: true },
+      initialContent: ""
+    });
   });
-});
 
-</script>
+  </script>
 
 <?php
-	$description = $resourcedescription;
+    $resourcetitle = getCategoryTitle($cat);
+	$description = getCategoryDesc($cat);
 	$message="";
 	// $con = mysqli_connect("ec2-54-243-13-79.compute-1.amazonaws.com","openai","theaiisclosed","openair");
 	// if (mysqli_connect_errno($con))
@@ -40,11 +45,17 @@ $(function() {
 		else
 			$message = "<div class='alert alert-failure'>" . $resourcetitle . " description could not be updated.<button type='button' class='close' data-dismiss='alert'>&times;</button></div>";
 	}
-	echo "<head><title>Edit ".$resourcetitle."</title></head>";
 ?>
 
+  <title>Edit <?= $resourcetitle ?></title>
+  
+  </head>
+  
+<body>
 
-<div id="right" class="span7">
+<?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/nav.php'); ?>
+
+  <div id="right" class="span7">
 	<h2>Editing Topic: <?php echo $resourcetitle ?></h2>
 	<?php echo $message; ?>
 	<form id='edit-category' method="POST" >
@@ -55,6 +66,11 @@ $(function() {
     <button type="submit" name="save" class="btn btn-primary">Save</button>
     <button type="submit" name="cancel" class="btn">Cancel</button>
 	</form>
-</div>
+  </div>
 
-<?php include 'footer.php'; ?>
+<?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/footer.php'); ?>
+
+    </body>
+</html>
+
+<?php ob_flush() ?>

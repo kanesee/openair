@@ -153,7 +153,7 @@ if(isAdmin()) {
   function deleteResource() {
     var r=confirm("Are you sure you want to delete this resource?");
     if (r==true) {
-      window.location.href = window.location.origin+"/delete_resource.php?id=<?php echo $id; ?>";
+      window.location.href = window.location.origin+"/services/delete_resource.php?id=<?= $id ?>";
     }
     else{
     }

@@ -69,12 +69,20 @@ if(isAdmin()) {
       <div id="index" class="span7">
         <div id="resourceinfo">
           <div id="resourcetitle">
-            <?php echo $catTitle ?>
-            <?php if(isAdmin() && $cat>0 ) {echo "<a href='javascript:deleteCategory()' ><i class='icon-trash'></i></a>";}?>
+            <?= $catTitle ?>
+<?php if( isAdmin() && $cat>0 ) { ?>
+            <a href='javascript:deleteCategory()' >
+              <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </a>
+<?php } ?>
           </div>
           <div id="resourcedescription">
             <?= $catdescription ?>
-            <?php if(isAdmin() && $cat>0 ) {echo "<a href='edit_category.php?cat=$cat'><i class='icon-edit'></i></a>";}?>
+<?php if( isAdmin() && $cat>0 ) { ?>
+            <a href='edit_category.php?cat=<?=$cat?>'>
+              <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+            </a>
+<?php } ?>
           </div>
         </div>
 
