@@ -3,6 +3,10 @@
 <head>
 
   <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/header.php'); ?>
+  
+  <link rel="stylesheet" href="/assets/css/comments.css" type="text/css">
+  <script src="/assets/js/comments.js"></script>
+  
   <title>Open AIR Home</title>
 
 <?php
@@ -136,39 +140,89 @@ while ($row = mysql_fetch_array($rs)) {
       }
     }
 ?>
+            <div class="resource-comment">
+              <div class="resource">
+                <div class=title>
+                  <a href="details.php?id=<?=$row{'id'}?>"><?=$row{'name'}?></a>
+                </div>
+                <div class="link">
+                  <b>Project</b>: </b><a href="<?=$row{'link'}?>" target='_blank'><?=$row{'link'}?></a>
+                </div>
+                <div class="paper-link">
+                  <b>Paper</b>: <a href="<?=$row{'paper_url'}?>" target='_blank'><?=$row{'paper_url'}?></a>
+                </div>
 
-            <div class=resource>
-              <div class=title>
-                <a href="details.php?id=<?=$row{'id'}?>"><?=$row{'name'}?></a>
+                <div class="">
+                  <pre class="about"><?=htmlspecialchars($row{'description'})?></pre>
+                </div>
+                <table class=features>
+                  <tr>
+                    <td><b>Resource type:</b>&nbsp;<?=$row{'resource_type'}?></td>
+                    <td><b>License type:</b>&nbsp;<?=$row{'license_type'}?></td>
+                  </tr>
+                  <tr>
+                    <td><b>Categories:</b>&nbsp;<?=$catPath?></td>
+                    <td><b>Owner:</b>&nbsp;<?=$row{'owner'}?></td>
+                  </tr>
+                  <tr>
+                    <td><b>Author:</b>&nbsp;<?=$row{'author'}?></td>
+                  </tr>
+                </table>
+                <div class=added>Added on <?=$row{'approved_date'}?></div>
+                <div class="action-list">
+                  <span class="glyphicon glyphicon-eye-open view" aria-hidden="true"><?=$row{'num_views'}?></span>
+                  <span class="glyphicon glyphicon-thumbs-up like <?=$likedClass?>" aria-hidden="true" data-resource-id="<?=$row{'id'}?>"><?=$row{'num_likes'}?></span>
+                  <span class="glyphicon glyphicon-comment comment" aria-hidden="true" data-resource-id="<?=$row{'id'}?>"><?=$row{'num_comments'}?></span>
+                </div>
               </div>
-              <div class="link">
-                <b>Project</b>: </b><a href="<?=$row{'link'}?>" target='_blank'><?=$row{'link'}?></a>
-              </div>
-              <div class="paper-link">
-                <b>Paper</b>: <a href="<?=$row{'paper_url'}?>" target='_blank'><?=$row{'paper_url'}?></a>
-              </div>
+
+<!-- ######### comments ############# -->
+              <div class="cmt-container">
+
+                <!-- comment form -->
+                <!--
+                <div class="new-com-bt">
+                  <span>Write a comment ...</span>
+                </div>
+                -->
+                <div class="new-com-cnt">
+                  <textarea class="the-new-com"></textarea>
+                  <div data-resource-id="<?=$row{'id'}?>" class="bt-add-com">Post comment</div>
+<!--                  <div class="bt-cancel-com">Cancel</div>-->
+                </div>
+                <div class="clear"></div>
               
-              <div class="">
-                <pre class="about"><?=htmlspecialchars($row{'description'})?></pre>
-              </div>
-              <table class=features>
-                <tr>
-                  <td><b>Resource type:</b>&nbsp;<?=$row{'resource_type'}?></td>
-                  <td><b>License type:</b>&nbsp;<?=$row{'license_type'}?></td>
-                </tr>
-                <tr>
-                  <td><b>Categories:</b>&nbsp;<?=$catPath?></td>
-                  <td><b>Owner:</b>&nbsp;<?=$row{'owner'}?></td>
-                </tr>
-                <tr>
-                  <td><b>Author:</b>&nbsp;<?=$row{'author'}?></td>
-                </tr>
-              </table>
-              <div class=added>Added on <?=$row{'approved_date'}?></div>
-              <div class="action-list">
-                <span class="glyphicon glyphicon-thumbs-up like <?=$likedClass?>" aria-hidden="true" data-resource-id="<?=$row{'id'}?>"><?=$row{'num_likes'}?></span>
-              </div>
-            </div>
+                <!-- previous comments -->
+<?php 
+  
+  $sql = mysql_query("SELECT * FROM comments c
+                      LEFT JOIN user u ON c.userid=u.id
+                      WHERE resource_id = ".$row{'id'}
+                    ." ORDER BY c.date DESC")
+          or die(mysql_error());;
+  while($affcom = mysql_fetch_assoc($sql)){
+    $commenter_name = $affcom['name'];
+    $commenter_img = $affcom['image_url'];
+    $comment = $affcom['comment'];
+    $date = $affcom['date'];
+?>
+                <div class="cmt-cnt">
+                  <img src="<?= $commenter_img; ?>" />
+                  <div class="thecom">
+                    <h5><?= $commenter_name; ?></h5>
+                    <span data-utime="1371248446" class="com-dt"><?php echo $date; ?></span>
+                    <br/>
+                    <p>
+                      <?php echo $comment; ?>
+                    </p>
+                  </div>
+                </div><!-- end "cmt-cnt" -->
+<?php 
+  } // end while
+?>
+              </div> <!-- class=comments -->
+<!-- ######### end comments ############# -->
+            </div> <!-- class=resource-comment -->
 <?php
 } // end while
 ?>

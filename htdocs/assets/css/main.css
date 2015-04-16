@@ -409,6 +409,18 @@ i:hover {
   color: blue;
 }
 
+.action-list > span.glyphicon {
+  padding-right: 10px;
+}
+
+.comments {
+  padding-bottom: 20px;
+}
+
+.comment {
+  cursor: pointer;
+}
+
 /**************************
  * Edit Resource
  **************************/

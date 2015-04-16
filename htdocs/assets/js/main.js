@@ -50,6 +50,7 @@ function attachEvents() {
       });    
     }
   });
+
 }
 
 function initialize() {
