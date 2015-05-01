@@ -92,6 +92,17 @@
                 <span class="glyphicon glyphicon-thumbs-up like <?=$likedClass?>" aria-hidden="true" data-resource-id="<?=$row{'id'}?>"><?=$row{'num_likes'}?></span>
                 <span class="glyphicon glyphicon-comment comment" aria-hidden="true" data-resource-id="<?=$row{'id'}?>"><?=$row{'num_comments'}?></span>
               </div>
+<?php
+  if( isLoggedIn() ) {
+    $mailto = 'admin@inferlink.com';
+    $subject = 'Post-' . $row{'id'} . ' Flagged';
+    $body = $_SESSION["user"]->name . ' (' . $_SESSION["user"]->id . ') has the following comment about this post: ';
+    $mail_link = 'mailto:'.$mailto.'?subject='.$subject.'&body='.$body;
+?>
+            <a href="<?=$mail_link?>"><span class="glyphicon glyphicon-flag" aria-hidden="true"></span> Notify Editor about error</a>
+<?php
+  }
+?>
             </div>
 
 <!-- ######### comments ############# -->
