@@ -6,11 +6,9 @@
   <?php include ($_SERVER['DOCUMENT_ROOT'].'/services/login-required.php'); ?>
   
   <script src="/assets/js/select-categories.js"></script>
-
-<?php
-$json = buildJSTreeJson($cat, false);
-echo "<script>var category_json = ".$json.";</script>";
-?>
+  <script>
+    var category_json = <?=buildJSTreeJson($cat, true, 'approved_count')?>;
+  </script>
 
   <script>
     function preprocessForm() {

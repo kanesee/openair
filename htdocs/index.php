@@ -6,13 +6,9 @@
   
   <link rel="stylesheet" href="/assets/css/comments.css" type="text/css">
   <script src="/assets/js/comments.js"></script>
-  
-  <title>Open AIR Home</title>
-
-<?php
-$json = buildJSTreeJson($cat, true);
-echo "<script>var category_json = ".$json.";</script>";
-?>
+  <script>
+    var category_json = <?=buildJSTreeJson($cat, true, 'approved_count')?>;
+  </script>
   
 <?php
 $query = "";
@@ -53,6 +49,8 @@ if(isAdmin()) {
 <?php
 }
 ?>
+  
+  <title>Open AIR Home</title>
 
 </head>
   

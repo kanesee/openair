@@ -78,35 +78,41 @@ function isAdmin() {
  * Category stuff
  ****************************************/
 
-function createData($row) {
-	$id = $row{'id'};
-	$name = $row{'name'};
-	$singleData = str_replace("NAME_REPLACE", $name, '{ "data" : "NAME_REPLACE", "attr": { "id": "ID_REPLACE"}, "metadata" : { id : ID_REPLACE, name : "NAME_REPLACE" }, "children" : [ CHILDREN_REPLACE ] }');
-	$singleData = str_replace("ID_REPLACE", $id, $singleData);
+function createCategoryEntry($row, $countOf) {
+  $id = $row{'id'};
+  $name = $row{'name'};
+  if( $countOf == 'pending_count' ) {
+    $name .= ' (' . $row{'pending_count'} . ')';    
+  } else
+  if( $countOf == 'approved_count' ) {
+    $name .= ' (' . $row{'approved_count'} . ')';
+  }
+  $singleData = str_replace("NAME_REPLACE", $name, '{ "data" : "NAME_REPLACE", "attr": { "id": "ID_REPLACE"}, "metadata" : { id : ID_REPLACE, name : "NAME_REPLACE" }, "children" : [ CHILDREN_REPLACE ] }');
+  $singleData = str_replace("ID_REPLACE", $id, $singleData);
 
-	$children = "";
-	$filter_id = 0;
-	$sqlQuery = "SELECT id, name, description, parent from category where parent=".$id;
-	if (!isAdmin()) {
-		$sqlQuery.= " AND id > 0";
-	}
-	$sqlQuery.= " ORDER BY id";
+  $children = "";
+  $filter_id = 0;
+  $sqlQuery = "SELECT * from category where parent=".$id;
+  if (!isAdmin()) {
+      $sqlQuery.= " AND id > 0";
+  }
+  $sqlQuery.= " ORDER BY id";
 
-	$r_sub = mysql_query($sqlQuery);
-	while ($row_sub = mysql_fetch_array($r_sub)) {
-		if(!empty($children)) {
-			$children .= ",";
-		}
-		$children .= createData($row_sub);
-	}
+  $r_sub = mysql_query($sqlQuery);
+  while ($row_sub = mysql_fetch_array($r_sub)) {
+      if(!empty($children)) {
+          $children .= ",";
+      }
+      $children .= createCategoryEntry($row_sub, $countOf);
+  }
 
-	return str_replace("CHILDREN_REPLACE", $children, $singleData);
+  return str_replace("CHILDREN_REPLACE", $children, $singleData);
 }
 
 /****
  * $openNode(true,false) determines if tree is opened to a node or not
  ************/
-function buildJSTreeJson($cat, $openNode) {
+function buildJSTreeJson($cat, $openNode, $countOf) {
   $MAIN_JSON = '{ 
 		"json_data" : {
 			"data" : [
@@ -124,7 +130,7 @@ function buildJSTreeJson($cat, $openNode) {
   
   $data = "";
 
-  $sqlQuery = "SELECT id, name, description, parent from category where parent=0";
+  $sqlQuery = "SELECT * from category where parent=0";
   if (!isAdmin()) {
       $sqlQuery.= " AND id > 0";
   }
@@ -135,7 +141,7 @@ function buildJSTreeJson($cat, $openNode) {
       if(!empty($data)) {
           $data .= ",";
       }
-      $singleData = createData($row);
+      $singleData = createCategoryEntry($row, $countOf);
       $data .= $singleData;
   }
 
@@ -216,9 +222,10 @@ function getCategoryOptions($catId, $nameprefix) {
 }
 
 function buildCategorySelect($withAI, $name = 'drilldown') {
-  $select = "<select class='drilldown' name='".$name."'><option value=''>-- Select Category --</option>";
+  $select = "<select class='drilldown' name='$name'>
+               <option value=''>-- Select Category --</option>";
   if($withAI) {
-    $select.="<option value='0'>Artificial Intelligence</option>";
+    $select.= "<option value='0'>Artificial Intelligence</option>";
   }
   $select .= getCategoryOptions(0, "");
   $select .= "</select>";

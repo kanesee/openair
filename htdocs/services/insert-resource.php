@@ -2,6 +2,21 @@
 include ($_SERVER['DOCUMENT_ROOT'].'/includes/utils.php');
 include ($_SERVER['DOCUMENT_ROOT'].'/services/login-required.php');
 
+function tricklePendingCountUpdate($cat_id, &$updatedCats) {
+  if( !array_key_exists($cat_id, $updatedCats) ) {
+    $updatedCats[$cat_id] = true;
+    
+    // update for current category
+    mysql_query("UPDATE category
+                 SET pending_count=pending_count+1
+                 WHERE id=$cat_id");
+    $r=mysql_query("SELECT parent FROM category WHERE id=$cat_id");
+    while( $row = mysql_fetch_array($r) ) {
+      tricklePendingCountUpdate($row{'parent'}, $updatedCats);
+    }
+  }
+}
+
 if( !empty($_POST['dbname'])
 &&  !empty($_POST['link'])
 &&  !empty($_POST['description'])
@@ -34,9 +49,11 @@ if( !empty($_POST['dbname'])
   // Manage resource categories
   $categories = addslashes($_POST['categories']);  
   $catPieces = explode(',', $categories);
-  foreach($catPieces as $cat) {
+  $updatedCats = array();
+  foreach($catPieces as $cat_id) {
     mysql_query("INSERT INTO resource_category(resource_id,category_id)"
-               ." VALUES($id,'$cat')");
+               ." VALUES($id,'$cat_id')");
+    tricklePendingCountUpdate($cat_id, $updatedCats);
   }
 
   // mysqli_close($con);

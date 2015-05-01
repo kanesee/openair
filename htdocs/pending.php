@@ -5,10 +5,9 @@
   <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/header.php'); ?>
   <?php include ($_SERVER['DOCUMENT_ROOT'].'/services/admin-required.php'); ?>
 
-<?php
- $json = buildJSTreeJson($cat, true);
- echo "<script>var category_json = ".$json.";</script>";
-?>
+  <script>
+    var category_json = <?=buildJSTreeJson($cat, true, 'pending_count')?>;
+  </script>
 
 <?php
   $MAX_RESULTS = 10;

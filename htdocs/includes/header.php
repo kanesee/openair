@@ -20,7 +20,7 @@ $activepage = $_SERVER["REQUEST_URI"];
 
 <!-- Le styles -->
 <!-- <link href="/assets/css/bootstrap.min.css" rel="stylesheet"> -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" media="all" href="/assets/css/style.css">
 <link rel="stylesheet" href="/assets/css/main.css" type="text/css">
 <!-- <link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet"> -->
@@ -28,7 +28,7 @@ $activepage = $_SERVER["REQUEST_URI"];
 <!-- Le javascript -->
 <script src="/assets/js/jquery-1.9.1.min.js"></script>
 <!-- <script src="/assets/js/bootstrap.min.js"></script> -->
-<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/assets/js/jquery.jstree-1.0.js"></script>
 <!--<script type="text/javascript" src="/assets/js/jstree.min-3.1.js"></script>-->
 <script src="/assets/js/jquery.select-hierarchy.js"></script>
