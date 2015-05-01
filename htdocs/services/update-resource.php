@@ -45,6 +45,7 @@ if( !empty($_POST['id'])
       .", paper_url='$paperurl'"
       .", author='$author'"
       .", owner='$owner'"
+      .", last_edited_date=now()"
       ." WHERE id=$id";
 
 	$result = mysql_query($updateSql);

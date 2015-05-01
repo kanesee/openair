@@ -23,9 +23,9 @@ if( !empty($_POST['dbname'])
   $user_id = $_SESSION["user"]->id;
 
   $insertSql = "INSERT INTO resource (name, link, description, resource_type, license_type, 
-  submitter_id, programming_lang, data_format, paper_url, owner, author) 
+  submitter_id, programming_lang, data_format, paper_url, owner, author, last_edited_date) 
   VALUES ('$dbname', '$link', '$description', '$type', '$license', 
-  $user_id, '$prog_lang', '$dataformat', '$paperurl', '$owner', '$author')";
+  $user_id, '$prog_lang', '$dataformat', '$paperurl', '$owner', '$author', now())";
 
   $result = mysql_query($insertSql);
 

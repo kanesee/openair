@@ -58,6 +58,9 @@
               <div class=title>
                 <a href="details.php?id=<?=$row{'id'}?>"><?=$row{'name'}?></a>
 <?php if( isAdmin() ) { ?>
+                <a href="edit_resource.php?id=<?=$row{'id'}?>">
+                  <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                </a>
                 <a href='javascript:deleteResource()' >
                   <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                 </a>
@@ -87,11 +90,6 @@
                 </tr>
               </table>
               <div class=added>Added on <?=$row{'approved_date'}?></div>
-              <div class="action-list">
-                <span class="glyphicon glyphicon-eye-open view" aria-hidden="true"><?=$row{'num_views'}?></span>
-                <span class="glyphicon glyphicon-thumbs-up like <?=$likedClass?>" aria-hidden="true" data-resource-id="<?=$row{'id'}?>"><?=$row{'num_likes'}?></span>
-                <span class="glyphicon glyphicon-comment comment" aria-hidden="true" data-resource-id="<?=$row{'id'}?>"><?=$row{'num_comments'}?></span>
-              </div>
 <?php
   if( isLoggedIn() ) {
     $mailto = 'admin@inferlink.com';
@@ -103,6 +101,11 @@
 <?php
   }
 ?>
+              <div class="action-list">
+                <span class="glyphicon glyphicon-eye-open view" aria-hidden="true"><?=$row{'num_views'}?></span>
+                <span class="glyphicon glyphicon-thumbs-up like <?=$likedClass?>" aria-hidden="true" data-resource-id="<?=$row{'id'}?>"><?=$row{'num_likes'}?></span>
+                <span class="glyphicon glyphicon-comment comment" aria-hidden="true" data-resource-id="<?=$row{'id'}?>"><?=$row{'num_comments'}?></span>
+              </div>
             </div>
 
 <!-- ######### comments ############# -->

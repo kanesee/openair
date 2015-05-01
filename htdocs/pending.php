@@ -101,7 +101,7 @@ if($totalPages>0) {
                   <td><b>Author:</b>&nbsp;<?=$row{'author'}?></td>
                 </tr>
               </table>
-              <div class=added>Added on <?=$row{'approved_date'}?></div>
+<!--              <div class=added>Added on <?=$row{'approved_date'}?></div>-->
               <form method=post action=./services/pending-approve.php>
                 <input type=hidden name=id value="<?= $row{'id'} ?>" />
                 <button type=submit name=approve class='btn span2'>Approve</button>
