@@ -1,7 +1,13 @@
-<?php include 'header.php'; ?>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+
+  <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/header.php'); ?>
+  <?php include ($_SERVER['DOCUMENT_ROOT'].'/services/admin-required.php'); ?>
+
   <title>Add Category</title>
 </head>
+  
 <?php
   $message = "";
   $catname = "";
@@ -32,7 +38,9 @@
   }
 ?>
 
-<?php include 'category.php'; ?>
+<body>
+
+<?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/nav.php'); ?>
 
 <div id="right" class="span7">
 	<h2>Add a Category</h2>
@@ -47,7 +55,12 @@
 </div>
 
 <script type="text/javascript">
-  $('select.drilldown').selectHierarchy({ hideOriginal: true });
+//  $('select.drilldown').selectHierarchy({ hideOriginal: true });
 </script>
 
-<?php include 'footer.php'; ?>
+<?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/footer.php'); ?>
+
+    </body>
+</html>
+
+<?php ob_flush() ?>
