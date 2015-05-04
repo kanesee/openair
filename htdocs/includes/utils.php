@@ -75,7 +75,7 @@ function isAdmin() {
 }
 
 /****************************************
- * Category stuff
+ * Topic/Category stuff
  ****************************************/
 
 function createCategoryEntry($row, $countOf) {
@@ -169,17 +169,17 @@ function buildJSTreeJson($cat, $openNode, $countOf) {
   return $json;
 }
 
-function getCategoryTitle($cat) {
+function getTopicName($cat) {
   $resourcetitle = "";
 
   if(empty($cat)) {
       $resourcetitle = "Artificial Intelligence";
   }
   else {
-    $r = mysql_query("SELECT id, name, description, parent from category where id=".$cat);
+    $r = mysql_query("SELECT name from category where id=".$cat);
     $row = mysql_fetch_array($r);
     if(is_null($row)) {
-//          $resourcedescription = "The category does not exist.";
+      $resourcetitle = "Artificial Intelligence";
     }
     else {
         $resourcetitle = $row{'name'};
@@ -189,7 +189,7 @@ function getCategoryTitle($cat) {
   return $resourcetitle;
 }
 
-function getCategoryDesc($cat) {
+function getTopicDesc($cat) {
   $resourcedescription = "";
 
   if(empty($cat)) {
@@ -208,6 +208,26 @@ function getCategoryDesc($cat) {
   }
   
   return $resourcedescription;
+}
+
+function getTopicImg($cat) {
+  $img = "";
+
+  if(empty($cat)) {
+      $cat = 0;
+  }
+//  else {
+    $r = mysql_query("SELECT image from category where id=".$cat);
+    $row = mysql_fetch_array($r);
+    if(is_null($row)) {
+      $img = "http://www.dailygalaxy.com/.a/6a00d8341bf7f753ef019affc63311970d-pi";
+    }
+    else {
+        $img = $row{'image'};
+    }
+//  }
+  
+  return $img;
 }
 
 function getCategoryOptions($catId, $nameprefix) {
@@ -299,9 +319,11 @@ function getResourceSearchSQL($subcatString, $query, $startIdx, $MAX_RESULTS) {
          r.owner, r.link, r.paper_url,
          r.license_type, r.resource_type,
          r.author, r.approved_date,
-         r.num_views, r.num_likes, r.num_comments
+         r.num_views, r.num_likes, r.num_comments,
+         u.image_url
     FROM resource r
   LEFT JOIN resource_category rc ON r.id=rc.resource_id
+  LEFT JOIN user u ON r.submitter_id = u.id
   WHERE r.approved_date IS NOT NULL
   AND rc.category_id IN $subcatString
   ";
@@ -370,6 +392,14 @@ function incrementViewCount($resource_id) {
     ." WHERE id=$resource_id";
 
   $result = mysql_query($updateSql);
+}
+
+
+/****************************************
+ * Misc stuff
+ ****************************************/
+function stringToColorCode($str) {
+  return '#'.substr(md5($str), 0, 6);
 }
 
 ?>

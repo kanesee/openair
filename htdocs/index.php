@@ -27,10 +27,12 @@ if(!empty($cat)) {
   $urlAdd .= "&cat=".$cat;
 }
 
-$totalPages = ceil(countResults($subcatString, $query) / $MAX_RESULTS);
+$numResult = countResults($subcatString, $query);
+$totalPages = ceil($numResult / $MAX_RESULTS);
 
-$catTitle = getCategoryTitle($cat);
-$catdescription = getCategoryDesc($cat);
+$catTitle = getTopicName($cat);
+$catdescription = getTopicDesc($cat);
+$catImg = getTopicImg($cat);
 
 ?>
 
@@ -60,60 +62,89 @@ if(isAdmin()) {
 <body>
 
 <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/nav.php'); ?>
+  
+<div id="heading" class="hero-unit">
+  <div class="row">
+    <img class="topic-img" src="<?= $catImg ?>">
+    <div id="topic-name">
+      <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+      <span class="topic-name-text"><?= $catTitle ?></span>
+      
+<?php if( isAdmin() && $cat>0 ) { ?>
+      <a href='javascript:deleteCategory()' >
+        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+      </a>
+<?php } ?>
+    </div>
+    <div id="editors">
+      <div class="editor-heading">Editors: </div>
+      
+<!--
+      <div class="editor"><img src="http://abs.twimg.com/sticky/default_profile_images/default_profile_5_normal.png"></div>
+      <div class="editor"><img src="https://graph.facebook.com/10152673886552261/picture?type=square"></div>
+      <div class="editor"><img src="/assets/img-3rd/unknownuser.png"></div>
+-->
 
+      <img class="editor" src="http://abs.twimg.com/sticky/default_profile_images/default_profile_5_normal.png">
+      <img class="editor" src="https://graph.facebook.com/10152673886552261/picture?type=square">
+      <img class="editor" src="/assets/img-3rd/unknownuser.png">
+    </div>
+
+    <div id="topic-desc">
+      <?= $catdescription ?>
+<?php if( isAdmin() && $cat>0 ) { ?>
+      <a href='edit_category.php?cat=<?=$cat?>'>
+        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+      </a>
+<?php } ?>
+    </div>
+    
+    <div id="search">
+      <form id="searchform" class="form-search form-group" method="GET" action=".">
+        <div class="input-append">
+          <input name='cat' type='hidden' value="<?php echo $cat ?>"></input>
+          <button type="submit" class="btn btn-danger">Search</button>
+          <input type="text" class="search-query input-xxlarge form-control" name='q' value="<?= $query ?>" placeholder="Search within <?= $catTitle ?>">
+        </div>
+      </form>
+    </div>
+    <br style="clear: both">
+    
+  </div>
+</div> <!-- end id=heading -->
+<div class="arrow_box"></div>
+  
+  
+<!-- search results -->  
 <div class="container">
   <div class="row row-offcanvas row-offcanvas-left">
     
-    <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/category.php'); ?>
-
-    <div id="main" class="col-xs-12 col-sm-9">
+    <div id="main" class="col-xs-12 col-sm-12">
       <div id="index" class="span7">
-        <div id="resourceinfo">
-          <div id="resourcetitle">
-            <?= $catTitle ?>
-<?php if( isAdmin() && $cat>0 ) { ?>
-            <a href='javascript:deleteCategory()' >
-              <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-            </a>
-<?php } ?>
-          </div>
-          <div id="resourcedescription">
-            <?= $catdescription ?>
-<?php if( isAdmin() && $cat>0 ) { ?>
-            <a href='edit_category.php?cat=<?=$cat?>'>
-              <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-            </a>
-<?php } ?>
-          </div>
-        </div>
-
-        <div id="search">
-          <form id="searchform" class="form-search form-group" method="GET" action=".">
-            <div class="input-append">
-              <input name='cat' type='hidden' value="<?php echo $cat ?>"></input>
-              <input type="text" class="search-query input-xxlarge form-control" name='q' value="<?= $query ?>" placeholder="Search within <?= $catTitle ?>">
-              <button type="submit" class="btn">Search</button>
-            </div>
-          </form>
-        </div>
-
 <?php
 if($totalPages>0) {
 ?>
-        <div class="searchcontrols">
+<!--
+        <div class="page-controls">
           <div class="row-fluid">
             <div class="col-xs-3 text-left"><?php if ($page > 1) {echo "<a href=index.php?p=".($page-1).$urlAdd.">&lt; Previous Page</a>";} else { echo "&lt; Previous Page";} ?></div>
             <div class="col-xs-6 text-center">Page <?php echo $page." of ". $totalPages; ?> </div>
             <div class="col-xs-3 text-right"><?php if ($page < $totalPages) {echo "<a href=index.php?p=".($page+1).$urlAdd.">Next Page &gt;</a>";} else { echo "Next Page &gt;";} ?></div>
           </div>
         </div>
+-->
 <?php
 }
 ?>
   
-        <div id='searchresults'>
+        <table id='searchresults' class="table">
+          <thead>
+            <tr>
+              <th colspan="2" id="totalResult"><?= $numResult ?> results</th>
+            </tr>
+          </thead>
+          <tbody>
 
-  
 <?php
 // ########## print search results
 $count = 0;
@@ -121,7 +152,17 @@ $sqlStatement = getResourceSearchSQL($subcatString, $query, $startIdx, $MAX_RESU
 
 $rs = mysql_query($sqlStatement);
 while ($row = mysql_fetch_array($rs)) {
-	$count++;
+  $count++;
+  
+  $types = explode(",", $row{'resource_type'});
+  $typeHtml = '';
+  foreach($types as $type) {
+    $type = trim($type);
+    $typeColor = stringToColorCode($type);
+    $typeHtml .= "<span class='label' style='background-color: $typeColor'>
+                    $type
+                  </span>";
+  }
   
     $catRs = mysql_query("
       SELECT c.id, c.name FROM resource_category rc
@@ -149,55 +190,42 @@ while ($row = mysql_fetch_array($rs)) {
       }
     }
 ?>
-            <div class="resource-comment">
+          <tr class="resource-container">
+            <td class="meta-resource-column">
+              <a class="link" href="<?=$row{'link'}?>" target='_blank'>
+                <span class="glyphicon glyphicon-link" aria-hidden="true">Project</span>
+              </a>
+              <a class="link" href="<?=$row{'paper_url'}?>" target='_blank'>
+                <span class="glyphicon glyphicon-link" aria-hidden="true">Paper</span>
+              </a>
+              
+              <div class="action-list">
+                <span class="glyphicon glyphicon-thumbs-up like <?=$likedClass?>" aria-hidden="true" data-resource-id="<?=$row{'id'}?>"> <?=$row{'num_likes'}?></span>
+                <span class="glyphicon glyphicon-comment comment" aria-hidden="true" data-resource-id="<?=$row{'id'}?>"> <?=$row{'num_comments'}?></span>
+              </div>
+              
+            </td>
+            <td class="resource-column">
               <div class="resource">
-                <div class=title>
+                <div class="resource-title">
                   <a href="details.php?id=<?=$row{'id'}?>"><?=$row{'name'}?></a>
-                </div>
-                <div class="link">
-                  <b>Project</b>: </b><a href="<?=$row{'link'}?>" target='_blank'><?=$row{'link'}?></a>
-                </div>
-                <div class="paper-link">
-                  <b>Paper</b>: <a href="<?=$row{'paper_url'}?>" target='_blank'><?=$row{'paper_url'}?></a>
+                  <span class="resource-type"><?= $typeHtml ?></span>
                 </div>
 
-                <div class="">
-                  <pre class="about"><?=htmlspecialchars($row{'description'})?></pre>
-                </div>
-                <table class=features>
-                  <tr>
-                    <td><b>Resource type:</b>&nbsp;<?=$row{'resource_type'}?></td>
-                    <td><b>License type:</b>&nbsp;<?=$row{'license_type'}?></td>
-                  </tr>
-                  <tr>
-                    <td><b>Categories:</b>&nbsp;<?=$catPath?></td>
-                    <td><b>Owner:</b>&nbsp;<?=$row{'owner'}?></td>
-                  </tr>
-                  <tr>
-                    <td><b>Author:</b>&nbsp;<?=$row{'author'}?></td>
-                  </tr>
-                </table>
-                <div class=added>Added on <?=$row{'approved_date'}?></div>
-                <div class="action-list">
-                  <span class="glyphicon glyphicon-eye-open view" aria-hidden="true"><?=$row{'num_views'}?></span>
-                  <span class="glyphicon glyphicon-thumbs-up like <?=$likedClass?>" aria-hidden="true" data-resource-id="<?=$row{'id'}?>"><?=$row{'num_likes'}?></span>
-                  <span class="glyphicon glyphicon-comment comment" aria-hidden="true" data-resource-id="<?=$row{'id'}?>"><?=$row{'num_comments'}?></span>
+                <div class="resource-desc"><?=htmlspecialchars($row{'description'})?></div>
+                
+                <div class="view"><?=$row{'num_views'}?> views</div>
+
+                <div class="submission">
+                  Submitted by <img class="submitter" src="<?=$row{'image_url'}?>"> on <?=$row{'approved_date'}?>
                 </div>
               </div>
 
-<!-- ######### comments ############# -->
+              <!-- ######### comments ############# -->
               <div class="cmt-container">
-
-                <!-- comment form -->
-                <!--
-                <div class="new-com-bt">
-                  <span>Write a comment ...</span>
-                </div>
-                -->
                 <div class="new-com-cnt">
                   <textarea class="the-new-com"></textarea>
                   <div data-resource-id="<?=$row{'id'}?>" class="bt-add-com">Post comment</div>
-<!--                  <div class="bt-cancel-com">Cancel</div>-->
                 </div>
                 <div class="clear"></div>
               
@@ -247,23 +275,27 @@ if($count==0) {
 	}
 }
 ?>
-  
+                </td>
+              </tr>
+            </tbody>
+          </table> <!-- id=searchresults -->
+
 <?php
 if($totalPages>0) {
 ?>
-            <div class="searchcontrols">
+<!--
+            <div class="page-controls">
               <div class="row-fluid">
                 <div class="col-xs-3 text-left"><?php if ($page > 1) {echo "<a href=index.php?p=".($page-1).$urlAdd.">&lt; Previous Page</a>";} else { echo "&lt; Previous Page";} ?></div>
                 <div class="col-xs-6 text-center">Page <?php echo $page." of ". $totalPages; ?> </div>
                 <div class="col-xs-3 text-right"><?php if ($page < $totalPages) {echo "<a href=index.php?p=".($page+1).$urlAdd.">Next Page &gt;</a>";} else { echo "Next Page &gt;";} ?></div>
               </div>
             </div>
+-->
 <?php
 }
 ?>
       
-      
-          </div> <!-- id=searchresults -->
       
         </div> <!-- id=index -->
       </div> <!-- id=main -->
