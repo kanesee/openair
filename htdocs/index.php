@@ -23,6 +23,9 @@ $urlAdd = "";
 if(!empty($query)) {
   $urlAdd = "&q=".$query;
 }
+if(!empty($cat)) {
+  $urlAdd .= "&cat=".$cat;
+}
 
 $totalPages = ceil(countResults($subcatString, $query) / $MAX_RESULTS);
 
@@ -97,7 +100,7 @@ if(isAdmin()) {
 <?php
 if($totalPages>0) {
 ?>
-        <div id="searchcontrols">
+        <div class="searchcontrols">
           <div class="row-fluid">
             <div class="col-xs-3 text-left"><?php if ($page > 1) {echo "<a href=index.php?p=".($page-1).$urlAdd.">&lt; Previous Page</a>";} else { echo "&lt; Previous Page";} ?></div>
             <div class="col-xs-6 text-center">Page <?php echo $page." of ". $totalPages; ?> </div>
@@ -248,7 +251,7 @@ if($count==0) {
 <?php
 if($totalPages>0) {
 ?>
-            <div id="searchcontrols">
+            <div class="searchcontrols">
               <div class="row-fluid">
                 <div class="col-xs-3 text-left"><?php if ($page > 1) {echo "<a href=index.php?p=".($page-1).$urlAdd.">&lt; Previous Page</a>";} else { echo "&lt; Previous Page";} ?></div>
                 <div class="col-xs-6 text-center">Page <?php echo $page." of ". $totalPages; ?> </div>

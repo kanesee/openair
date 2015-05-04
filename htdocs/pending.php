@@ -10,13 +10,18 @@
   </script>
 
 <?php
-  $MAX_RESULTS = 10;
-  $page = 1;
-  if (isset($_GET['p'])) { $page=$_GET['p']; }
-  $startIdx = ($page-1) * $MAX_RESULTS;
-  $totalPages = ceil(countPendingResults($subcatString) / $MAX_RESULTS);
+$MAX_RESULTS = 10;
+$page = 1;
+if (isset($_GET['p'])) { $page=$_GET['p']; }
+$startIdx = ($page-1) * $MAX_RESULTS;
+$totalPages = ceil(countPendingResults($subcatString) / $MAX_RESULTS);
 
-  $catTitle = getCategoryTitle($cat);
+$catTitle = getCategoryTitle($cat);
+
+$urlAdd = "";
+if(!empty($cat)) {
+  $urlAdd = "&cat=".$cat;
+}
 
 ?>
   
@@ -40,11 +45,11 @@
 <?php
 if($totalPages>0) {
 ?>
-      <div id="searchcontrols">
+      <div class="searchcontrols">
         <div class="row-fluid">
-          <div class="col-xs-3 text-left"><?php if ($page > 1) {echo "<a href=pending.php?p=".($page-1).">&lt; Previous Page</a>";} else { echo "&lt; Previous Page";} ?></div>
+          <div class="col-xs-3 text-left"><?php if ($page > 1) {echo "<a href=pending.php?p=".($page-1).$urlAdd.">&lt; Previous Page</a>";} else { echo "&lt; Previous Page";} ?></div>
           <div class="col-xs-6 text-center">Page <?php echo $page." of ". $totalPages; ?> </div>
-          <div class="col-xs-3 text-right"><?php if ($page < $totalPages) {echo "<a href=pending.php?p=".($page+1).">Next Page &gt;</a>";} else { echo "Next Page &gt;";} ?></div>
+          <div class="col-xs-3 text-right"><?php if ($page < $totalPages) {echo "<a href=pending.php?p=".($page+1).$urlAdd.">Next Page &gt;</a>";} else { echo "Next Page &gt;";} ?></div>
         </div>
       </div>
 <?php
@@ -122,11 +127,11 @@ if($totalPages>0) {
 <?php
 if($totalPages>0) {
 ?>
-      <div id="searchcontrols">
+      <div class="searchcontrols">
         <div class="row-fluid">
-          <div class="col-xs-3 text-left"><?php if ($page > 1) {echo "<a href=pending.php?p=".($page-1).">&lt; Previous Page</a>";} else { echo "&lt; Previous Page";} ?></div>
+          <div class="col-xs-3 text-left"><?php if ($page > 1) {echo "<a href=pending.php?p=".($page-1).$urlAdd.">&lt; Previous Page</a>";} else { echo "&lt; Previous Page";} ?></div>
           <div class="col-xs-6 text-center">Page <?php echo $page." of ". $totalPages; ?> </div>
-          <div class="col-xs-3 text-right"><?php if ($page < $totalPages) {echo "<a href=pending.php?p=".($page+1).">Next Page &gt;</a>";} else { echo "Next Page &gt;";} ?></div>
+          <div class="col-xs-3 text-right"><?php if ($page < $totalPages) {echo "<a href=pending.php?p=".($page+1).$urlAdd.">Next Page &gt;</a>";} else { echo "Next Page &gt;";} ?></div>
         </div>
       </div>
 <?php

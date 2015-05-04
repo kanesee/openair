@@ -274,6 +274,24 @@ function getSubCats($catId) {
  * Search stuff
  ****************************************/
 
+function countResults($subcatString, $query) {
+  $sqlStatement = "
+    SELECT count(DISTINCT r.id)
+      FROM resource r
+    LEFT JOIN resource_category rc ON r.id=rc.resource_id
+    WHERE r.approved_date IS NOT NULL
+    AND rc.category_id IN $subcatString
+    ";
+  if(!empty($query)) {
+      $sqlStatement.=" AND (r.name like '%".$query."%' OR r.description like '%".$query."%')";
+//    $sqlStatement.=" AND r.name like '%".$query."%'";
+  }
+
+  $r = mysql_query($sqlStatement);
+  $row = mysql_fetch_row($r);
+  return $row[0];
+}
+
 function getResourceSearchSQL($subcatString, $query, $startIdx, $MAX_RESULTS) {
 
   $sqlStatement="
@@ -285,7 +303,8 @@ function getResourceSearchSQL($subcatString, $query, $startIdx, $MAX_RESULTS) {
     FROM resource r
   LEFT JOIN resource_category rc ON r.id=rc.resource_id
   WHERE r.approved_date IS NOT NULL
-  AND rc.category_id IN $subcatString";
+  AND rc.category_id IN $subcatString
+  ";
 
   if(!empty($query)) {
       $sqlStatement.=" AND (r.name like '%".$query."%' OR r.description like '%".$query."%')";
@@ -294,6 +313,18 @@ function getResourceSearchSQL($subcatString, $query, $startIdx, $MAX_RESULTS) {
                   LIMIT ".$startIdx.", ".$MAX_RESULTS;
   
   return $sqlStatement;
+}
+
+function countPendingResults($subcatString) {
+  $r=mysql_query("
+    SELECT count(DISTINCT r.id)
+      FROM resource r
+    LEFT JOIN resource_category rc ON r.id=rc.resource_id
+    WHERE r.approved_date IS NULL
+    AND rc.category_id IN $subcatString
+     ");
+  $row = mysql_fetch_row($r);
+  return $row[0];
 }
 
 function getPendingResourceSQL($subcatString, $startIdx, $MAX_RESULTS) {
@@ -326,35 +357,6 @@ function getResourceSQL($resource_id) {
   WHERE r.id = '$resource_id'";
   
   return $sqlStatement;
-}
-
-function countResults($subcatString, $query) {
-  $sqlStatement = "
-    SELECT count(*)
-      FROM resource r
-    LEFT JOIN resource_category rc ON r.id=rc.resource_id
-    WHERE r.approved_date IS NOT NULL
-    AND rc.category_id IN $subcatString
-    ";
-  if(!empty($query)) {
-    $sqlStatement.=" AND r.name like '%".$query."%'";
-  }
-
-  $r = mysql_query($sqlStatement);
-  $row = mysql_fetch_row($r);
-  return $row[0];
-}
-
-function countPendingResults($subcatString) {
-  $r=mysql_query("
-    SELECT count(*)
-      FROM resource r
-    LEFT JOIN resource_category rc ON r.id=rc.resource_id
-    WHERE r.approved_date IS NULL
-    AND rc.category_id IN $subcatString
-     ");
-  $row = mysql_fetch_row($r);
-  return $row[0];
 }
 
 /****************************************
