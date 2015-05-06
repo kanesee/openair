@@ -19,22 +19,27 @@ $activepage = $_SERVER["REQUEST_URI"];
 ?>
 
 <!-- Le styles -->
-<!-- <link href="/assets/css/bootstrap.min.css" rel="stylesheet"> -->
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+ <link href="/assets/css/bootstrap-3.3.4.min.css" rel="stylesheet"> 
+<!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">-->
 <link rel="stylesheet" type="text/css" media="all" href="/assets/css/style.css">
-<link rel="stylesheet" href="/assets/css/main.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="/assets/css/main.css">
 <!-- <link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet"> -->
 
 <!-- Le javascript -->
 <script src="/assets/js/jquery-1.9.1.min.js"></script>
-<!-- <script src="/assets/js/bootstrap.min.js"></script> -->
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/assets/js/jquery.jstree-1.0.js"></script>
-<!--<script type="text/javascript" src="/assets/js/jstree.min-3.1.js"></script>-->
-<script src="/assets/js/jquery.select-hierarchy.js"></script>
+ <script src="/assets/js/bootstrap-3.3.4.min.js"></script> 
+<!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>-->
 <script src="/assets/js/main.js"></script>
 
-<!-- ################ Category related headers ###################-->
+<!-- ################ Topic related headers ###################-->
+<link rel="stylesheet" type="text/css" href="/assets/css/topic-tree.css">
+
+<!--<script src="/assets/js/jquery.jstree-1.0.js"></script>-->
+<!--<script type="text/javascript" src="/assets/js/jstree.min-3.1.js"></script>-->
+<!--<script src="/assets/js/jquery.select-hierarchy.js"></script>-->
+<script src="/assets/js/jquery.twbsPagination.min.js"></script>
+<script src="/assets/js/topic-tree.js"></script>
+
 <?php
 
 $id = "";
@@ -47,8 +52,8 @@ echo "<script>var cat = \"".$cat."\";</script>";
 
 $subcatString = buildSubCatSqlCondition($cat);
 
-
-//if(isset($_GET['cat']) && basename($_SERVER['PHP_SELF']) != "edit_category.php" && basename($_SERVER['PHP_SELF']) != "pending.php")
-//	echo "<head><title>$resourcetitle</title></head>";
 ?>
+
+<!-- ################ Search Result headers ###################-->
+<script src="/assets/js/search-result.js"></script>
 

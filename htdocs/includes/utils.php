@@ -78,6 +78,44 @@ function isAdmin() {
  * Topic/Category stuff
  ****************************************/
 
+function writeTopicEntry($row, $countOf, $selectedCat, $level) {
+  $id = $row{'id'};
+  $name = $row{'name'};
+  if( $countOf == 'pending_count' ) {
+    $name .= ' (' . $row{'pending_count'} . ')';    
+  } else
+  if( $countOf == 'approved_count' ) {
+    $name .= ' (' . $row{'approved_count'} . ')';
+  }
+  $icon = ($level == 0) ? 'glyphicon-plus' : 'glyphicon-minus';
+  $class = ($level == 0) ? 'parent_li' : '';
+  if( !empty($selectedCat) && $selectedCat == $id ) { $class .= ' selected-topic'; }
+  $topic = "<li data-level='$level' class='$class'>
+              <span class='glyphicon $icon'></span>
+              <a href='?cat=$id'>$name</a>
+            ";
+
+  $children = "";
+  $filter_id = 0;
+  $sqlQuery = "SELECT * from category where parent=".$id;
+  if (!isAdmin()) {
+      $sqlQuery.= " AND id > 0";
+  }
+  $sqlQuery.= " ORDER BY id";
+
+  $r_sub = mysql_query($sqlQuery);
+  if( mysql_num_rows($r_sub) > 0 ) {
+    $topic .= "<ul>";
+    while ($row_sub = mysql_fetch_array($r_sub)) {
+      $topic .= writeTopicEntry($row_sub, $countOf, $selectedCat, $level+1);
+    }
+      $topic .= "</ul>";
+  }
+  $topic .= "</li>";
+  
+  return $topic;
+}
+
 function createCategoryEntry($row, $countOf) {
   $id = $row{'id'};
   $name = $row{'name'};

@@ -6,9 +6,6 @@
   
   <link rel="stylesheet" href="/assets/css/comments.css" type="text/css">
   <script src="/assets/js/comments.js"></script>
-  <script>
-    var category_json = <?=buildJSTreeJson($cat, true, 'approved_count')?>;
-  </script>
   
 <?php
 $query = "";
@@ -34,6 +31,16 @@ $catTitle = getTopicName($cat);
 $catdescription = getTopicDesc($cat);
 $catImg = getTopicImg($cat);
 
+$topicImageElement = "";
+if( !empty($catImg) ) {
+  $topicImageElement = "<img class='topic-img' src='$catImg'>";
+} else {
+  $topicBgColor = stringToColorCode($catTitle);
+  $topicText = substr($catTitle, 0, 1);
+  $topicImageElement = "<div class='topic-img-none' style='background: $topicBgColor'>
+                          $topicText
+                        </div>";
+}
 ?>
 
 <?php
@@ -55,6 +62,19 @@ if(isAdmin()) {
 }
 ?>
   
+  <!-- ########### Pagination script ############ -->
+  <script>
+    $(function () {
+
+      $('.pagination').twbsPagination({
+          totalPages: <?= $totalPages ?>,
+          visiblePages: 3,
+          href: '?p={{number}}<?=$urlAdd?>'
+      });
+
+    });
+  </script>
+  
   <title>Open AIR Home</title>
 
 </head>
@@ -65,10 +85,13 @@ if(isAdmin()) {
   
 <div id="heading" class="hero-unit">
   <div class="row">
-    <img class="topic-img" src="<?= $catImg ?>">
+    <?= $topicImageElement ?>
     <div id="topic-name">
-      <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
       <span class="topic-name-text"><?= $catTitle ?></span>
+<!--      <span class="topic-name-label">Browse By: </span>-->
+      
+      <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/category.php'); ?>
+      
       
 <?php if( isAdmin() && $cat>0 ) { ?>
       <a href='javascript:deleteCategory()' >
@@ -78,12 +101,6 @@ if(isAdmin()) {
     </div>
     <div id="editors">
       <div class="editor-heading">Editors: </div>
-      
-<!--
-      <div class="editor"><img src="http://abs.twimg.com/sticky/default_profile_images/default_profile_5_normal.png"></div>
-      <div class="editor"><img src="https://graph.facebook.com/10152673886552261/picture?type=square"></div>
-      <div class="editor"><img src="/assets/img-3rd/unknownuser.png"></div>
--->
 
       <img class="editor" src="http://abs.twimg.com/sticky/default_profile_images/default_profile_5_normal.png">
       <img class="editor" src="https://graph.facebook.com/10152673886552261/picture?type=square">
@@ -119,8 +136,11 @@ if(isAdmin()) {
 <div class="container">
   <div class="row row-offcanvas row-offcanvas-left">
     
+    
     <div id="main" class="col-xs-12 col-sm-12">
       <div id="index" class="span7">
+        
+<!--        <div id="resultTotal"></div>-->
 <?php
 if($totalPages>0) {
 ?>
@@ -140,7 +160,12 @@ if($totalPages>0) {
         <table id='searchresults' class="table">
           <thead>
             <tr>
-              <th colspan="2" id="totalResult"><?= $numResult ?> results</th>
+              <th id="result-header" colspan="2">
+                <div id="page-control-top">
+                  <ul class="pagination pagination-sm"></ul>
+                </div>
+                <div id="resultTotal"><?= $numResult ?> results in "<?= $catTitle ?>"</div>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -283,6 +308,7 @@ if($count==0) {
 <?php
 if($totalPages>0) {
 ?>
+  <ul id="page-control-bottom" class="pagination pagination-sm"></ul>
 <!--
             <div class="page-controls">
               <div class="row-fluid">
