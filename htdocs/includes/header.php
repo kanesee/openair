@@ -35,7 +35,6 @@ $activepage = $_SERVER["REQUEST_URI"];
 <link rel="stylesheet" type="text/css" href="/assets/css/topic-tree.css">
 
 <!--<script src="/assets/js/jquery.jstree-1.0.js"></script>-->
-<!--<script type="text/javascript" src="/assets/js/jstree.min-3.1.js"></script>-->
 <!--<script src="/assets/js/jquery.select-hierarchy.js"></script>-->
 <script src="/assets/js/jquery.twbsPagination.min.js"></script>
 <script src="/assets/js/topic-tree.js"></script>
@@ -53,7 +52,3 @@ echo "<script>var cat = \"".$cat."\";</script>";
 $subcatString = buildSubCatSqlCondition($cat);
 
 ?>
-
-<!-- ################ Search Result headers ###################-->
-<script src="/assets/js/search-result.js"></script>
-

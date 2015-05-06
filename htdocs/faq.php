@@ -11,7 +11,7 @@
 
 <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/nav.php'); ?>
 
- <div id="right" class="span7">
+ <div id="" class="span7">
 	<div id="resourceinfo">
 		<div id="resourcetitle">Frequently Asked Questions</div>
 		<div id="resourcedescription">
