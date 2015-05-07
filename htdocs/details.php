@@ -178,7 +178,7 @@
         
         <a id="flag-resource" href="<?=$mail_link?>">
           <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
-          Notify Editor about error
+          Flag for editor
         </a>
       </div>
     </div>
@@ -253,9 +253,8 @@
 
             <!-- ############## Topic ############### -->
             <div class="row">
-              <div class="col-xs-3 detail-field">Categorized in:</div>
-              <div class="col-xs-9">          
-                <?=$catPath?>
+              <div class="col-xs-12 detail-field">
+                Categorized in: <?=$catPath?>
               </div>
             </div>
 
@@ -283,11 +282,12 @@
             while($affcom = mysql_fetch_assoc($sql)){
               $commenter_name = $affcom['name'];
               $commenter_img = $affcom['image_url'];
+              $commenter_profile = $affcom['profile_url'];
               $comment = $affcom['comment'];
               $date = $affcom['date'];
 ?>
               <div class="cmt-cnt">
-                <img src="<?= $commenter_img; ?>" />
+                <a href="<?= $commenter_profile ?>"><img src="<?= $commenter_img ?>" /></a>
                 <div class="thecom">
                   <h5><?= $commenter_name; ?></h5>
                   <span data-utime="1371248446" class="com-dt"><?php echo $date; ?></span>

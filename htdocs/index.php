@@ -154,7 +154,7 @@ if($totalPages>0) {
 }
 ?>
   
-        <table id='searchresults' class="table">
+        <table id='searchresults' class="table table-striped">
           <thead>
             <tr>
               <th id="result-header" colspan="2">
