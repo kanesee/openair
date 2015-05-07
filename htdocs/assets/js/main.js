@@ -81,6 +81,6 @@ function denyResource(id) {
   }
 }
 
-function denyResource(id) {
+function editResource(id) {
   window.location = window.location.origin+"/edit_resource.php?id="+id;
 }

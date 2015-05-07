@@ -379,7 +379,7 @@ function getResourceSearchSQL($subcatString, $query, $startIdx, $MAX_RESULTS) {
   ";
 
   if(!empty($query)) {
-      $sqlStatement.=" AND (r.name like '%".$query."%' OR r.description like '%".$query."%')";
+    $sqlStatement.=" AND (r.name like '%".$query."%' OR r.description like '%".$query."%')";
   }
   $sqlStatement.=" ORDER BY r.num_likes DESC, r.name
                   LIMIT ".$startIdx.", ".$MAX_RESULTS;
