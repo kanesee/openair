@@ -3,12 +3,35 @@
 <head>
 
   <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/header.php'); ?>
+  
+  <style>
+    .arrow_box {
+      margin-bottom: 30px;
+    }
+    
+    .action-link {
+      padding-left: 10px;
+      padding-right: 5px;
+      vertical-align: super;
+    }
+  </style>
 
   <link rel="stylesheet" href="/assets/css/comments.css" type="text/css">
   <script src="/assets/js/comments.js"></script>
   
+  <script>
+    $(function () {
+      if( window.location.href.indexOf('#comments') > -1 ) {
+        $('a[href="#comments"]').tab('show');
+        $('#comment-area').focus();
+      }
+    });
+  </script>
 <?php
   incrementViewCount($id);
+
+  $catTitle = getTopicName($cat);
+
     
   $r=mysql_query(getResourceSQL($id));
 
@@ -43,142 +66,248 @@
   }
 ?>
    
-  <title>Open Air</title>
+  <title><?=$row{'name'}?></title>
 </head>
   
 <body>
 
   <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/nav.php'); ?>
 
-  <div id="main" class="container">
+  <div id="detail-heading" class="hero-unit">
     <div class="row">
+      <div id="search-detail">
+        <form id="searchform" class="form-search form-group" method="GET" action=".">
+          <div class="input-append">
+            <input name='cat' type='hidden' value="<?= $cat ?>"></input>
+            <button type="submit" class="btn btn-danger">Search</button>
+            <input type="text" class="search-query input-xxlarge form-control" name='q' value="" placeholder="Search within <?= $catTitle ?>">
+            <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/category.php'); ?>
+          </div>
+        </form>
+      </div>
+      <br style="clear: both">
 
-          <div class="resource-comment">
-            <div class="resource">
-              <div class=title>
-                <a href="details.php?id=<?=$row{'id'}?>"><?=$row{'name'}?></a>
-<?php if( isAdmin() ) { ?>
-                <a href="edit_resource.php?id=<?=$row{'id'}?>">
-                  <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                </a>
-                <a href='javascript:deleteResource()' >
-                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                </a>
-<?php } ?>
-              </div>
-              <div class="link">
-                <b>Project</b>: </b><a href="<?=$row{'link'}?>" target='_blank'><?=$row{'link'}?></a>
-              </div>
-              <div class="paper-link">
-                <b>Paper</b>: <a href="<?=$row{'paper_url'}?>" target='_blank'><?=$row{'paper_url'}?></a>
-              </div>
-              
-              <div class="">
-                <pre class="about"><?=htmlspecialchars($row{'description'})?></pre>
-              </div>
-              <table class=features>
-                <tr>
-                  <td><b>Resource type:</b>&nbsp;<?=$row{'resource_type'}?></td>
-                  <td><b>License type:</b>&nbsp;<?=$row{'license_type'}?></td>
-                </tr>
-                <tr>
-                  <td><b>Categories:</b>&nbsp;<?=$catPath?></td>
-                  <td><b>Owner:</b>&nbsp;<?=$row{'owner'}?></td>
-                </tr>
-                <tr>
-                  <td><b>Author:</b>&nbsp;<?=$row{'author'}?></td>
-                </tr>
-              </table>
-              <div class=added>Added on <?=$row{'approved_date'}?></div>
+    </div>
+  </div> <!-- end id=heading -->
+  <div class="arrow_box"></div>
+  
+  <div class="container">
+    
+    <div id="detail-brief">
+    
+    <!-- ############## Title ############### -->
+    <div class="row">
+      <div class="col-xs-12">
+        <h2 id="detail-title">
+  <?php if( isAdmin() ) { ?>
+          <a href="edit_resource.php?id=<?=$row{'id'}?>">
+            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+          </a>
+          <a href='javascript:deleteResource()' >
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+          </a>
+  <?php } ?>
+          <?=$row{'name'}?>
+        </h2>
+      </div>
+    </div>
+    
+    <!-- ############## Project & Paper Links ############### -->
 <?php
+    $attribution = "";
+    if( !empty($row{'author'}) )
+        $attribution = "by ".$row{'author'}." ";
+    if( !empty($row{'owner'}) )
+        $attribution .= "from ".$row{'owner'};
+?>
+    <div class="row">
+<?php   if( !empty($row{'link'}) ) { ?>
+      <div class="col-xs-6">
+        Project: <a class="link" href="<?=$row{'link'}?>" target='_blank'>
+          <?=$row{'link'}?>
+        </a>
+      </div>
+<?php   } ?>
+<?php   if( !empty($row{'paper_url'}) ) { ?>
+      <div class="col-xs-6">
+        Paper: <a class="link" href="<?=$row{'paper_url'}?>" target='_blank'>
+          <?=$row{'paper_url'}?>
+        </a>
+      </div>
+<?php   } ?>
+    </div>
+
+    <!-- ############## Author/ Owner ############### -->
+    <div class="row">
+      <div class="col-xs-12">
+        <?= $attribution ?>
+      </div>
+    </div>
+
+    <!-- ############## Submitter ############### -->
+    <div class="row detail-submission">
+      <div class="col-xs-12">
+        Submitted by
+        <a href="<?=$row{'profile_url'}?>">
+          <img class="submitter" src="<?=$row{'image_url'}?>">
+        </a>
+        on <?= date('M d Y', strtotime($row{'approved_date'})) ?>
+      </div>
+    </div>
+  </div>
+    
+    <!-- ############## Links and Meta ############### -->
+<?php
+  $mailto = 'admin@inferlink.com';
+  $subject = 'Post-' . $row{'id'} . ' Flagged';
+  $who = "";
   if( isLoggedIn() ) {
-    $mailto = 'admin@inferlink.com';
-    $subject = 'Post-' . $row{'id'} . ' Flagged';
-    $body = $_SESSION["user"]->name . ' (' . $_SESSION["user"]->id . ') has the following comment about this post: ';
-    $mail_link = 'mailto:'.$mailto.'?subject='.$subject.'&body='.$body;
-?>
-            <a href="<?=$mail_link?>"><span class="glyphicon glyphicon-flag" aria-hidden="true"></span> Notify Editor about error</a>
-<?php
+    $who = $_SESSION["user"]->name . ' (' . $_SESSION["user"]->id . ') has';
+  } else {
+    $who = "I have";
   }
+    $body = "$who the following comment about this post: ";
+    $mail_link = 'mailto:'.$mailto.'?subject='.$subject.'&body='.$body;
+?>    
+    <div class="row">
+      <div class="col-xs-12">
+        <span class="glyphicon glyphicon-thumbs-up action-link like <?=$likedClass?>" aria-hidden="true" data-resource-id="<?=$row{'id'}?>"> <?=$row{'num_likes'}?></span>
+      
+        <a href="https://twitter.com/share" class="twitter-share-button" data-via="OpenAIResources">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+        
+        <a id="flag-resource" href="<?=$mail_link?>">
+          <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+          Notify Editor about error
+        </a>
+      </div>
+    </div>
+    
+    
+    <!-- ############## Tab Area ############### -->
+    <div id="detail-tabpanel" class="row">
+      <div class="col-xs-12">
+        
+        <div role="tabpanel">
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+              <a href="#summary" aria-controls="summary" role="tab" data-toggle="tab">Summary</a>
+            </li>
+            <li role="presentation">
+              <a href="#comments" aria-controls="comments" role="tab" data-toggle="tab">Comments (<span id="comment-count"><?=$row{'num_comments'}?></span>)</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="tab-content">
+
+          <!-- ############## Summary ############### -->
+          <div role="tabpanel" class="tab-pane active" id="summary">
+
+            <!-- ############## Resource Types / License ############### -->
+<?php
+            $types = explode(",", $row{'resource_type'});
+            $typeHtml = '';
+            foreach($types as $type) {
+              $type = trim($type);
+              $typeColor = stringToColorCode($type);
+              $typeHtml .= "<span class='label' style='background-color: $typeColor'>
+                              $type
+                            </span>";
+            }
 ?>
-              <div class="action-list">
-                <span class="glyphicon glyphicon-eye-open view" aria-hidden="true"><?=$row{'num_views'}?></span>
-                <span class="glyphicon glyphicon-thumbs-up like <?=$likedClass?>" aria-hidden="true" data-resource-id="<?=$row{'id'}?>"><?=$row{'num_likes'}?></span>
-                <span class="glyphicon glyphicon-comment comment" aria-hidden="true" data-resource-id="<?=$row{'id'}?>"><?=$row{'num_comments'}?></span>
+            <div class="row">
+              <div class="col-xs-2 detail-field">Type:</div>
+              <div class="col-xs-4">
+                <span class="resource-type"><?= $typeHtml ?></span>
+              </div>
+              <div class="col-xs-2 detail-field">License:</div>
+              <div class="col-xs-4">
+                <?= $row{'license_type'} ?>
               </div>
             </div>
 
-<!-- ######### comments ############# -->
-              <div class="cmt-container">
+            <!-- ############## Programming Language  / Data Format ############### -->
+            <div class="row">
+              <div class="col-xs-2 detail-field">Language:</div>
+              <div class="col-xs-4">
+                <?= $row{'programming_lang'} ?>
+              </div>
+              <div class="col-xs-2 detail-field">Data Format:</div>
+              <div class="col-xs-4">
+                <?= $row{'data_format'} ?>
+              </div>
+            </div>
 
-                <!-- comment form -->
-                <!--
-                <div class="new-com-bt">
-                  <span>Write a comment ...</span>
-                </div>
-                -->
-                <div class="new-com-cnt">
-                  <textarea class="the-new-com"></textarea>
-                  <div data-resource-id="<?=$row{'id'}?>" class="bt-add-com">Post comment</div>
-<!--                  <div class="bt-cancel-com">Cancel</div>-->
-                </div>
-                <div class="clear"></div>
-              
-                <!-- previous comments -->
+            <!-- ############## Description ############### -->
+            <div class="row">
+              <div class="col-xs-12 detail-field">
+                <h4>Description</h4>
+              </div>
+            </div>
+            <div id="detail-desc" class="row">
+              <div class="col-xs-12">
+                <?= htmlspecialchars($row{'description'}) ?>
+              </div>
+            </div>
+
+            <!-- ############## Topic ############### -->
+            <div class="row">
+              <div class="col-xs-3 detail-field">Categorized in:</div>
+              <div class="col-xs-9">          
+                <?=$catPath?>
+              </div>
+            </div>
+
+          </div> <!-- tabpanel=summary -->
+
+          <!-- ############## Comments ############### -->
+          <div role="tabpanel" class="tab-pane" id="comments">
+
+            <!-- comment form -->
+            <div class="new-com-cnt">
+              <textarea id="comment-area" class="the-new-com"></textarea>
+              <div data-resource-id="<?=$row{'id'}?>" class="bt-add-com">Post comment</div>
+              <div class="bt-cancel-com">Cancel</div>
+            </div>
+            <div class="clear"></div>
+
+            <!-- previous comments -->
 <?php 
-  
-  $sql = mysql_query("SELECT * FROM comments c
-                      LEFT JOIN user u ON c.userid=u.id
-                      WHERE resource_id = ".$row{'id'}
-                    ." ORDER BY c.date DESC")
-          or die(mysql_error());;
-  while($affcom = mysql_fetch_assoc($sql)){
-    $commenter_name = $affcom['name'];
-    $commenter_img = $affcom['image_url'];
-    $comment = $affcom['comment'];
-    $date = $affcom['date'];
+
+            $sql = mysql_query("SELECT * FROM comments c
+                                LEFT JOIN user u ON c.userid=u.id
+                                WHERE resource_id = ".$row{'id'}
+                              ." ORDER BY c.date DESC")
+                    or die(mysql_error());;
+            while($affcom = mysql_fetch_assoc($sql)){
+              $commenter_name = $affcom['name'];
+              $commenter_img = $affcom['image_url'];
+              $comment = $affcom['comment'];
+              $date = $affcom['date'];
 ?>
-                <div class="cmt-cnt">
-                  <img src="<?= $commenter_img; ?>" />
-                  <div class="thecom">
-                    <h5><?= $commenter_name; ?></h5>
-                    <span data-utime="1371248446" class="com-dt"><?php echo $date; ?></span>
-                    <br/>
-                    <p>
-                      <?php echo $comment; ?>
-                    </p>
-                  </div>
-                </div><!-- end "cmt-cnt" -->
+              <div class="cmt-cnt">
+                <img src="<?= $commenter_img; ?>" />
+                <div class="thecom">
+                  <h5><?= $commenter_name; ?></h5>
+                  <span data-utime="1371248446" class="com-dt"><?php echo $date; ?></span>
+                  <br/>
+                  <p>
+                    <?php echo $comment; ?>
+                  </p>
+                </div>
+              </div><!-- end "cmt-cnt" -->
 <?php 
-  } // end while
+            } // end while
 ?>
-              </div> <!-- class=comments -->
-<!-- ######### end comments ############# -->
-            </div> <!-- class=resource-comment -->
-    </div> <!-- class=row -->
+            </div> <!-- class=comments -->
+            <!-- ######### end comments ############# -->
+        </div> <!-- tabpanel contents -->
+      </div> <!-- tab panel -->
+    </div>
   </div> <!-- class=container -->
 
   <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/footer.php'); ?>
-
-<script type="text/javascript">
-//  $('select.drilldown').selectHierarchy({ hideOriginal: true });
-</script>
-
-<?php
-//ONLY PRINT THIS JAVASCRIPT IF THEY ARE AN ADMIN
-if(isAdmin()) {
-?>
-<script>
-  function deleteResource() {
-    var r=confirm("Are you sure you want to delete this resource?");
-    if (r==true) {
-      window.location.href = window.location.origin+"/services/delete_resource.php?id=<?= $id ?>";
-    }
-    else{
-    }
-  }
-</script>
-<?php } ?>
 
 
 </body>

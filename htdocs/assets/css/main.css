@@ -131,25 +131,6 @@
  * HEADER SECTION
  ***********************************/
 
-#main {
-/*  background-color: rgb(175, 182, 194);*/
-  margin-top: 10px;
-}
-
-#main a {
-/*  color: white !important;*/
-}
-
-/*
-#right {
-  border-right: 3px solid #287EC1;
-  background-color: white;
-  margin-left: 0px; 
-  padding: 0px 10px;
-  min-height: 835px;
-}
-*/
-
 #index {
   background-color: transparent;
   margin-left: 0px; 
@@ -170,7 +151,7 @@
 	position: relative;
 	background: #f3f3f3;
 	border: 4px solid #ADADAD;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
 }
 .arrow_box:after, .arrow_box:before {
 	top: 100%;
@@ -355,17 +336,18 @@ i:hover {
   margin: 10px 0;
 }
 
-.meta-resource-column {
-  width: 1px;
+table > tbody > tr > td.meta-resource-column {
+  width: 50px;
+  padding-right: 0;
 }
 
 .like {
   cursor: pointer;
-  color: red;
+  color: gray;
 }
 
 .liked {
-  color: blue;
+  color: green;
 }
 
 .action-list > span.glyphicon {
@@ -377,24 +359,20 @@ i:hover {
 }
 
 .comment {
-  cursor: pointer;
-  color: red;
+/*  cursor: pointer;*/
+/*  color: gray;*/
 }
 
 .resource {
   position: relative;
-  min-height: 80px;
-  padding-bottom: 1em; /* make room for views and submitted by */
-}
-
-.resource > .link {
-  padding-right: 5px;
+/*  min-height: 80px;*/
+  padding-bottom: 1.2em; /* make room for views and submitted by */
 }
 
 .resource-title {
   font-size: 19px;
   font-weight: bold;
-/*  margin-bottom: 5px;*/
+  margin-bottom: -5px;
 }
 
 .resource-type {
@@ -403,6 +381,12 @@ i:hover {
 
 .resource-type > span {
   margin-right: 5px;
+}
+
+a.link {
+  padding-right: 5px;
+  font-size: small;
+  color: rgb(67, 137, 67);
 }
 
 .view {
@@ -446,10 +430,59 @@ img.submitter {
 }
 */
 
+
+/**************************
+ * Detail CSS
+ **************************/
+
+#detail-heading {
+  text-align: center;
+  padding: 10px 50px;
+  background: #f3f3f3;
+  position: relative;
+}
+
+#flag-resource {
+  position: absolute;
+  right: 20px;
+  color: red;
+}
+
+#detail-brief {
+  border-bottom: 1px solid gainsboro;
+  padding: 10px;
+  margin-bottom: 5px;
+}
+
+#detail-title {
+  float: left;
+  margin-bottom: 0;
+}
+
+.detail-submission {
+  font-size: 10px;
+  color: #bbb;
+}
+
+.tab-content {
+  padding: 10px;
+}
+
+#detail-tabpanel {
+  margin-top: 20px;
+}
+
+.detail-field {
+  font-weight: bold;
+}
+
+#detail-desc {
+  padding-bottom: 10px;
+}
+
 /**************************
  * Footer CSS
  **************************/
-
 
 #footer-spacer {
   height: 50px;

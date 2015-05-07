@@ -15,8 +15,8 @@
   $r = mysql_query($sqlQuery);
 
   $topicHtml = "<ul>";
-  while ($row = mysql_fetch_array($r)) {
-    $subtopicHtml = writeTopicEntry($row, $countOf, $cat, 0);
+  while ($catrow = mysql_fetch_array($r)) {
+    $subtopicHtml = writeTopicEntry($catrow, $countOf, $cat, 0);
     $topicHtml .= $subtopicHtml;
   }
   $topicHtml .= "</ul>";

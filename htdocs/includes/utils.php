@@ -36,7 +36,14 @@ function loginUser($response) {
     $user->provider_type = $provider_type;
     $user->name = $response['auth']['info']['name'];
     $user->image = $response['auth']['info']['image'];
-
+    $profile_url = "";
+    if( $provider_type == 'Facebook' ) {
+      $profile_url = $response['auth']['info']['urls']['facebook'];
+    } else
+    if( $provider_type == 'Twitter' ) {
+      $profile_url = $response['auth']['info']['urls']['twitter'];
+    }
+    
     $r = mysql_query("SELECT * FROM user WHERE provider_id = '".$provider_id."'"
                      ." AND provider_type = '".$provider_type."'");
     if($row = mysql_fetch_array($r)) {
@@ -50,9 +57,14 @@ function loginUser($response) {
       $user->id = $row{'id'};
       $user->privilege = $row{'privilege'};
     } else {
-      mysql_query("INSERT INTO user(provider_id, provider_type, name, image_url, privilege, lastLogin)"
-                  ." VALUES('".$provider_id."','".$provider_type."','".$user->name."','"
-                            .$user->image."','".$default_privilege."','".$now."')");
+      mysql_query("
+          INSERT INTO user(provider_id, provider_type, 
+                           name, image_url, profile_url,
+                           privilege, lastLogin)
+                    VALUES('$provider_id','$provider_type',
+                           '$user->name','$user->image','$profile_url',
+                           '$default_privilege','$now')
+                           ");
       $user->id = mysql_insert_id();
       $user->privilege = $default_privilege;
     }
@@ -92,7 +104,7 @@ function writeTopicEntry($row, $countOf, $selectedCat, $level) {
   if( !empty($selectedCat) && $selectedCat == $id ) { $class .= ' selected-topic'; }
   $topic = "<li data-level='$level' class='$class'>
               <span class='glyphicon $icon'></span>
-              <a href='?cat=$id'>$name</a>
+              <a href='/?cat=$id'>$name</a>
             ";
 
   $children = "";
@@ -358,7 +370,7 @@ function getResourceSearchSQL($subcatString, $query, $startIdx, $MAX_RESULTS) {
          r.license_type, r.resource_type,
          r.author, r.approved_date,
          r.num_views, r.num_likes, r.num_comments,
-         u.image_url
+         u.image_url, u.profile_url
     FROM resource r
   LEFT JOIN resource_category rc ON r.id=rc.resource_id
   LEFT JOIN user u ON r.submitter_id = u.id
@@ -412,8 +424,11 @@ function getResourceSQL($resource_id) {
          r.owner, r.link, r.paper_url,
          r.license_type, r.resource_type,
          r.author, r.approved_date,
-         r.num_views, r.num_likes, r.num_comments
+         r.num_views, r.num_likes, r.num_comments,
+         u.image_url, u.profile_url,
+         r.programming_lang, r.data_format
     FROM resource r
+    LEFT JOIN user u ON r.submitter_id = u.id
   WHERE r.id = '$resource_id'";
   
   return $sqlStatement;

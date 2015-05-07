@@ -4,9 +4,6 @@
 
   <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/header.php'); ?>
   
-  <link rel="stylesheet" href="/assets/css/comments.css" type="text/css">
-  <script src="/assets/js/comments.js"></script>
-  
 <?php
 $query = "";
 if(isset($_GET['q'])) { $query = $_GET['q']; }
@@ -83,53 +80,53 @@ if(isAdmin()) {
 
 <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/nav.php'); ?>
   
-<div id="heading" class="hero-unit">
-  <div class="row">
-    <?= $topicImageElement ?>
-    <div id="topic-name">
-      <span class="topic-name-text"><?= $catTitle ?></span>
-<!--      <span class="topic-name-label">Browse By: </span>-->
-      
-      <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/category.php'); ?>
-      
-      
-<?php if( isAdmin() && $cat>0 ) { ?>
-      <a href='javascript:deleteCategory()' >
-        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-      </a>
-<?php } ?>
-    </div>
-    <div id="editors">
-      <div class="editor-heading">Editors: </div>
+  <div id="heading" class="hero-unit">
+    <div class="row">
+      <?= $topicImageElement ?>
+      <div id="topic-name">
+  <?php if( isAdmin() && $cat>0 ) { ?>
+        <a href='javascript:deleteCategory()' >
+          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+        </a>
+  <?php } ?>
+        <span class="topic-name-text"><?= $catTitle ?></span>
+  <!--      <span class="topic-name-label">Browse By: </span>-->
+        
+        <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/category.php'); ?>
+        
+        
+      </div>
+      <div id="editors">
+        <div class="editor-heading">Editors: </div>
 
-      <img class="editor" src="http://abs.twimg.com/sticky/default_profile_images/default_profile_5_normal.png">
-      <img class="editor" src="https://graph.facebook.com/10152673886552261/picture?type=square">
-      <img class="editor" src="/assets/img-3rd/unknownuser.png">
-    </div>
+        <img class="editor" src="http://abs.twimg.com/sticky/default_profile_images/default_profile_5_normal.png">
+        <img class="editor" src="https://graph.facebook.com/10152673886552261/picture?type=square">
+        <img class="editor" src="/assets/img-3rd/unknownuser.png">
+      </div>
 
-    <div id="topic-desc">
-      <?= $catdescription ?>
-<?php if( isAdmin() && $cat>0 ) { ?>
-      <a href='edit_category.php?cat=<?=$cat?>'>
-        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-      </a>
-<?php } ?>
+      <div id="topic-desc">
+        <?= $catdescription ?>
+  <?php if( isAdmin() && $cat>0 ) { ?>
+        <a href='edit_category.php?cat=<?=$cat?>'>
+          <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+        </a>
+  <?php } ?>
+      </div>
+      
+      <div id="search">
+        <form id="searchform" class="form-search form-group" method="GET" action=".">
+          <div class="input-append">
+            <input name='cat' type='hidden' value="<?php echo $cat ?>"></input>
+            <button type="submit" class="btn btn-danger">Search</button>
+            <input type="text" class="search-query input-xxlarge form-control" name='q' value="<?= $query ?>" placeholder="Search within <?= $catTitle ?>">
+          </div>
+        </form>
+      </div>
+      <br style="clear: both">
+      
     </div>
-    
-    <div id="search">
-      <form id="searchform" class="form-search form-group" method="GET" action=".">
-        <div class="input-append">
-          <input name='cat' type='hidden' value="<?php echo $cat ?>"></input>
-          <button type="submit" class="btn btn-danger">Search</button>
-          <input type="text" class="search-query input-xxlarge form-control" name='q' value="<?= $query ?>" placeholder="Search within <?= $catTitle ?>">
-        </div>
-      </form>
-    </div>
-    <br style="clear: both">
-    
-  </div>
-</div> <!-- end id=heading -->
-<div class="arrow_box"></div>
+  </div> <!-- end id=heading -->
+  <div class="arrow_box"></div>
   
   
 <!-- search results -->  
@@ -171,122 +168,94 @@ if($totalPages>0) {
           <tbody>
 
 <?php
-// ########## print search results
-$count = 0;
-$sqlStatement = getResourceSearchSQL($subcatString, $query, $startIdx, $MAX_RESULTS);
+        // ########## print search results
+        $count = 0;
+        $sqlStatement = getResourceSearchSQL($subcatString, $query, $startIdx, $MAX_RESULTS);
 
-$rs = mysql_query($sqlStatement);
-while ($row = mysql_fetch_array($rs)) {
-  $count++;
-  
-  $types = explode(",", $row{'resource_type'});
-  $typeHtml = '';
-  foreach($types as $type) {
-    $type = trim($type);
-    $typeColor = stringToColorCode($type);
-    $typeHtml .= "<span class='label' style='background-color: $typeColor'>
-                    $type
-                  </span>";
-  }
-  
-    $catRs = mysql_query("
-      SELECT c.id, c.name FROM resource_category rc
-      LEFT JOIN category c ON rc.category_id = c.id
-      WHERE rc.resource_id = ".$row{'id'});
+        $rs = mysql_query($sqlStatement);
+        while ($row = mysql_fetch_array($rs)) {
+          $count++;
 
-    $catPath = '';
-    while($catRow = mysql_fetch_array($catRs)) {
-      if( !empty($catPath) ) { $catPath .= " | "; }
-      $catPath .= '<a href="?cat='.$catRow{'id'}.'">'.$catRow{'name'}.'</a>';
-    }
-  
-    $likedClass = '';
-    if( isLoggedIn() ) {
-      $user_id = $_SESSION["user"]->id;
+          $types = explode(",", $row{'resource_type'});
+          $typeHtml = '';
+          foreach($types as $type) {
+            $type = trim($type);
+            $typeColor = stringToColorCode($type);
+            $typeHtml .= "<span class='label' style='background-color: $typeColor'>
+                            $type
+                          </span>";
+          }
 
-      $likedRs = mysql_query("
-        SELECT COUNT(*) as cnt FROM resource_likes
-        WHERE resource_id=".$row{'id'}."
-        AND user_id=$user_id
-        ");
-      $likedRow = mysql_fetch_array($likedRs);
-      if( $likedRow{'cnt'} > 0 ) {
-        $likedClass='liked';
-      }
-    }
+            $catRs = mysql_query("
+              SELECT c.id, c.name FROM resource_category rc
+              LEFT JOIN category c ON rc.category_id = c.id
+              WHERE rc.resource_id = ".$row{'id'});
+
+            $catPath = '';
+            while($catRow = mysql_fetch_array($catRs)) {
+              if( !empty($catPath) ) { $catPath .= " | "; }
+              $catPath .= '<a href="?cat='.$catRow{'id'}.'">'.$catRow{'name'}.'</a>';
+            }
+
+            $likedClass = '';
+            if( isLoggedIn() ) {
+              $user_id = $_SESSION["user"]->id;
+
+              $likedRs = mysql_query("
+                SELECT COUNT(*) as cnt FROM resource_likes
+                WHERE resource_id=".$row{'id'}."
+                AND user_id=$user_id
+                ");
+              $likedRow = mysql_fetch_array($likedRs);
+              if( $likedRow{'cnt'} > 0 ) {
+                $likedClass='liked';
+              }
+            }
 ?>
           <tr class="resource-container">
             <td class="meta-resource-column">
-              <a class="link" href="<?=$row{'link'}?>" target='_blank'>
-                <span class="glyphicon glyphicon-link" aria-hidden="true">Project</span>
+              <span class="glyphicon glyphicon-thumbs-up like <?=$likedClass?>" aria-hidden="true" data-resource-id="<?=$row{'id'}?>"> <?=$row{'num_likes'}?></span>
+              <a href="details.php?id=<?=$row{'id'}?>&cat=<?=$cat?>#comments">
+                  <span class="glyphicon glyphicon-comment comment" aria-hidden="true" data-resource-id="<?=$row{'id'}?>"> <?=$row{'num_comments'}?></span>
               </a>
-              <a class="link" href="<?=$row{'paper_url'}?>" target='_blank'>
-                <span class="glyphicon glyphicon-link" aria-hidden="true">Paper</span>
-              </a>
-              
-              <div class="action-list">
-                <span class="glyphicon glyphicon-thumbs-up like <?=$likedClass?>" aria-hidden="true" data-resource-id="<?=$row{'id'}?>"> <?=$row{'num_likes'}?></span>
-                <span class="glyphicon glyphicon-comment comment" aria-hidden="true" data-resource-id="<?=$row{'id'}?>"> <?=$row{'num_comments'}?></span>
-              </div>
-              
             </td>
             <td class="resource-column">
               <div class="resource">
                 <div class="resource-title">
-                  <a href="details.php?id=<?=$row{'id'}?>"><?=$row{'name'}?></a>
+                  <a href="details.php?id=<?=$row{'id'}?>&cat=<?=$cat?>"><?=$row{'name'}?></a>
                   <span class="resource-type"><?= $typeHtml ?></span>
                 </div>
 
-                <div class="resource-desc"><?=htmlspecialchars($row{'description'})?></div>
+<?php         if( !empty($row{'link'}) ) { ?>
+                <a class="link" href="<?=$row{'link'}?>" target='_blank'>
+                  <?=$row{'link'}?>
+                </a>
+<?php          } ?>
+
+<?php
+                $desc = htmlspecialchars($row{'description'});
+                if( strlen($desc) > 100 ) {
+                  $desc = substr($desc, 0, 100) . "...";
+                }
+?>
+                <div class="resource-desc">
+                  <?= $desc ?>
+                </div>
                 
                 <div class="view"><?=$row{'num_views'}?> views</div>
 
                 <div class="submission">
-                  Submitted by <img class="submitter" src="<?=$row{'image_url'}?>"> on <?=$row{'approved_date'}?>
+                  Submitted by
+                  <a href="<?=$row{'profile_url'}?>">
+                    <img class="submitter" src="<?=$row{'image_url'}?>">
+                  </a>
+                  on <?= date('M d Y', strtotime($row{'approved_date'})) ?>
                 </div>
               </div>
 
-              <!-- ######### comments ############# -->
-              <div class="cmt-container">
-                <div class="new-com-cnt">
-                  <textarea class="the-new-com"></textarea>
-                  <div data-resource-id="<?=$row{'id'}?>" class="bt-add-com">Post comment</div>
-                </div>
-                <div class="clear"></div>
-              
-                <!-- previous comments -->
-<?php 
-  
-  $sql = mysql_query("SELECT * FROM comments c
-                      LEFT JOIN user u ON c.userid=u.id
-                      WHERE resource_id = ".$row{'id'}
-                    ." ORDER BY c.date DESC")
-          or die(mysql_error());;
-  while($affcom = mysql_fetch_assoc($sql)){
-    $commenter_name = $affcom['name'];
-    $commenter_img = $affcom['image_url'];
-    $comment = $affcom['comment'];
-    $date = $affcom['date'];
-?>
-                <div class="cmt-cnt">
-                  <img src="<?= $commenter_img ?>" />
-                  <div class="thecom">
-                    <h5><?= $commenter_name; ?></h5>
-                    <span data-utime="1371248446" class="com-dt"><?php echo $date; ?></span>
-                    <br/>
-                    <p>
-                      <?php echo $comment; ?>
-                    </p>
-                  </div>
-                </div><!-- end "cmt-cnt" -->
-<?php 
-  } // end while
-?>
-              </div> <!-- class=comments -->
-<!-- ######### end comments ############# -->
             </div> <!-- class=resource-comment -->
 <?php
-} // end while
+        } // end while
 ?>
 
 <?php

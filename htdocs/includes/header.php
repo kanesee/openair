@@ -52,3 +52,22 @@ echo "<script>var cat = \"".$cat."\";</script>";
 $subcatString = buildSubCatSqlCondition($cat);
 
 ?>
+
+<!-- ################ Resource related headers ###################-->
+
+<?php
+//ONLY PRINT THIS JAVASCRIPT IF THEY ARE AN ADMIN
+if(isAdmin()) {
+?>
+<script>
+  function deleteResource() {
+    var r=confirm("Are you sure you want to delete this resource?");
+    if (r==true) {
+      window.location.href = window.location.origin+"/services/delete_resource.php?id=<?= $id ?>";
+    }
+    else{
+    }
+  }
+</script>
+<?php } ?>
+

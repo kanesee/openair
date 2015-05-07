@@ -32,7 +32,7 @@ function attachEvents() {
           200: function() {
 //            console.log('submitted Like');
             numLikes++;
-            $(that).text(numLikes);
+            $(that).text(' '+numLikes);
             $(that).addClass('liked');
           },
           304: function() {
