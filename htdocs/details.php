@@ -178,7 +178,7 @@
         
         <a id="flag-resource" href="<?=$mail_link?>">
           <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
-          Flag for editor
+          Suggest Revision
         </a>
       </div>
     </div>

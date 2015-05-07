@@ -5,7 +5,9 @@
       </button>
     
 <?php
-  $countOf = 'approved_count';
+  if( !isset($countOf) ) { $countOf = 'approved_count'; }
+  if( !isset($catHref) ) { $catHref = '/'; }
+
 
   $sqlQuery = "SELECT * from category where parent=0";
   if (!isAdmin()) {
@@ -16,7 +18,7 @@
 
   $topicHtml = "<ul>";
   while ($catrow = mysql_fetch_array($r)) {
-    $subtopicHtml = writeTopicEntry($catrow, $countOf, $cat, 0);
+    $subtopicHtml = writeTopicEntry($catHref, $catrow, $countOf, $cat, 0);
     $topicHtml .= $subtopicHtml;
   }
   $topicHtml .= "</ul>";

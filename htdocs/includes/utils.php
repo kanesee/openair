@@ -90,7 +90,7 @@ function isAdmin() {
  * Topic/Category stuff
  ****************************************/
 
-function writeTopicEntry($row, $countOf, $selectedCat, $level) {
+function writeTopicEntry($catHref, $row, $countOf, $selectedCat, $level) {
   $id = $row{'id'};
   $name = $row{'name'};
   if( $countOf == 'pending_count' ) {
@@ -104,7 +104,7 @@ function writeTopicEntry($row, $countOf, $selectedCat, $level) {
   if( !empty($selectedCat) && $selectedCat == $id ) { $class .= ' selected-topic'; }
   $topic = "<li data-level='$level' class='$class'>
               <span class='glyphicon $icon'></span>
-              <a href='/?cat=$id'>$name</a>
+              <a href='$catHref?cat=$id'>$name</a>
             ";
 
   $children = "";
@@ -119,7 +119,7 @@ function writeTopicEntry($row, $countOf, $selectedCat, $level) {
   if( mysql_num_rows($r_sub) > 0 ) {
     $topic .= "<ul>";
     while ($row_sub = mysql_fetch_array($r_sub)) {
-      $topic .= writeTopicEntry($row_sub, $countOf, $selectedCat, $level+1);
+      $topic .= writeTopicEntry($catHref, $row_sub, $countOf, $selectedCat, $level+1);
     }
       $topic .= "</ul>";
   }
@@ -399,15 +399,21 @@ function countPendingResults($subcatString) {
   return $row[0];
 }
 
-function getPendingResourceSQL($subcatString, $startIdx, $MAX_RESULTS) {
+/***
+ * Don't use query but keep it for consistency with getResourceSearchSQL()
+ */
+function getPendingResourceSQL($subcatString, $query, $startIdx, $MAX_RESULTS) {
 
   $sqlStatement="
   SELECT DISTINCT r.id, r.name, r.description, 
          r.owner, r.link, r.paper_url,
          r.license_type, r.resource_type,
-         r.author, r.approved_date
+         r.author, r.approved_date,
+         r.num_views, r.num_likes, r.num_comments,
+         u.image_url, u.profile_url
     FROM resource r
   LEFT JOIN resource_category rc ON r.id=rc.resource_id
+  LEFT JOIN user u ON r.submitter_id = u.id
   WHERE r.approved_date IS NULL
   AND rc.category_id IN ".$subcatString."
   ";

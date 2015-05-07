@@ -68,3 +68,19 @@ $(document).ready(function(){
   
   attachEvents();
 });
+
+
+/*******************************************
+ * Pending Resource scripts
+ ******************************************/
+
+function denyResource(id) {
+  var r=confirm("Are you sure you want to delete this resource?");
+  if (r==true) {
+    window.location = window.location.origin+"./services/delete_resource.php?id="+id;
+  }
+}
+
+function denyResource(id) {
+  window.location = window.location.origin+"/edit_resource.php?id="+id;
+}

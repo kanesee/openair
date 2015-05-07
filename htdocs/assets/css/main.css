@@ -278,12 +278,9 @@
 }
 
 
-#searchresults, #pendingresults {
+#searchresults {
   padding: 10px;
   margin-bottom: 0;
-}
-
-#pendingresults {
 }
 
 .drilldown-1 {
@@ -412,6 +409,17 @@ img.submitter {
 .resource-desc {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 /*  background-color: #C1C8D5;*/
+}
+
+/**************************
+ * Pending List
+ **************************/
+
+#pending-instruction {
+  width: 60%;
+  position: absolute;
+  bottom: 8px;
+  margin-bottom: 0;
 }
 
 /**************************
