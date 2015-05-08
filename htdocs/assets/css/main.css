@@ -488,6 +488,38 @@ img.submitter {
   padding-bottom: 10px;
 }
 
+
+/**************************
+ * About CSS
+ **************************/
+
+#about-heading {
+  background-image: url('/assets/img-3rd/blue_light.jpg');
+  background-size: cover;
+  background-position: bottom;
+/*  height: 300px;*/
+}
+
+#about-desc {
+  padding: 30px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.36);
+  font-size: x-large;
+}
+
+#about-content {
+  margin: 30px;
+}
+
+#sponsor-heading {
+  text-align: center;
+}
+
+#sponsors {
+  text-align: center;
+}
+
+
 /**************************
  * Footer CSS
  **************************/

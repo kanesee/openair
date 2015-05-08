@@ -3,6 +3,11 @@
 <head>
 
   <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/header.php'); ?>
+  <style>
+    .content {
+      margin-top: 20px;
+    }
+  </style>
 
   <title>FAQ</title>
 </head>
@@ -11,8 +16,9 @@
 
 <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/nav.php'); ?>
 
- <div id="" class="span7">
-	<div id="resourceinfo">
+ <div id="" class="content">
+   <div class="row">
+	<div id="resourceinfo" class="col-xs-12">
 		<div id="resourcetitle">Frequently Asked Questions</div>
 		<div id="resourcedescription">
 		  <ol style="font-weight: bold;"> 
@@ -34,6 +40,7 @@
 		  </ol>
 		</div>
 	</div>
+  </div>
 </div>
 
 <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/footer.php'); ?>
