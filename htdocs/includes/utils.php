@@ -5,7 +5,7 @@ session_start();
 
 
 $conn = mysql_connect($hostname, $username, $password) or die("Unable to connect to MySQL");
-$db = mysql_select_db($database, $conn) or die("Could not select examples");
+$db = mysql_select_db($database, $conn) or die("Unable to connect to $database");
 
 function redirect($url, $permanent = false) {
   if ($permanent) {

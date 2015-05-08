@@ -287,9 +287,15 @@
               $date = $affcom['date'];
 ?>
               <div class="cmt-cnt">
-                <a href="<?= $commenter_profile ?>"><img src="<?= $commenter_img ?>" /></a>
+                <?php if( !empty($commenter_profile) ) { ?><a href="<?= $commenter_profile ?>"><?php } ?>
+                  <img src="<?= $commenter_img ?>" />
+                <?php if( !empty($commenter_profile) ) { ?></a><?php } ?>
                 <div class="thecom">
-                  <h5><?= $commenter_name; ?></h5>
+                  <h5>
+                    <?php if( !empty($commenter_profile) ) { ?><a href="<?= $commenter_profile ?>"><?php } ?>
+                      <?= $commenter_name; ?>
+                    <?php if( !empty($commenter_profile) ) { ?></a><?php } ?>
+                  </h5>
                   <span data-utime="1371248446" class="com-dt"><?php echo $date; ?></span>
                   <br/>
                   <p>

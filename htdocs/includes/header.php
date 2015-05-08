@@ -45,7 +45,11 @@ $id = "";
 if(isset($_GET['id'])) { $id = $_GET['id']; }
 
 $cat = "";
-if(isset($_GET['cat'])) { $cat = $_GET['cat']; }
+if(isset($_GET['cat'])) {
+  $cat = $_GET['cat'];
+} else {
+  $cat = 0;
+}
 
 echo "<script>var cat = \"".$cat."\";</script>";
 

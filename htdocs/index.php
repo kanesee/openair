@@ -98,10 +98,19 @@ if(isAdmin()) {
       </div>
       <div id="editors">
         <div class="editor-heading">Editors: </div>
+<?php
+        $editorRs = mysql_query("
+          SELECT image_url, profile_url FROM editor e, user u
+          WHERE category_id = $cat
+          AND e.editor_id = u.id");
 
-        <img class="editor" src="http://abs.twimg.com/sticky/default_profile_images/default_profile_5_normal.png">
-        <img class="editor" src="https://graph.facebook.com/10152673886552261/picture?type=square">
-        <img class="editor" src="/assets/img-3rd/unknownuser.png">
+        while($editorRow = mysql_fetch_array($editorRs)) {
+?>
+        <a href="<?=$editorRow{'profile_url'}?>"><img class="editor" src="<?=$editorRow{'image_url'}?>"></a>
+        
+<?php
+        }
+?>
       </div>
 
       <div id="topic-desc">
