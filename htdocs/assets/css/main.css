@@ -38,6 +38,10 @@
   height: 50px;
 }
 
+#nav .navbar-right {
+  margin-right: 0;
+}
+
 
 /***********************************
  * CATEGORY CSS
