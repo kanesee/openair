@@ -72,7 +72,7 @@
 <?php
         $editorRs = mysql_query("
           SELECT image_url, profile_url FROM user u
-          WHERE privilege != 'xadmin'");
+          WHERE privilege != 'xadmin' and image_url != '/assets/img-3rd/unknownuser.png'");
 
         while($editorRow = mysql_fetch_array($editorRs)) {
 ?>
