@@ -75,11 +75,6 @@
 
   <div id="detail-heading" class="hero-unit">
 
-    <div class="row">
-      <div class="col-xs-12">
-                <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/category.php'); ?>
-      </div>
-    </div>
     <!-- ############### search bar ################## -->
     <div class="row">
       <div id="search-detail" class="col-xs-12">
@@ -89,10 +84,12 @@
               <div class="input-group">
                 <input name='cat' type='hidden' value="<?php echo $cat ?>"></input>
                 <span class="input-group-btn">
-<!--                  <button class="btn btn-default" type="button">Go!</button>-->
                   <button type="submit" class="btn btn-danger">Search</button>
                 </span>
                 <input type="text" class="form-control" name='q' value="<?= $query ?>" placeholder="Search within <?= $catTitle ?>">
+                <span class="input-group-btn">
+                  <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/category.php'); ?>
+                </span>
               </div><!-- /input-group -->
             </div><!-- /.col-lg-6 -->
           </div><!-- /.row -->
