@@ -29,6 +29,7 @@ $activepage = $_SERVER["REQUEST_URI"];
 <script src="/assets/js/jquery-1.9.1.min.js"></script>
  <script src="/assets/js/bootstrap-3.3.4.min.js"></script> 
 <!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>-->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script src="/assets/js/main.js"></script>
 
 <!-- ################ Topic related headers ###################-->

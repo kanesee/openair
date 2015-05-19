@@ -68,6 +68,10 @@ if(isAdmin()) {
           href: '?p={{number}}<?=$urlAdd?>#results'
       });
 
+      if (typeof $.cookie('visited') === 'undefined'){
+//        $.cookie('visited', 'true', { expires: 365 });
+        $('#intro-modal').modal('show');
+      }
     });
   </script>
   
@@ -78,6 +82,9 @@ if(isAdmin()) {
 <body>
 
 <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/nav.php'); ?>
+
+<?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/intro.php'); ?>
+
   
   <div id="heading" class="hero-unit">
     <div class="row">
