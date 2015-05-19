@@ -74,20 +74,31 @@
   <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/nav.php'); ?>
 
   <div id="detail-heading" class="hero-unit">
+
     <div class="row">
-      <div id="search-detail">
+      <div class="col-xs-12">
+                <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/category.php'); ?>
+      </div>
+    </div>
+    <!-- ############### search bar ################## -->
+    <div class="row">
+      <div id="search-detail" class="col-xs-12">
         <form id="searchform" class="form-search form-group" method="GET" action=".">
-          <div class="input-append">
-            <input name='cat' type='hidden' value="<?= $cat ?>"></input>
-            <button type="submit" class="btn btn-danger">Search</button>
-            <input type="text" class="search-query input-xxlarge form-control" name='q' value="" placeholder="Search within <?= $catTitle ?>">
-            <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/category.php'); ?>
-          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="input-group">
+                <input name='cat' type='hidden' value="<?php echo $cat ?>"></input>
+                <span class="input-group-btn">
+<!--                  <button class="btn btn-default" type="button">Go!</button>-->
+                  <button type="submit" class="btn btn-danger">Search</button>
+                </span>
+                <input type="text" class="form-control" name='q' value="<?= $query ?>" placeholder="Search within <?= $catTitle ?>">
+              </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+          </div><!-- /.row -->
         </form>
       </div>
-      <br style="clear: both">
-
-    </div>
+    </div>  
   </div> <!-- end id=heading -->
   <div class="arrow_box"></div>
   

@@ -5,12 +5,18 @@
   <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/header.php'); ?>
 
   <style>
-    .arrow_box {
-      margin-bottom: 70px;
+    body {
+      background-image: url('http://www.adweek.com/files/imagecache/node-blog/blogs/istock-unfinished-business-hed-2015.jpg');
+      background-repeat: no-repeat;
+      background-size: contain;
     }
 
-    .arrow_box:after {
-      border-top-color: #8D8F8F;
+    .section-odd {
+      background-color: white;
+    }
+
+    .section-even {
+      background-color: rgba(0, 0, 0, 0.63);
     }
     
     #about-content .row {
