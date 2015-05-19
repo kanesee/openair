@@ -11,7 +11,12 @@
 
     .arrow_box:after {
       border-top-color: #8D8F8F;
-    }    
+    }
+    
+    #about-content .row {
+      margin-left: 0;
+      margin-right: 0;
+    }
   </style>
   <title>About</title>
 </head>
@@ -20,83 +25,157 @@
 
 <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/nav.php'); ?>
 
-  <div id="about-heading" class="hero-unit">
+  
+  
+<div id="about-content" class="">
+  <!-- ############### About Us ############### -->
+  <div id="about-us" class="about-section section-odd">
     <div class="row">
-      <div id="about-desc">
-        <p>This directory is a community resource that seeks to provide access to all available open source artificial intelligence related software and data. This site was initially developed by InferLink Corporation and we are soliciting contributions by the AI community.  For more information, please feel free to contact us at ...</p>
-        <p>Please also consider making a donation to help our cause:<br>
-        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" style="padding: 5px;"><input type="hidden" name="cmd" value="_s-xclick">   <input type="hidden" name="hosted_button_id" value="9W2ECGFRDNLGW"><input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!"> <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1"> </form>        </p>
+      <div class="col-xs-12">
+        <h2 class="section-header">About Us</h2>
+      </div>
+      <div id="about-desc" class="col-xs-12">
+        <p>Open AI Resources is a directory of open source software and open access data for the AI research community. The site was initially developed by the <a href="http://allenai.org/">Allen Institute for Artificial Intelligence</a> and <a href="http://www.inferlink.com">InferLink Corporation</a>, and is currently managed by <a href="https://www.jair.org/aiaf.html">AI Access Foundation</a>. Please consider helping us out by submitting a new resource, becoming an editor, or making a financial contribution.</p>
+      </div>
+      <div class="about-anchor-link col-xs-12 col-sm-4"><a href="#editor">Our Editors</a></div>
+      <div class="about-anchor-link col-xs-12 col-sm-4"><a href="#advisory-board">Our Advisory Board</a></div>
+      <div class="about-anchor-link col-xs-12 col-sm-4"><a href="#sponsors">Our Sponsors</a> </div>
+    </div>
+    <div class="section-footer row">
+      <div class="col-xs-12">
+      <!-- anchor placed here so Editor section shows up just below nav -->
+      <a name="editor"> </a>
       </div>
     </div>
-  </div> <!-- end id=heading -->
-  <div class="arrow_box"></div>
-  
-  
-  
-  
-  <div id="about-content" class="container">
-    <!-- ############### Sponsors ############### -->
-    <div class="row">
-      <div id="sponsor-heading" class="col-xs-12 col-sm-12">
-        <h2>Sponsors</h2>
-      </div>
-    </div>
-    <div id="sponsors" class="row">
-      <div class="col-xs-12 col-sm-3">
-        <a href="http://www.aaai.org/" target="_blank">
-<!--          Association for the Advancement of Artificial Intelligence-->
-          <br><img src="http://www.aaai.org/Graphics/Logos/aaai-logo.png">
-        </a>
-      </div>
-      <div class="col-xs-12 col-sm-6">
-        <a href="http://www.jair.org/" target="_blank">
-<!--          Journal of Artificial Intelligence Research-->
-          <br><img src="/assets/img-3rd/jair-logo.jpg">
-        </a>
-      </div>
-      <div class="col-xs-12 col-sm-3">
-        <a href="http://www.inferlink.com/" target="_blank">
-<!--          InferLink-->
-          <br><img src="http://static1.squarespace.com/static/53cede1ae4b0de9f6e919b11/t/53cee0eae4b007d752955c2d/1422520719771/?format=1500w">
-          
-        </a>
-      </div>
-    </div>
-    
-    <!-- ############### Editors ############### -->
-	<div class="row">
-      <div class="col-xs-6">
-        <h3>Editors</h3>
-        <p>Much of the content on Open AIR has been contributed or managed by our editors below. If you are interested in participating in the editorial work at Open AIR, please contact us at <img src="/assets/img/openai-email.png" width="175">.</p>
-        <div class="row">
-<?php
-        $editorRs = mysql_query("
-          SELECT image_url, profile_url FROM user u
-          WHERE privilege != 'xadmin' and image_url != '/assets/img-3rd/unknownuser.png'");
+  </div>
 
-        while($editorRow = mysql_fetch_array($editorRs)) {
-?>
-          <div class="col-xs-1">
-            <a href="<?=$editorRow{'profile_url'}?>">
-              <img class="editor" src="<?=$editorRow{'image_url'}?>">
-            </a>
+  <!-- ############### Editors ############### -->
+  <div class="about-section section-even">
+    <div class="row">
+      <div class="col-xs-12">
+        <h2 class="section-header">Editors</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <p>The content on Open AI Research is curated and reviewed by our  editor, all of whom contribute their time on a volunteer basis.  If you are interested in becoming and editor of open AI  and have experience in the field, contact us at<img src="/assets/img/openai-email.png" width="175"></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <h3>Managing Editor:</h3>
+        <div class="row">
+          <div class="col-xs-6">
+            Isaac Cowhey
           </div>
-<?php
-        }
-?>
         </div>
       </div>
-      <div class="col-xs-6">
-        <h3>Chair</h3>
-        <ul>
-          <li>Steve Minton</li>
-          <li>Isaac Cowhey</li>
-        </ul>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <h3>Editors:</h3>
+        <div class="row">
+          <div class="col-xs-6">
+            Alfred Krzywicki
+          </div>
+          <div class="col-xs-6">
+            Bianca Pereira
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">
+            Jonathan May
+          </div>
+          <div class="col-xs-6">
+            David Rajaratnam
+          </div>
+        </div>
       </div>
-	</div>
-    
-    
+    </div>
+    <div class="section-footer row">
+      <div class="col-xs-12">
+      <!-- anchor placed here so Advisory Board section shows up just below nav -->
+      <a name="advisory-board"> </a>
+      </div>
+    </div>
   </div>
+
+  <!-- ############### Advisory Board ############### -->
+  <div class="about-section section-odd">
+    <div class="row">
+      <div class="col-xs-12">
+        <h2 class="section-header">Advisory Board</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <h3>Co-Chairs:</h3>
+        <div class="row">
+          <div class="col-xs-6">Oren Etzioni</div>
+          <div class="col-xs-6">Steven Minton</div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <h3>Advisors:</h3>
+        <div class="row">
+          <div class="col-xs-6">Wolfram Burgard</div>
+          <div class="col-xs-6">Eric Horvitz</div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">Leslie Kaebling</div>
+          <div class="col-xs-6">Craig Knoblock</div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">Peter Norvig</div>
+          <div class="col-xs-6">David Smith</div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">Manuela Veloso</div>
+          <div class="col-xs-6">Toby Walsh</div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">Dan Weld</div>
+          <div class="col-xs-6">Chris White</div>
+        </div>
+      </div>
+    </div>
+    <div class="section-footer row">
+      <div class="col-xs-12">
+      <!-- anchor placed here so Sponsors section shows up just below nav -->
+      <a name="sponsors"> </a>
+      </div>
+    </div>
+  </div>
+  
+  <!-- ############### Sponsors ############### -->
+  <div class="about-section section-even">
+    <div class="row">
+      <div class="col-xs-12">
+        <h2 class="section-header">Sponsors</h2>
+      </div>
+      <div class="col-xs-12">
+        <p>Our sponsors include <a href="http://www.inferlink.com">InferLink Corporation</a>, which developed the initial site,  the <a href="http://allenai.org/">Allen Institute for Artificial Intelligence</a>, which collected the directory of resources.
+        </p>
+        <p>Please consider supporting our work.  Contributions to <a href="https://www.jair.org/aiaf.html">AI Access Foundation</a> will help support the site. AI Access Foundation is a  tax-exempt 501(c)(3) public benefit corporation.</p>
+        <center>
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" style="padding: 5px;"><input type="hidden" name="cmd" value="_s-xclick">   <input type="hidden" name="hosted_button_id" value="9W2ECGFRDNLGW"><input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!"> <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1"> </form>
+        </center>
+      </div>
+    </div>
+    <div class="section-footer row">
+      <div class="col-xs-12">
+      <!-- anchor placed here so Editor section shows up just below nav -->
+      <a name="editor"> </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div id="about-author" class="col-xs-12">Site designed and developed by staff at InferLink, lead by Kane See</div>
+  </div>
+</div>
 
 <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/footer.php'); ?>
 

@@ -3,6 +3,12 @@
  * Overall Theme
  **************************/
 
+body {
+  min-width: 700px;
+/*  background-image: url('http://s3.amazonaws.com/digitaltrends-uploads-prod/2014/01/google-deepmind-artificial-intelligence.jpg');*/
+}
+
+
 /**************************
  * Header Nav
  **************************/
@@ -19,7 +25,7 @@
 }
 
 #nav .navbar-brand {
-  padding-top: 8px;
+  padding-top: 0;
 }
 
 #nav ul.navbar-nav > li > a {
@@ -212,18 +218,16 @@
 
 .topic-img {
   float: right;
-  padding-left: 10px;
-  width: 30%;
+  height: 100px;
 }
 
 .topic-img-none {
   float: right;
   padding-left: 10px;
-  width: 30%;
-/*  height: 200px;*/
-  height: 100%;
+  height: 100px;
+  width: 100px;
   color: white;
-  font-size: 10em;
+  font-size: 5em;
   text-align: center;
 }
 
@@ -238,9 +242,8 @@
 }
 
 #search {
-  width: 90%;
-  text-align: left;
-  position: absolute;
+  width: 100%;
+  margin-top: 20px;
   bottom: 8px;
 }
 
@@ -249,13 +252,19 @@
 }
 
 #searchform .input-xxlarge {
-  width: 60% !important;
+  width: 100% !important;
   display: inline-block;
 }
 
 /************************************
  * Search Results
  ***********************************/
+.anchor {
+  display: block;
+  height: 105px; /*same height as header*/
+  margin-top: -105px; /*same height as header*/
+  visibility: hidden;
+}
 
 #result-header {
   position: relative;
@@ -497,32 +506,46 @@ img.submitter {
  * About CSS
  **************************/
 
-#about-heading {
-  background-image: url('/assets/img-3rd/blue_light.jpg');
-  background-size: cover;
-  background-position: bottom;
-/*  height: 300px;*/
+#about-content {
+/*  margin: 30px;*/
+}
+
+.section-header {
+  text-align: center;
 }
 
 #about-desc {
   padding: 30px;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.36);
-  font-size: x-large;
+  font-size: large;
 }
 
-#about-content {
-  margin: 30px;
+.about-anchor-link {
+  font-size: x-large;
+  text-align: center;
+}
+
+.section-footer {
+  height: 30px;
 }
 
 #sponsor-heading {
   text-align: center;
 }
 
+.section-even {
+  background-color: rgba(162, 210, 239, 1);
+  color: white;  
+}
+
 #sponsors {
   text-align: center;
 }
 
+#about-author {
+  color: gray;
+  text-align: center;
+  font-size: 12px;
+}
 
 /**************************
  * Footer CSS

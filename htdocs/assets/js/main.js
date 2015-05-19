@@ -69,7 +69,6 @@ $(document).ready(function(){
   attachEvents();
 });
 
-
 /*******************************************
  * Pending Resource scripts
  ******************************************/

@@ -25,7 +25,7 @@ $numResult = countResults($subcatString, $query);
 $totalPages = ceil($numResult / $MAX_RESULTS);
 
 $catTitle = getTopicName($cat);
-$catdescription = getTopicDesc($cat);
+//$catdescription = getTopicDesc($cat);
 $catImg = getTopicImg($cat);
 
 $topicImageElement = "";
@@ -59,14 +59,13 @@ if(isAdmin()) {
 }
 ?>
   
-  <!-- ########### Pagination script ############ -->
+  
   <script>
     $(function () {
-
       $('.pagination').twbsPagination({
           totalPages: <?= $totalPages ?>,
           visiblePages: 3,
-          href: '?p={{number}}<?=$urlAdd?>'
+          href: '?p={{number}}<?=$urlAdd?>#results'
       });
 
     });
@@ -82,87 +81,73 @@ if(isAdmin()) {
   
   <div id="heading" class="hero-unit">
     <div class="row">
-      <?= $topicImageElement ?>
-      <div id="topic-name">
+      <div class="col-xs-9">
+        <div id="topic-name">
   <?php if( isAdmin() && $cat>0 ) { ?>
-        <a href='javascript:deleteCategory()' >
-          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-        </a>
+          <a href='javascript:deleteCategory()' >
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+          </a>
   <?php } ?>
-        <span class="topic-name-text"><?= $catTitle ?></span>
-  <!--      <span class="topic-name-label">Browse By: </span>-->
+          <span class="topic-name-text"><?= $catTitle ?></span>
         
-        <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/category.php'); ?>
-        
-        
-      </div>
-      <div id="editors">
-        <div class="editor-heading">Editors: </div>
+          <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/category.php'); ?>
+        </div>
+
+        <!-- ############## Editors ############## -->
 <?php
         $editorRs = mysql_query("
           SELECT image_url, profile_url FROM editor e, user u
           WHERE category_id = $cat
           AND e.editor_id = u.id");
-
-        while($editorRow = mysql_fetch_array($editorRs)) {
+        if( !empty($cat) && $cat != 0 && mysql_num_rows($editorRs) ) {
 ?>
-        <a href="<?=$editorRow{'profile_url'}?>"><img class="editor" src="<?=$editorRow{'image_url'}?>"></a>
-        
-<?php
-        }
-?>
-      </div>
+        <div id="editors">
+          <div class="editor-heading">Editors: </div>
+<?php     while($editorRow = mysql_fetch_array($editorRs)) { ?>
+          <a href="<?=$editorRow{'profile_url'}?>">
+            <img class="editor" src="<?=$editorRow{'image_url'}?>">
+          </a>
+<?php     } // while($editorRow = mysql_fetch_array($editorRs) ?>
+        </div>
+<?php   } // if( !empty($cat) && $cat != 0 ) ?>
 
-      <div id="topic-desc">
-        <?= $catdescription ?>
-  <?php if( isAdmin() && $cat>0 ) { ?>
-        <a href='edit_category.php?cat=<?=$cat?>'>
-          <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-        </a>
-  <?php } ?>
       </div>
-      
-      <div id="search">
+      <div class="col-xs-3">
+        <?= $topicImageElement ?>
+      </div>
+    </div>
+    <div class="row">
+      <div id="search" class="col-xs-12">
         <form id="searchform" class="form-search form-group" method="GET" action=".">
-          <div class="input-append">
-            <input name='cat' type='hidden' value="<?php echo $cat ?>"></input>
-            <button type="submit" class="btn btn-danger">Search</button>
-            <input type="text" class="search-query input-xxlarge form-control" name='q' value="<?= $query ?>" placeholder="Search within <?= $catTitle ?>">
-          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="input-group">
+                <input name='cat' type='hidden' value="<?php echo $cat ?>"></input>
+                <span class="input-group-btn">
+<!--                  <button class="btn btn-default" type="button">Go!</button>-->
+                  <button type="submit" class="btn btn-danger">Search</button>
+                </span>
+                <input type="text" class="form-control" name='q' value="<?= $query ?>" placeholder="Search within <?= $catTitle ?>">
+              </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+          </div><!-- /.row -->
         </form>
       </div>
-      <br style="clear: both">
-      
     </div>
+  
   </div> <!-- end id=heading -->
   <div class="arrow_box"></div>
   
   
 <!-- search results -->  
 <div class="container">
+  <span class="anchor" id="results"></span>
   <div class="row row-offcanvas row-offcanvas-left">
     
     
     <div id="main" class="col-xs-12 col-sm-12">
       <div id="index" class="span7">
-        
-<!--        <div id="resultTotal"></div>-->
-<?php
-if($totalPages>0) {
-?>
-<!--
-        <div class="page-controls">
-          <div class="row-fluid">
-            <div class="col-xs-3 text-left"><?php if ($page > 1) {echo "<a href=index.php?p=".($page-1).$urlAdd.">&lt; Previous Page</a>";} else { echo "&lt; Previous Page";} ?></div>
-            <div class="col-xs-6 text-center">Page <?php echo $page." of ". $totalPages; ?> </div>
-            <div class="col-xs-3 text-right"><?php if ($page < $totalPages) {echo "<a href=index.php?p=".($page+1).$urlAdd.">Next Page &gt;</a>";} else { echo "Next Page &gt;";} ?></div>
-          </div>
-        </div>
--->
-<?php
-}
-?>
-  
+          
         <table id='searchresults' class="table table-striped">
           <thead>
             <tr>
@@ -282,24 +267,7 @@ if($count==0) {
               </tr>
             </tbody>
           </table> <!-- id=searchresults -->
-
-<?php
-if($totalPages>0) {
-?>
-  <ul id="page-control-bottom" class="pagination pagination-sm"></ul>
-<!--
-            <div class="page-controls">
-              <div class="row-fluid">
-                <div class="col-xs-3 text-left"><?php if ($page > 1) {echo "<a href=index.php?p=".($page-1).$urlAdd.">&lt; Previous Page</a>";} else { echo "&lt; Previous Page";} ?></div>
-                <div class="col-xs-6 text-center">Page <?php echo $page." of ". $totalPages; ?> </div>
-                <div class="col-xs-3 text-right"><?php if ($page < $totalPages) {echo "<a href=index.php?p=".($page+1).$urlAdd.">Next Page &gt;</a>";} else { echo "Next Page &gt;";} ?></div>
-              </div>
-            </div>
--->
-<?php
-}
-?>
-      
+          <ul id="page-control-bottom" class="pagination pagination-sm"></ul>      
       
         </div> <!-- id=index -->
       </div> <!-- id=main -->

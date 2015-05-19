@@ -72,7 +72,7 @@ if(isAdmin()) {
       $('.pagination').twbsPagination({
           totalPages: <?= $totalPages ?>,
           visiblePages: 3,
-          href: '?p={{number}}<?=$urlAdd?>'
+          href: '?p={{number}}<?=$urlAdd?>#results'
       });
 
     });
@@ -86,70 +86,69 @@ if(isAdmin()) {
 
 <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/nav.php'); ?>
   
+  
   <div id="heading" class="hero-unit">
     <div class="row">
-      <?= $topicImageElement ?>
-      <div id="topic-name">
+      <div class="col-xs-9">
+        <div id="topic-name">
   <?php if( isAdmin() && $cat>0 ) { ?>
-        <a href='javascript:deleteCategory()' >
-          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-        </a>
+          <a href='javascript:deleteCategory()' >
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+          </a>
   <?php } ?>
-        <span class="topic-name-text"><?= $catTitle ?></span>
-  <!--      <span class="topic-name-label">Browse By: </span>-->
+          <span class="topic-name-text"><?= $catTitle ?></span>
         
-        <?php $countOf = 'pending_count'; ?>
-        <?php $catHref = 'pending.php'; ?>
-        <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/category.php'); ?>
-        
-        
-      </div>
-      <div id="editors">
-        <div class="editor-heading">Editors: </div>
+          <?php $countOf = 'pending_count'; ?>
+          <?php $catHref = 'pending.php'; ?>
+          <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/category.php'); ?>
+        </div>
 
+        <!-- ############## Editors ############## -->
 <?php
         $editorRs = mysql_query("
           SELECT image_url, profile_url FROM editor e, user u
           WHERE category_id = $cat
           AND e.editor_id = u.id");
-
-        while($editorRow = mysql_fetch_array($editorRs)) {
+        if( !empty($cat) && $cat != 0 && mysql_num_rows($editorRs) ) {
 ?>
-        <a href="<?=$editorRow{'profile_url'}?>"><img class="editor" src="<?=$editorRow{'image_url'}?>"></a>
-        
-<?php
-        }
-?>      </div>
+        <div id="editors">
+          <div class="editor-heading">Editors: </div>
+<?php     while($editorRow = mysql_fetch_array($editorRs)) { ?>
+          <a href="<?=$editorRow{'profile_url'}?>">
+            <img class="editor" src="<?=$editorRow{'image_url'}?>">
+          </a>
+<?php     } // while($editorRow = mysql_fetch_array($editorRs) ?>
+        </div>
+<?php   } // if( !empty($cat) && $cat != 0 ) ?>
 
-      <div id="topic-desc">
-        <?= $catdescription ?>
-  <?php if( isAdmin() && $cat>0 ) { ?>
-        <a href='edit_category.php?cat=<?=$cat?>'>
-          <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-        </a>
-  <?php } ?>
       </div>
-      
+      <div class="col-xs-3">
+        <?= $topicImageElement ?>
+      </div>
+    </div>
+    <div class="row">
+      <div id="search" class="alert alert-success col-xs-12" role="alert">
+        Please review the resources below
 <!--
-      <div id="search">
         <form id="searchform" class="form-search form-group" method="GET" action=".">
-          <div class="input-append">
-            <input name='cat' type='hidden' value="<?php echo $cat ?>"></input>
-            <button type="submit" class="btn btn-danger">Search</button>
-            <input type="text" class="search-query input-xxlarge form-control" name='q' value="<?= $query ?>" placeholder="Search within <?= $catTitle ?>">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="input-group">
+                <input name='cat' type='hidden' value="<?php echo $cat ?>"></input>
+                <span class="input-group-btn">
+                  <button type="submit" class="btn btn-danger">Search</button>
+                </span>
+                <input type="text" class="form-control" name='q' value="<?= $query ?>" placeholder="Search within <?= $catTitle ?>">
+              </div>
+            </div>
           </div>
         </form>
-      </div>
 -->
-      <div id="pending-instruction" class="alert alert-success" role-"alert">
-        Please review the resources below
       </div>
-      <br style="clear: both">
-      
     </div>
-  </div> <!-- end id=heading -->
-  <div class="arrow_box"></div>
   
+  </div> <!-- end id=heading -->
+  <div class="arrow_box"></div>  
   
 <!-- search results -->  
 <div class="container">

@@ -27,7 +27,7 @@
       <div id="topic-browser" style="display: none">
         
         <div class="tree" >
-          <a href=".">Artificial Intelligence</a>
+          <a href="<?= $catHref ?>">Artificial Intelligence</a>
 <!--
           <ul>
             <li>
