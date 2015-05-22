@@ -6,7 +6,7 @@
         <h4 class="modal-title" id="myModalLabel">Welcome to AI Resources</h4>
       </div>
       <div class="modal-body">
-        Here you'll find open source AI tools, data, and other related resources to help you build your project.
+        This directory of open source code and open access data is maintained by <a href="https://www.jair.org/aiaf.html">AI Access Foundation</a> to support the artificial intelligence community. You can help us by adding new resources if they are not already listed.
       </div>
 <!--
       <div class="modal-footer">

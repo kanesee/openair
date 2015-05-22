@@ -69,7 +69,7 @@ if(isAdmin()) {
       });
 
       if (typeof $.cookie('visited') === 'undefined'){
-//        $.cookie('visited', 'true', { expires: 365 });
+        $.cookie('visited', 'true', { expires: 365 });
         $('#intro-modal').modal('show');
       }
     });

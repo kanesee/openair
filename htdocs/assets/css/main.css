@@ -532,6 +532,10 @@ img.submitter {
   text-align: center;
 }
 
+.list-item {
+  text-align: center;
+}
+
 .section-even {
   background-color: rgba(162, 210, 239, 1);
   color: white;  

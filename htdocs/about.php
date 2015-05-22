@@ -71,7 +71,7 @@
       <div class="col-xs-12">
         <h3>Managing Editor:</h3>
         <div class="row">
-          <div class="col-xs-6">
+          <div class="list-item col-xs-6">
             Isaac Cowhey
           </div>
         </div>
@@ -81,18 +81,18 @@
       <div class="col-xs-12">
         <h3>Editors:</h3>
         <div class="row">
-          <div class="col-xs-6">
+          <div class="list-item col-xs-6">
             Alfred Krzywicki
           </div>
-          <div class="col-xs-6">
+          <div class="list-item col-xs-6">
             Bianca Pereira
           </div>
         </div>
         <div class="row">
-          <div class="col-xs-6">
+          <div class="list-item col-xs-6">
             Jonathan May
           </div>
-          <div class="col-xs-6">
+          <div class="list-item col-xs-6">
             David Rajaratnam
           </div>
         </div>
