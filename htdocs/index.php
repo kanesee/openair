@@ -216,8 +216,8 @@ if(isAdmin()) {
 ?>
           <tr class="resource-container">
             <td class="meta-resource-column">
-              <span class="glyphicon glyphicon-thumbs-up like <?=$likedClass?>" aria-hidden="true" data-resource-id="<?=$row{'id'}?>"> <?=$row{'num_likes'}?></span>
-              <a href="details.php?id=<?=$row{'id'}?>&cat=<?=$cat?>#comments">
+              <span class="hover-show glyphicon glyphicon-thumbs-up like <?=$likedClass?>" aria-hidden="true" data-resource-id="<?=$row{'id'}?>"> <?=$row{'num_likes'}?></span>
+              <a class="hover-show" href="details.php?id=<?=$row{'id'}?>&cat=<?=$cat?>#comments">
                   <span class="glyphicon glyphicon-comment comment" aria-hidden="true" data-resource-id="<?=$row{'id'}?>"> <?=$row{'num_comments'}?></span>
               </a>
             </td>
@@ -244,9 +244,9 @@ if(isAdmin()) {
                   <?= $desc ?>
                 </div>
                 
-                <div class="view"><?=$row{'num_views'}?> views</div>
+                <div class="view hover-show"><?=$row{'num_views'}?> views</div>
 
-                <div class="submission">
+                <div class="submission hover-show">
                   Submitted by
                   <a href="<?=$row{'profile_url'}?>">
                     <img class="submitter" src="<?=$row{'image_url'}?>">

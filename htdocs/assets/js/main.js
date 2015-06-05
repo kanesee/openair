@@ -50,6 +50,17 @@ function attachEvents() {
       });    
     }
   });
+  
+  $('.resource-container').hover(
+    function(evt) {
+      $(this).css('background-color','rgb(228, 234, 245)');
+      $(this).find('.hover-show').show();
+    },
+    function(evt) {
+      $(this).css('background-color','');
+      $(this).find('.hover-show').hide();
+    }
+  );
 
 }
 
