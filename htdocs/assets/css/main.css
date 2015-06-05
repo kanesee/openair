@@ -338,7 +338,7 @@ i:hover {
 }
 
 .hover-show {
-  display: none;
+/*  display: none;*/
 }
 
 /***********************************
@@ -537,7 +537,7 @@ img.submitter {
 }
 
 .list-item {
-  text-align: center;
+/*  text-align: center;*/
 }
 
 .section-even {
@@ -545,8 +545,14 @@ img.submitter {
   color: white;  
 }
 
+/*
 #sponsors {
   text-align: center;
+}
+*/
+
+.sponsor-section a {
+  color: red;
 }
 
 #about-author {

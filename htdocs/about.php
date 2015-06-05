@@ -6,9 +6,11 @@
 
   <style>
     body {
+/*
       background-image: url('http://www.adweek.com/files/imagecache/node-blog/blogs/istock-unfinished-business-hed-2015.jpg');
       background-repeat: no-repeat;
       background-size: contain;
+*/
     }
 
     .section-odd {
@@ -117,8 +119,8 @@
       <div class="col-xs-12">
         <h3>Co-Chairs:</h3>
         <div class="row">
-          <div class="col-xs-6">Oren Etzioni</div>
-          <div class="col-xs-6">Steven Minton</div>
+          <div class="list-item col-xs-6">Oren Etzioni</div>
+          <div class="list-item col-xs-6">Steven Minton</div>
         </div>
       </div>
     </div>
@@ -126,24 +128,24 @@
       <div class="col-xs-12">
         <h3>Advisors:</h3>
         <div class="row">
-          <div class="col-xs-6">Wolfram Burgard</div>
-          <div class="col-xs-6">Eric Horvitz</div>
+          <div class="list-item col-xs-6">Wolfram Burgard</div>
+          <div class="list-item col-xs-6">Eric Horvitz</div>
         </div>
         <div class="row">
-          <div class="col-xs-6">Leslie Kaebling</div>
-          <div class="col-xs-6">Craig Knoblock</div>
+          <div class="list-item col-xs-6">Leslie Kaebling</div>
+          <div class="list-item col-xs-6">Craig Knoblock</div>
         </div>
         <div class="row">
-          <div class="col-xs-6">Peter Norvig</div>
-          <div class="col-xs-6">David Smith</div>
+          <div class="list-item col-xs-6">Peter Norvig</div>
+          <div class="list-item col-xs-6">David Smith</div>
         </div>
         <div class="row">
-          <div class="col-xs-6">Manuela Veloso</div>
-          <div class="col-xs-6">Toby Walsh</div>
+          <div class="list-item col-xs-6">Manuela Veloso</div>
+          <div class="list-item col-xs-6">Toby Walsh</div>
         </div>
         <div class="row">
-          <div class="col-xs-6">Dan Weld</div>
-          <div class="col-xs-6">Chris White</div>
+          <div class="list-item col-xs-6">Dan Weld</div>
+          <div class="list-item col-xs-6">Chris White</div>
         </div>
       </div>
     </div>
@@ -156,7 +158,7 @@
   </div>
   
   <!-- ############### Sponsors ############### -->
-  <div class="about-section section-even">
+  <div class="sponsor-section section-even">
     <div class="row">
       <div class="col-xs-12">
         <h2 class="section-header">Sponsors</h2>
