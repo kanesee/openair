@@ -39,6 +39,18 @@ $activepage = $_SERVER["REQUEST_URI"];
 <!--<script src="/assets/js/jquery.select-hierarchy.js"></script>-->
 <script src="/assets/js/jquery.twbsPagination.min.js"></script>
 <script src="/assets/js/topic-tree.js"></script>
+<script>
+  // This is to dismiss topics popup when it loses focus
+  $(document).on('click', function (e) {
+      $('[data-toggle="popover"]').each(function () {
+          //the 'is' for buttons that trigger popups
+          //the 'has' for icons within a button that triggers a popup
+          if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+              $(this).popover('hide');
+          }
+      });
+  });
+</script>
 
 <?php
 
