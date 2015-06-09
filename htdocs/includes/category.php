@@ -1,6 +1,8 @@
       <button id="topic-browser-btn" type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="bottom">
         <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true">
-          <span class="topic-name-text">Choose new topic</span>
+          <span class="topic-name-text">
+            <?= ($cat == 0) ? 'Choose subtopic' : 'Choose new topic' ?>
+          </span>
         </span>
       </button>
     

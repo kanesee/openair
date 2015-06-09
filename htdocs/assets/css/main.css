@@ -516,9 +516,17 @@ img.submitter {
 
 .section-header {
   text-align: center;
+  color: #5499D3;
 }
 
-#about-desc {
+.section-subheader {
+  text-align: center;
+  font-size: 1.5em;
+  font-style: italic;
+  margin: 10px 0;
+}
+
+.about-desc {
   padding: 30px;
   font-size: large;
 }
@@ -537,7 +545,7 @@ img.submitter {
 }
 
 .list-item {
-/*  text-align: center;*/
+  text-align: center;
 }
 
 .section-even {
