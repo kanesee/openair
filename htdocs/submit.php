@@ -5,6 +5,7 @@
   <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/header.php'); ?>
   <?php include ($_SERVER['DOCUMENT_ROOT'].'/services/login-required.php'); ?>
   
+  <script src="/assets/js/jquery.jstree-1.0.js"></script>
   <script src="/assets/js/select-categories.js"></script>
   <script>
     var category_json = <?=buildJSTreeJson($cat, true, 'approved_count')?>;

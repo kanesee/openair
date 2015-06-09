@@ -32,7 +32,7 @@ function attachEvents() {
           200: function() {
 //            console.log('submitted Like');
             numLikes++;
-            $(that).text(numLikes);
+            $(that).text(' '+numLikes);
             $(that).addClass('liked');
           },
           304: function() {
@@ -50,6 +50,17 @@ function attachEvents() {
       });    
     }
   });
+  
+  $('.resource-container').hover(
+    function(evt) {
+      $(this).css('background-color','rgb(228, 234, 245)');
+//      $(this).find('.hover-show').show();
+    },
+    function(evt) {
+      $(this).css('background-color','');
+//      $(this).find('.hover-show').hide();
+    }
+  );
 
 }
 
@@ -68,3 +79,18 @@ $(document).ready(function(){
   
   attachEvents();
 });
+
+/*******************************************
+ * Pending Resource scripts
+ ******************************************/
+
+function denyResource(id) {
+  var r=confirm("Are you sure you want to delete this resource?");
+  if (r==true) {
+    window.location = window.location.origin+"./services/delete_resource.php?id="+id;
+  }
+}
+
+function editResource(id) {
+  window.location = window.location.origin+"/edit_resource.php?id="+id;
+}

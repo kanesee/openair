@@ -5,6 +5,7 @@
 */
 
 /* the comments container  */
+/*
 .cmt-container{ 
 	width: 540px;
 	height: auto; min-height: 30px;
@@ -15,6 +16,7 @@
 	-webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
     display: none;
 }
+*/
 
 .cmt-cnt{
 	width: 100%; height: auto; min-height: 35px; 
@@ -117,7 +119,7 @@
 	width:100%; height: auto; 
 /*	display: none;*/
 	padding-top: 10px; margin-bottom: 10px;
-	border-top: #d9d9d9 1px dotted;
+/*	border-top: #d9d9d9 1px dotted;*/
 }
 
 

@@ -5,7 +5,7 @@ session_start();
 
 
 $conn = mysql_connect($hostname, $username, $password) or die("Unable to connect to MySQL");
-$db = mysql_select_db($database, $conn) or die("Could not select examples");
+$db = mysql_select_db($database, $conn) or die("Unable to connect to $database");
 
 function redirect($url, $permanent = false) {
   if ($permanent) {
@@ -36,7 +36,14 @@ function loginUser($response) {
     $user->provider_type = $provider_type;
     $user->name = $response['auth']['info']['name'];
     $user->image = $response['auth']['info']['image'];
-
+    $profile_url = "";
+    if( $provider_type == 'Facebook' ) {
+      $profile_url = $response['auth']['info']['urls']['facebook'];
+    } else
+    if( $provider_type == 'Twitter' ) {
+      $profile_url = $response['auth']['info']['urls']['twitter'];
+    }
+    
     $r = mysql_query("SELECT * FROM user WHERE provider_id = '".$provider_id."'"
                      ." AND provider_type = '".$provider_type."'");
     if($row = mysql_fetch_array($r)) {
@@ -50,9 +57,14 @@ function loginUser($response) {
       $user->id = $row{'id'};
       $user->privilege = $row{'privilege'};
     } else {
-      mysql_query("INSERT INTO user(provider_id, provider_type, name, image_url, privilege, lastLogin)"
-                  ." VALUES('".$provider_id."','".$provider_type."','".$user->name."','"
-                            .$user->image."','".$default_privilege."','".$now."')");
+      mysql_query("
+          INSERT INTO user(provider_id, provider_type, 
+                           name, image_url, profile_url,
+                           privilege, lastLogin)
+                    VALUES('$provider_id','$provider_type',
+                           '$user->name','$user->image','$profile_url',
+                           '$default_privilege','$now')
+                           ");
       $user->id = mysql_insert_id();
       $user->privilege = $default_privilege;
     }
@@ -75,8 +87,46 @@ function isAdmin() {
 }
 
 /****************************************
- * Category stuff
+ * Topic/Category stuff
  ****************************************/
+
+function writeTopicEntry($catHref, $row, $countOf, $selectedCat, $level) {
+  $id = $row{'id'};
+  $name = $row{'name'};
+  if( $countOf == 'pending_count' ) {
+    $name .= ' (' . $row{'pending_count'} . ')';    
+  } else
+  if( $countOf == 'approved_count' ) {
+    $name .= ' (' . $row{'approved_count'} . ')';
+  }
+  $icon = ($level == 0) ? 'glyphicon-plus' : 'glyphicon-minus';
+  $class = ($level == 0) ? 'parent_li' : '';
+  if( !empty($selectedCat) && $selectedCat == $id ) { $class .= ' selected-topic'; }
+  $topic = "<li data-level='$level' class='$class'>
+              <span class='glyphicon $icon'></span>
+              <a href='$catHref?cat=$id'>$name</a>
+            ";
+
+  $children = "";
+  $filter_id = 0;
+  $sqlQuery = "SELECT * from category where parent=".$id;
+  if (!isAdmin()) {
+      $sqlQuery.= " AND id > 0";
+  }
+  $sqlQuery.= " ORDER BY id";
+
+  $r_sub = mysql_query($sqlQuery);
+  if( mysql_num_rows($r_sub) > 0 ) {
+    $topic .= "<ul>";
+    while ($row_sub = mysql_fetch_array($r_sub)) {
+      $topic .= writeTopicEntry($catHref, $row_sub, $countOf, $selectedCat, $level+1);
+    }
+      $topic .= "</ul>";
+  }
+  $topic .= "</li>";
+  
+  return $topic;
+}
 
 function createCategoryEntry($row, $countOf) {
   $id = $row{'id'};
@@ -169,17 +219,17 @@ function buildJSTreeJson($cat, $openNode, $countOf) {
   return $json;
 }
 
-function getCategoryTitle($cat) {
+function getTopicName($cat) {
   $resourcetitle = "";
 
   if(empty($cat)) {
       $resourcetitle = "Artificial Intelligence";
   }
   else {
-    $r = mysql_query("SELECT id, name, description, parent from category where id=".$cat);
+    $r = mysql_query("SELECT name from category where id=".$cat);
     $row = mysql_fetch_array($r);
     if(is_null($row)) {
-//          $resourcedescription = "The category does not exist.";
+      $resourcetitle = "Artificial Intelligence";
     }
     else {
         $resourcetitle = $row{'name'};
@@ -189,7 +239,7 @@ function getCategoryTitle($cat) {
   return $resourcetitle;
 }
 
-function getCategoryDesc($cat) {
+function getTopicDesc($cat) {
   $resourcedescription = "";
 
   if(empty($cat)) {
@@ -208,6 +258,26 @@ function getCategoryDesc($cat) {
   }
   
   return $resourcedescription;
+}
+
+function getTopicImg($cat) {
+  $img = "";
+
+  if(empty($cat)) {
+      $cat = 0;
+  }
+//  else {
+    $r = mysql_query("SELECT image from category where id=".$cat);
+    $row = mysql_fetch_array($r);
+    if(is_null($row)) {
+      $img = "http://www.dailygalaxy.com/.a/6a00d8341bf7f753ef019affc63311970d-pi";
+    }
+    else {
+        $img = $row{'image'};
+    }
+//  }
+  
+  return $img;
 }
 
 function getCategoryOptions($catId, $nameprefix) {
@@ -283,7 +353,8 @@ function countResults($subcatString, $query) {
     AND rc.category_id IN $subcatString
     ";
   if(!empty($query)) {
-      $sqlStatement.=" AND (r.name like '%".$query."%' OR r.description like '%".$query."%')";
+    $query = mysql_escape_string($query);
+    $sqlStatement.=" AND (r.name like '%".$query."%' OR r.description like '%".$query."%')";
 //    $sqlStatement.=" AND r.name like '%".$query."%'";
   }
 
@@ -299,15 +370,18 @@ function getResourceSearchSQL($subcatString, $query, $startIdx, $MAX_RESULTS) {
          r.owner, r.link, r.paper_url,
          r.license_type, r.resource_type,
          r.author, r.approved_date,
-         r.num_views, r.num_likes, r.num_comments
+         r.num_views, r.num_likes, r.num_comments,
+         u.image_url, u.profile_url
     FROM resource r
   LEFT JOIN resource_category rc ON r.id=rc.resource_id
+  LEFT JOIN user u ON r.submitter_id = u.id
   WHERE r.approved_date IS NOT NULL
   AND rc.category_id IN $subcatString
   ";
 
   if(!empty($query)) {
-      $sqlStatement.=" AND (r.name like '%".$query."%' OR r.description like '%".$query."%')";
+    $query = mysql_escape_string($query);
+    $sqlStatement.=" AND (r.name like '%".$query."%' OR r.description like '%".$query."%')";
   }
   $sqlStatement.=" ORDER BY r.num_likes DESC, r.name
                   LIMIT ".$startIdx.", ".$MAX_RESULTS;
@@ -327,15 +401,21 @@ function countPendingResults($subcatString) {
   return $row[0];
 }
 
-function getPendingResourceSQL($subcatString, $startIdx, $MAX_RESULTS) {
+/***
+ * Don't use query but keep it for consistency with getResourceSearchSQL()
+ */
+function getPendingResourceSQL($subcatString, $query, $startIdx, $MAX_RESULTS) {
 
   $sqlStatement="
   SELECT DISTINCT r.id, r.name, r.description, 
          r.owner, r.link, r.paper_url,
          r.license_type, r.resource_type,
-         r.author, r.approved_date
+         r.author, r.approved_date,
+         r.num_views, r.num_likes, r.num_comments,
+         u.image_url, u.profile_url
     FROM resource r
   LEFT JOIN resource_category rc ON r.id=rc.resource_id
+  LEFT JOIN user u ON r.submitter_id = u.id
   WHERE r.approved_date IS NULL
   AND rc.category_id IN ".$subcatString."
   ";
@@ -352,8 +432,11 @@ function getResourceSQL($resource_id) {
          r.owner, r.link, r.paper_url,
          r.license_type, r.resource_type,
          r.author, r.approved_date,
-         r.num_views, r.num_likes, r.num_comments
+         r.num_views, r.num_likes, r.num_comments,
+         u.image_url, u.profile_url,
+         r.programming_lang, r.data_format
     FROM resource r
+    LEFT JOIN user u ON r.submitter_id = u.id
   WHERE r.id = '$resource_id'";
   
   return $sqlStatement;
@@ -370,6 +453,14 @@ function incrementViewCount($resource_id) {
     ." WHERE id=$resource_id";
 
   $result = mysql_query($updateSql);
+}
+
+
+/****************************************
+ * Misc stuff
+ ****************************************/
+function stringToColorCode($str) {
+  return '#'.substr(md5($str), 0, 6);
 }
 
 ?>

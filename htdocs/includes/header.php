@@ -19,36 +19,72 @@ $activepage = $_SERVER["REQUEST_URI"];
 ?>
 
 <!-- Le styles -->
-<!-- <link href="/assets/css/bootstrap.min.css" rel="stylesheet"> -->
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+ <link href="/assets/css/bootstrap-3.3.4.min.css" rel="stylesheet"> 
+<!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">-->
 <link rel="stylesheet" type="text/css" media="all" href="/assets/css/style.css">
-<link rel="stylesheet" href="/assets/css/main.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="/assets/css/main.css">
 <!-- <link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet"> -->
 
 <!-- Le javascript -->
 <script src="/assets/js/jquery-1.9.1.min.js"></script>
-<!-- <script src="/assets/js/bootstrap.min.js"></script> -->
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/assets/js/jquery.jstree-1.0.js"></script>
-<!--<script type="text/javascript" src="/assets/js/jstree.min-3.1.js"></script>-->
-<script src="/assets/js/jquery.select-hierarchy.js"></script>
+ <script src="/assets/js/bootstrap-3.3.4.min.js"></script> 
+<!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>-->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script src="/assets/js/main.js"></script>
 
-<!-- ################ Category related headers ###################-->
+<!-- ################ Topic related headers ###################-->
+<link rel="stylesheet" type="text/css" href="/assets/css/topic-tree.css">
+
+<!--<script src="/assets/js/jquery.jstree-1.0.js"></script>-->
+<!--<script src="/assets/js/jquery.select-hierarchy.js"></script>-->
+<script src="/assets/js/jquery.twbsPagination.min.js"></script>
+<script src="/assets/js/topic-tree.js"></script>
+<script>
+  // This is to dismiss topics popup when it loses focus
+  $(document).on('click', function (e) {
+      $('[data-toggle="popover"]').each(function () {
+          //the 'is' for buttons that trigger popups
+          //the 'has' for icons within a button that triggers a popup
+          if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+              $(this).popover('hide');
+          }
+      });
+  });
+</script>
+
 <?php
 
 $id = "";
 if(isset($_GET['id'])) { $id = $_GET['id']; }
 
 $cat = "";
-if(isset($_GET['cat'])) { $cat = $_GET['cat']; }
+if(isset($_GET['cat'])) {
+  $cat = $_GET['cat'];
+} else {
+  $cat = 0;
+}
 
 echo "<script>var cat = \"".$cat."\";</script>";
 
 $subcatString = buildSubCatSqlCondition($cat);
 
-
-//if(isset($_GET['cat']) && basename($_SERVER['PHP_SELF']) != "edit_category.php" && basename($_SERVER['PHP_SELF']) != "pending.php")
-//	echo "<head><title>$resourcetitle</title></head>";
 ?>
+
+<!-- ################ Resource related headers ###################-->
+
+<?php
+//ONLY PRINT THIS JAVASCRIPT IF THEY ARE AN ADMIN
+if(isAdmin()) {
+?>
+<script>
+  function deleteResource() {
+    var r=confirm("Are you sure you want to delete this resource?");
+    if (r==true) {
+      window.location.href = window.location.origin+"/services/delete_resource.php?id=<?= $id ?>";
+    }
+    else{
+    }
+  }
+</script>
+<?php } ?>
 

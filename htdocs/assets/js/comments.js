@@ -26,21 +26,17 @@
       });
 
       /* on clic  on the cancel button */
-//      $('.bt-cancel-com').click(function(){
-//          $(this).siblings('.the-new-com').val('');
+      $('.bt-cancel-com').click(function(){
+          $(this).siblings('.the-new-com').val('');
 //          $(this).parent('.new-com-cnt').fadeOut('fast', function(){
 //              $('.new-com-bt').fadeIn('fast');
 //          });
-//      });
+      });
 
       // on post comment click 
       $('.bt-add-com').click(function(){
         var theCom = $(this).siblings('.the-new-com');
-        var comCountElm = $(this)
-                            .parent() // new-com-cnt
-                            .parent() // cmt-container
-                            .parent() // resource-comment
-                            .find('.comment');
+        var comCountElm = $('#comment-count');
         var comCount = parseInt(comCountElm.text());
         var resource_id = $(this).attr('data-resource-id');
 

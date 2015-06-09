@@ -1,64 +1,61 @@
-    <nav id="nav" class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <nav id="nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
       <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/"><img src='/assets/img/openairlogo.png'/></a>
-        </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <ul class="nav navbar-nav">
-            <li><a href="/">Home</a></li>
-            <li><a href="about.php">About</a></li>
-            <li><a href="faq.php">FAQ</a></li>
-            <?php if(isLoggedIn()) { ?><li><a href="submit.php">Add Resource</a></li><?php } ?>
-            <?php if(isAdmin()) { ?><li><a href="admin.php">Admin</a></li><?php } ?>
-          </ul>
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/"><img src='/assets/img/airesources-logo.png'/></a>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="nav navbar-nav">
+          <?php if(isLoggedIn()) { ?><li><a href="submit.php">Add Resource</a></li><?php } ?>
+          <?php if(isAdmin()) { ?><li><a href="pending.php">Pending</a></li><?php } ?>
+          <li><a href="about.php">About</a></li>
+          <li><a href="faq.php">FAQ</a></li>
+        </ul>
 
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <?php if( !isLoggedIn() ) { ?>
+              <a href="#" class="hide-after-auth dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                <span>Sign In</span>
+                <span class="caret"></span>
+              </a>
+              <?php } else { ?>
+              <a href="#" class="show-after-auth dropdown-toggle headerProfile" data-toggle="dropdown" role="button" aria-expanded="false">
+                <img class="profileImg" src="<?= $_SESSION['user']->image ?>">
+                <span class="profileName"><?= $_SESSION['user']->name ?></span>
+                <span class="caret"></span>
+              </a>
+              <?php } ?>
+
+            <ul class="inverse-dropdown dropdown-menu" role="menu">
               <?php if( !isLoggedIn() ) { ?>
-                <a href="#" class="hide-after-auth dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                  <span>Sign In</span>
-                  <span class="caret"></span>
-                </a>
-                <?php } else { ?>
-                <a href="#" class="show-after-auth dropdown-toggle headerProfile" data-toggle="dropdown" role="button" aria-expanded="false">
-                  <img class="profileImg" src="<?= $_SESSION['user']->image ?>">
-                  <span class="profileName"><?= $_SESSION['user']->name ?></span>
-                  <span class="caret"></span>
-                </a>
-                <?php } ?>
+                <li class="hide-after-auth">
+                  <a href="/auth/twitter">
+                    <img id="twitterLoginBtn" src="/assets/img-3rd/sign-in-twitter.png">
+                  </a>
+                </li>
+                <li class="hide-after-auth">
+                  <a href="/auth/facebook">
+                    <img id="facebookLoginBtn" src="/assets/img-3rd/sign-in-facebook.png">
+                  </a>
+                </li>
+              <?php } else { ?>
+                <li class="show-after-auth">
+                  <a href="/services/logout">
+                    Log Off
+                  </a>
+                </li>
+              <?php } ?>
+              </ul>              
+          </li>
+        </ul>
 
-              <ul class="inverse-dropdown dropdown-menu" role="menu">
-                <?php if( !isLoggedIn() ) { ?>
-                  <li class="hide-after-auth">
-                    <a href="/auth/twitter">
-                      <img id="twitterLoginBtn" src="/assets/img-3rd/sign-in-twitter.png">
-                    </a>
-                  </li>
-                  <li class="hide-after-auth">
-                    <a href="/auth/facebook">
-                      <img id="facebookLoginBtn" src="/assets/img-3rd/sign-in-facebook.png">
-                    </a>
-                  </li>
-                <?php } else { ?>
-                  <li class="show-after-auth">
-                    <a href="/services/logout">
-                      Log Off
-                    </a>
-                  </li>
-                <?php } ?>
-                </ul>              
-            </li>
-          </ul>
-
-        </div>
       </div>
     </nav>
     <div class="header-spacer"></div>

@@ -35,6 +35,6 @@ if( isLoggedIn()
   endif;
 } else {
 //  echo "You must be logged in";
-  header('HTTP/1.1 401 You must be logged in');
+  header('HTTP/1.1 401 You must be signed in to comment');
 }
 ?>

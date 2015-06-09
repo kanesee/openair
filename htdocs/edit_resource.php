@@ -5,12 +5,11 @@
   <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/header.php'); ?>
   <?php include ($_SERVER['DOCUMENT_ROOT'].'/services/admin-required.php'); ?>
   
+  <script src="/assets/js/jquery.jstree-1.0.js"></script>
   <script src="/assets/js/select-categories.js"></script>
-
-<?php
-$json = buildJSTreeJson($cat, false);
-echo "<script>var category_json = ".$json.";</script>";
-?>
+  <script>
+    var category_json = <?=buildJSTreeJson($cat, true, 'approved_count')?>;
+  </script>
 
 <?php
 $id = $_GET['id'];
