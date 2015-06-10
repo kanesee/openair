@@ -66,7 +66,7 @@
     </div>
     <div class="row">
       <div class="col-xs-12 about-desc">
-        <p>The content on Open AI Research is curated and reviewed by our  editor, all of whom contribute their time on a volunteer basis.  If you are interested in becoming and editor of open AI  and have experience in the field, contact us at<img src="/assets/img/openai-email.png" width="175"></p>
+        <p>The content on Open AI Research is curated and reviewed by our  editor, all of whom contribute their time on a volunteer basis.  If you are interested in becoming and editor of open AI  and have experience in the field, contact us at<img src="/assets/img/contact-email.png" height="30"></p>
       </div>
     </div>
     <div class="row">
