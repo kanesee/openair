@@ -166,7 +166,7 @@
     
     <!-- ############## Links and Meta ############### -->
 <?php
-  $mailto = 'admin@inferlink.com';
+  $mailto = 'admin@airesources.org';
   $subject = 'Post-' . $row{'id'} . ' Flagged';
   $who = "";
   if( isLoggedIn() ) {
