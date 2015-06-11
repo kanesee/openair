@@ -85,8 +85,8 @@ if(isAdmin()) {
 <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/nav.php'); ?>
 
 <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/intro.php'); ?>
+<?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/search-tip.php'); ?>
 
-  <?=$urlAdd?> | <?= $totalPages ?>
   <div id="heading" class="hero-unit">
     <div class="row">
       <div class="col-xs-9">
@@ -142,6 +142,9 @@ if(isAdmin()) {
           </div><!-- /.row -->
         </form>
       </div>
+    </div>
+    <a href="" data-toggle="modal" data-target="#search-tip-modal">Advance Search Tips</a>
+    <div id="search-tip">
     </div>
   
   </div> <!-- end id=heading -->
