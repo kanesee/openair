@@ -15,7 +15,7 @@ $startIdx = ($page-1) * $MAX_RESULTS;
 
 $urlAdd = "";
 if(!empty($query)) {
-  $urlAdd = "&q=".$query;
+  $urlAdd = "&q=".urlencode($query);
 }
 if(!empty($cat)) {
   $urlAdd .= "&cat=".$cat;
@@ -67,6 +67,7 @@ if(isAdmin()) {
           visiblePages: 3,
           href: '?p={{number}}<?=$urlAdd?>#results'
       });
+      //<?=$urlAdd?>'//#results'
 
       if (typeof $.cookie('visited') === 'undefined'){
         $.cookie('visited', 'true', { expires: 365 });
@@ -85,7 +86,7 @@ if(isAdmin()) {
 
 <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/intro.php'); ?>
 
-  
+  <?=$urlAdd?> | <?= $totalPages ?>
   <div id="heading" class="hero-unit">
     <div class="row">
       <div class="col-xs-9">

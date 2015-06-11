@@ -354,8 +354,12 @@ function countResults($subcatString, $query) {
     ";
   if(!empty($query)) {
     $query = mysql_escape_string($query);
-    $sqlStatement.=" AND (r.name like '%".$query."%' OR r.description like '%".$query."%')";
-//    $sqlStatement.=" AND r.name like '%".$query."%'";
+//    $sqlStatement.=" AND (r.name like '%".$query."%' OR r.description like '%".$query."%')";
+    $queryCond = "MATCH(name,description,owner,author) AGAINST ('$query' IN BOOLEAN MODE)";
+    $sqlStatement.=" AND $queryCond";
+    $sqlStatement.=" ORDER BY $queryCond DESC, num_likes DESC";
+  } else {
+    $sqlStatement.=" ORDER BY num_likes DESC";
   }
 
   $r = mysql_query($sqlStatement);
@@ -381,10 +385,14 @@ function getResourceSearchSQL($subcatString, $query, $startIdx, $MAX_RESULTS) {
 
   if(!empty($query)) {
     $query = mysql_escape_string($query);
-    $sqlStatement.=" AND (r.name like '%".$query."%' OR r.description like '%".$query."%')";
+//    $sqlStatement.=" AND (r.name like '%".$query."%' OR r.description like '%".$query."%')";
+    $queryCond = "MATCH(r.name,description,owner,author) AGAINST ('$query' IN BOOLEAN MODE)";
+    $sqlStatement.=" AND $queryCond";
+    $sqlStatement.=" ORDER BY $queryCond DESC, num_likes DESC, r.name";
+  } else {
+    $sqlStatement.=" ORDER BY num_likes DESC, r.name";    
   }
-  $sqlStatement.=" ORDER BY r.num_likes DESC, r.name
-                  LIMIT ".$startIdx.", ".$MAX_RESULTS;
+  $sqlStatement.=" LIMIT $startIdx, $MAX_RESULTS";
   
   return $sqlStatement;
 }
