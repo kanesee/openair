@@ -111,7 +111,7 @@
           <a href="edit_resource.php?id=<?=$row{'id'}?>">
             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
           </a>
-          <a href='javascript:deleteResource()' >
+          <a href="javascript:deleteResource('<?=$row{'id'}?>')" >
             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
           </a>
   <?php } ?>
@@ -255,7 +255,7 @@
             </div>
             <div id="detail-desc" class="row">
               <div class="col-xs-12">
-                <?= htmlspecialchars($row{'description'}) ?>
+                <?= strip_tags($row{'description'}) ?>
               </div>
             </div>
 

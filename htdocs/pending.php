@@ -277,7 +277,7 @@ if($totalPages>0) {
                   <input type=hidden name=id value="<?= $row{'id'} ?>" />
                   <button type=submit name=approve class='btn span2'>Approve</button>
                   <button type=button onclick="editResource('<?=$row{'id'}?>')" name=edit class="btn span2">Edit</button>
-                  <button type=button onclick="denyResource('<?=$row{'id'}?>')" name=deny class="btn span2">Deny</button>
+                  <button type=button onclick="deleteResource('<?=$row{'id'}?>')" name=deny class="btn span2">Deny</button>
                 </form>
               </div>
 

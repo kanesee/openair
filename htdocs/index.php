@@ -143,7 +143,7 @@ if(isAdmin()) {
         </form>
       </div>
     </div>
-    <a href="" data-toggle="modal" data-target="#search-tip-modal">Advance Search Tips</a>
+    <a href="" data-toggle="modal" data-target="#search-tip-modal">Advanced Search Tips</a>
     <div id="search-tip">
     </div>
   
@@ -239,7 +239,7 @@ if(isAdmin()) {
 <?php          } ?>
 
 <?php
-                $desc = htmlspecialchars($row{'description'});
+                $desc = strip_tags($row{'description'});
                 if( strlen($desc) > 100 ) {
                   $desc = substr($desc, 0, 100) . "...";
                 }

@@ -75,7 +75,7 @@
         <div class="col-sm-6">
           <div class="form-group">
             <label for="license">License Type:<br></label>
-            <input type="text" class="form-control" name="license" required="required">
+            <input type="text" class="form-control" name="license">
           </div>
         </div>
       </div>

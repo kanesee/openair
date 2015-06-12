@@ -22,7 +22,7 @@ if( !empty($_POST['dbname'])
 &&  !empty($_POST['description'])
 &&  !empty($_POST['categories'])
 &&  !empty($_POST['type']) 
-&&  !empty($_POST['license'])
+//&&  !empty($_POST['license'])
 ) {
 
   $dbname = addslashes($_POST['dbname']);
@@ -66,7 +66,7 @@ if( !empty($_POST['dbname'])
   if( empty($_POST['description']) ) echo '<br>Requires description.';
   if( empty($_POST['categories']) ) echo '<br>Requires categories.';
   if( empty($_POST['type'])  ) echo '<br>Requires type.';
-  if( empty($_POST['license']) ) echo '<br>Requires license.';
+//  if( empty($_POST['license']) ) echo '<br>Requires license.';
   
   echo '<p>Click <a href="/submit.php">here</a> to try again';
 }

@@ -84,10 +84,11 @@ $(document).ready(function(){
  * Pending Resource scripts
  ******************************************/
 
-function denyResource(id) {
+
+function deleteResource(id) {
   var r=confirm("Are you sure you want to delete this resource?");
   if (r==true) {
-    window.location = window.location.origin+"./services/delete_resource.php?id="+id;
+    window.location = window.location.origin+"/services/delete_resource.php?id="+id;
   }
 }
 
