@@ -150,7 +150,8 @@ $resource = mysql_fetch_array($r);
         <br><?= $submitter ?>
       </div>
 
-      <button type="submit" class="btn">Submit Changes</button>
+      <button type="submit" class="btn btn-primary">Submit Changes</button>
+      <button type="cancel" class="btn btn-default" onclick="window.history.back()">Cancel</button>
     </form>
   </div> <!-- class=row -->  
 </div> <!-- class=container -->
