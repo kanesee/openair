@@ -41,13 +41,19 @@
 		      <p style="font-weight: normal;">Please feel free to send us comments at<img src="/assets/img/contact-email.png" height="" width="175"/></p>
             </li>
 		    <li>How can I become an Editor?
-		    <p style="font-weight: normal;">We are looking for individuals who are willing to serve as editors.  The main requirement is that you have some familiarity with AI, either as a working practitioner, or as a gradutate student or faculty member.  It doesn't take much time, just a few hours a month. Please contact us at<img src="/assets/img/contact-email.png" height="" width="175"/></p>
+		    <p style="font-weight: normal;">We are looking for individuals who are interested in volunteering as editors.  The main requirement is that you have some familiarity with AI, either as a working practitioner, or as a gradutate student or faculty member.  It doesn't take much time, just a few hours a month. Please contact us at<img src="/assets/img/contact-email.png" height="" width="175"/></p>
 		    </li>
 		    <li>How can I support this work financially?
 		    <p style="font-weight: normal;">Please help us by making a donation to AI Access Foundation. AI Access is a tax-exempt 501(c)(3) public benefit corporation located in Los Angeles, California.</p>
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" style="padding: 5px;"><input type="hidden" name="cmd" value="_s-xclick">   <input type="hidden" name="hosted_button_id" value="9W2ECGFRDNLGW"><input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!"> <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1"> </form>
+              
 		    </li>
 		    <li>How did this site get started?
 		    <p style="font-weight: normal;">The concept for the site, and the design of the current site was developed by InferLink Corporation. The original designers included Steven Minton, Kane See, Brian Amanatullah, Greg Barish, Neha Kansal and Henry Erhardt.  The Allen Institute for AI played a crucial role in making the site real, by collecting and curating thousands of entries.  We thank Oren Etzioni for supporting the effort, and Isaac Cowhey who managed the project and contributed the bulk of the curation work.  AI Access Foundation is currently managing the site.</p>
+<!--
+              <p>We also thank our previous editors and staff members who have helped with this site. 
+              </p>
+-->
 		    </li>
 		  </ol>
 		</div>

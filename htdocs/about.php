@@ -18,7 +18,7 @@
     }
 
     .section-even {
-      background-color: rgba(0, 0, 0, 0.63);
+      background-color: rgba(0, 0, 0, 0.28);
     }
     
     #about-content .row {
@@ -40,7 +40,7 @@
   <div id="about-us" class="about-section section-odd">
     <div class="row">
       <div class="col-xs-12">
-        <h2 class="section-header">About Us</h2>
+        <h2 class="section-header" style="color:black">About Us</h2>
       </div>
       <div class="col-xs-12 about-desc">
         <p>Open AI Resources is a directory of open source software and open access data for the AI research community. The site was initially developed by the <a href="http://allenai.org/">Allen Institute for Artificial Intelligence</a> and <a href="http://www.inferlink.com">InferLink Corporation</a>, and is currently managed by <a href="https://www.jair.org/aiaf.html">AI Access Foundation</a>. Please consider helping us out by submitting a new resource, becoming an editor, or making a financial contribution.</p>
@@ -61,12 +61,12 @@
   <div class="about-section section-even">
     <div class="row">
       <div class="col-xs-12">
-        <h2 class="section-header">Editors</h2>
+        <h2 class="section-header" style="color:white">Editors</h2>
       </div>
     </div>
     <div class="row">
       <div class="col-xs-12 about-desc">
-        <p>The content on Open AI Research is curated and reviewed by our  editor, all of whom contribute their time on a volunteer basis.  If you are interested in becoming and editor of open AI  and have experience in the field, contact us at<img src="/assets/img/contact-email.png" height="30"></p>
+        <p>The content on Open AI Research is curated and reviewed by our  editor, all of whom contribute their time on a volunteer basis.  If you are interested in becoming and editor of open AI  and have experience in the field, contact us at<img src="/assets/img/contact-email.png" height="25"></p>
       </div>
     </div>
     <div class="row">
@@ -112,7 +112,7 @@
   <div class="about-section section-odd">
     <div class="row">
       <div class="col-xs-12">
-        <h2 class="section-header">Advisory Board</h2>
+        <h2 class="section-header" style="color:black">Advisory Board</h2>
       </div>
     </div>
     <div class="row">
@@ -161,7 +161,7 @@
   <div class="sponsor-section section-even">
     <div class="row">
       <div class="col-xs-12">
-        <h2 class="section-header">Sponsors</h2>
+        <h2 class="section-header" style="color:white">Sponsors</h2>
       </div>
       <div class="col-xs-12 about-desc">
         <p>Our sponsors include <a href="http://www.inferlink.com">InferLink Corporation</a>, which developed the initial site,  the <a href="http://allenai.org/">Allen Institute for Artificial Intelligence</a>, which collected the directory of resources.

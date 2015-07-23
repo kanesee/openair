@@ -3,6 +3,7 @@
 <head>
 
   <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/header.php'); ?>
+  <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/listPage.php'); ?>
   
 <?php
 $query = "";
@@ -104,7 +105,7 @@ if(isAdmin()) {
         <!-- ############## Editors ############## -->
 <?php
         $editorRs = mysql_query("
-          SELECT image_url, profile_url FROM editor e, user u
+          SELECT image_url,name, profile_url FROM editor e, user u
           WHERE category_id = $cat
           AND e.editor_id = u.id");
         if( !empty($cat) && $cat != 0 && mysql_num_rows($editorRs) ) {
@@ -112,9 +113,28 @@ if(isAdmin()) {
         <div id="editors">
           <div class="editor-heading">Editors: </div>
 <?php     while($editorRow = mysql_fetch_array($editorRs)) { ?>
+<!--
           <a href="<?=$editorRow{'profile_url'}?>">
             <img class="editor" src="<?=$editorRow{'image_url'}?>">
           </a>
+-->
+<!--          <a href="<?=$editorRow{'profile_url'}?>">-->
+            <?=$editorRow{'name'}?>,
+<!--          </a>-->
+<?php
+          $editorName = $editorRow{'name'};                   
+//          $editorBgColor = stringToColorCode($editorName);
+          $editorInitial = substr($editorName, 0, 1);
+?>
+<!--
+          <a href=""
+             class="editor-name">
+            <span class="editor-initial"
+                  xstyle="background-color: <?=$editorBgColor?>"
+                  data-bgcolor="<?=$editorBgColor?>"><?=$editorInitial?></span>
+            <span class="editor-name-partial"><?=substr($editorName,1)?></span>
+          </a>
+-->
 <?php     } // while($editorRow = mysql_fetch_array($editorRs) ?>
         </div>
 <?php   } // if( !empty($cat) && $cat != 0 ) ?>

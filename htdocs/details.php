@@ -14,11 +14,19 @@
       padding-right: 5px;
       vertical-align: super;
     }
+    
+    .editBtn-group {
+      position: absolute;
+      top: -20px;
+    }
   </style>
 
   <link rel="stylesheet" href="/assets/css/comments.css" type="text/css">
   <script src="/assets/js/comments.js"></script>
-  
+
+  <link rel="stylesheet" href="/assets/css/details.css" type="text/css">
+  <script src="/assets/js/details.js"></script>
+
   <script>
     $(function () {
       if( window.location.href.indexOf('#comments') > -1 ) {
@@ -86,7 +94,7 @@
                 <span class="input-group-btn">
                   <button type="submit" class="btn btn-danger">Search</button>
                 </span>
-                <input type="text" class="form-control" name='q' value="<?= $query ?>" placeholder="Search within <?= $catTitle ?>">
+                <input type="text" class="form-control" name='q' value="" placeholder="Search within <?= $catTitle ?>">
                 <span class="input-group-btn">
                   <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/category.php'); ?>
                 </span>
@@ -103,18 +111,34 @@
     
     <div id="detail-brief">
     
-    <!-- ############## Title ############### -->
+    <!-- ############## Header ############### -->
     <div class="row">
       <div class="col-xs-12">
         <h2 id="detail-title">
-  <?php if( isAdmin() ) { ?>
-          <a href="edit_resource.php?id=<?=$row{'id'}?>">
-            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-          </a>
-          <a href="javascript:deleteResource('<?=$row{'id'}?>')" >
-            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-          </a>
-  <?php } ?>
+          <?php if( isAdmin() ) { ?>
+<!--          <form method="post" action="./services/pending-approve.php">-->
+            <input type="hidden" name="id" value="<?= $row{'id'} ?>" />
+            <div class="editBtn-group">
+              <span class="editBtn">
+                <a class="btn btn-default" href="/edit_resource.php?id=<?=$row{'id'}?>">Edit</a>
+              </span>
+              <span class="editBtn">
+                <a id="deleteBtn" class="btn btn-danger" href="#"
+                   onclick="return deleteResource('<?=$row{'id'}?>')">Delete</a>
+                <span id="deleteSuccess">Deleted</span>
+              </span>
+              <?php if( empty($row{'approved_date'}) ) { ?>
+              <span class="editBtn">
+                <a id="approveBtn" class="btn btn-success" href="#"
+                   onclick="return approveResource('<?=$row{'id'}?>')">Approve</a>
+                <span id="approveSuccess">Approved</span>
+              </span>
+              <?php } ?>
+            </div>
+<!--          </form>-->
+          <?php } ?>
+          
+          
           <?=$row{'name'}?>
         </h2>
       </div>
@@ -225,7 +249,7 @@
             }
 ?>
             <div class="row">
-              <div class="col-xs-2 detail-field">Type:</div>
+              <div class="col-xs-2 detail-field">Resource Type:</div>
               <div class="col-xs-4">
                 <span class="resource-type"><?= $typeHtml ?></span>
               </div>

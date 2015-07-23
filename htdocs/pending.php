@@ -3,13 +3,13 @@
 <head>
 
   <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/header.php'); ?>
+  <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/listPage.php'); ?>
   <?php include ($_SERVER['DOCUMENT_ROOT'].'/services/admin-required.php'); ?>
   
-  <style>
-    #topic-desc {
-      padding: 20px 0 40px 0;
-    }
-  </style>
+  
+  <link rel="stylesheet" href="/assets/css/pending.css" type="text/css">
+  <script src="/assets/js/pending.js"></script>
+  
 <?php
 $query = "";
 if(isset($_GET['q'])) { $query = $_GET['q']; }
@@ -129,21 +129,6 @@ if(isAdmin()) {
     <div class="row">
       <div id="search" class="alert alert-success col-xs-12" role="alert">
         Please review the resources below
-<!--
-        <form id="searchform" class="form-search form-group" method="GET" action=".">
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="input-group">
-                <input name='cat' type='hidden' value="<?php echo $cat ?>"></input>
-                <span class="input-group-btn">
-                  <button type="submit" class="btn btn-danger">Search</button>
-                </span>
-                <input type="text" class="form-control" name='q' value="<?= $query ?>" placeholder="Search within <?= $catTitle ?>">
-              </div>
-            </div>
-          </div>
-        </form>
--->
       </div>
     </div>
   
@@ -233,7 +218,7 @@ if($totalPages>0) {
               }
             }
 ?>
-          <tr class="resource-container">
+          <tr id="resource-<?=$row{'id'}?>" class="resource-container">
             <td class="meta-resource-column">
               <span class="glyphicon glyphicon-thumbs-up like <?=$likedClass?>" aria-hidden="true" data-resource-id="<?=$row{'id'}?>"> <?=$row{'num_likes'}?></span>
               <a href="details.php?id=<?=$row{'id'}?>&cat=<?=$cat?>#comments">
@@ -242,6 +227,25 @@ if($totalPages>0) {
             </td>
             <td class="resource-column">
               <div class="resource">
+                
+            <div id="edit-btns-<?=$row{'id'}?>" class="editBtn-group">
+              <span class="editBtn">
+                <a class="btn btn-default" href="/edit_resource.php?id=<?=$row{'id'}?>">Edit</a>
+              </span>
+              <span class="editBtn">
+                <a class="btn btn-danger" href="#"
+                   onclick="return deleteResource('<?=$row{'id'}?>')">Delete</a>
+              </span>
+              <?php if( empty($row{'approved_date'}) ) { ?>
+              <span class="editBtn">
+                <a class="btn btn-success" href="#"
+                   onclick="return approveResource('<?=$row{'id'}?>')">Approve</a>
+              </span>
+              <?php } ?>
+            </div>
+
+                
+                
                 <div class="resource-title">
                   <a href="details.php?id=<?=$row{'id'}?>&cat=<?=$cat?>"><?=$row{'name'}?></a>
                   <span class="resource-type"><?= $typeHtml ?></span>
@@ -273,12 +277,7 @@ if($totalPages>0) {
                   on <?= date('M d Y', strtotime($row{'approved_date'})) ?>
                 </div>
                 
-                <form method=post action=./services/pending-approve.php>
-                  <input type=hidden name=id value="<?= $row{'id'} ?>" />
-                  <button type=submit name=approve class='btn span2'>Approve</button>
-                  <button type=button onclick="editResource('<?=$row{'id'}?>')" name=edit class="btn span2">Edit</button>
-                  <button type=button onclick="deleteResource('<?=$row{'id'}?>')" name=deny class="btn span2">Deny</button>
-                </form>
+
               </div>
 
             </div> <!-- class=resource-comment -->

@@ -28,7 +28,7 @@ if( !empty($_POST['dbname'])
   $dbname = addslashes($_POST['dbname']);
   $prog_lang = addslashes($_POST['prog_lang']);
   $dataformat = addslashes($_POST['dataformat']);
-  $type = addslashes($_POST['type']);
+  $type = addslashes(implode(', ', $_POST['type']));
   $license = addslashes($_POST['license']);
   $description = addslashes($_POST['description']);
   $link = addslashes($_POST['link']);

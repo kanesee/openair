@@ -54,14 +54,11 @@ if(isset($_POST['approve'])){
        WHERE id=$id
        ");
 
-//  $r=mysql_query("
-//      UPDATE category c SET
-//        approved_count = approved_count+1
-//        ,pending_count = pending_count-1
-//      WHERE id IN (SELECT category_id FROM resource_category WHERE resource_id=$id)
-//      ");
   updateCount($id);
+  
+  redirect("/details.php?id=$id");
+} else {
+  redirect("/pending.php");
 }
-redirect("/pending.php");
 
 ?>

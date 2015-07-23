@@ -233,12 +233,28 @@ body {
 
 .editor-heading {
   float: left;
+  padding-right: 10px;
 }
 
 .editor {
   float: left;
   padding-left: 5px;
   height: 40px;
+}
+
+.editor-initial {
+  font-size: 2em; 
+  padding: 0 15px;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-family: sans-serif;
+  box-shadow: 0 0 2px rgba(0,0,0,0.12),0 2px 4px rgba(0,0,0,0.24);
+  background-color: #337AB7;
+  color: white;
+}
+
+.editor-name-partial {
+  display: none;
 }
 
 #search {
@@ -342,7 +358,7 @@ i:hover {
 }
 
 /***********************************
- * RESOURCES CSS
+ * DETAILS page CSS
  ***********************************/
 
 .resource-container {
@@ -427,6 +443,7 @@ img.submitter {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 /*  background-color: #C1C8D5;*/
 }
+
 
 /**************************
  * Pending List
@@ -516,7 +533,7 @@ img.submitter {
 
 .section-header {
   text-align: center;
-  color: #5499D3;
+  color: #FF0000;
 }
 
 .section-subheader {
@@ -560,7 +577,7 @@ img.submitter {
 */
 
 .sponsor-section a {
-  color: red;
+/*  color: red;*/
 }
 
 #about-author {

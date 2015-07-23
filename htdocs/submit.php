@@ -67,8 +67,14 @@
       <div class="row">
         <div class="col-sm-6">
           <div class="form-group">
-            <label for="type">Entry Type:<br></label>
-            <input type="text" class="form-control" name="type" required="required">
+            <label for="type">Resource Type (check all that apply):<br></label>
+            <p>
+<!--            <input type="text" class="form-control" name="type" required="required">-->
+              <label><input type="checkbox" name="type[]" value="Code"> Code</label>
+              <label><input type="checkbox" name="type[]" value="Project"> Project</label>
+              <label><input type="checkbox" name="type[]" value="Service"> Service</label>
+              <label><input type="checkbox" name="type[]" value="Data"> Data</label>
+            </p>
           </div>
         </div>
 
@@ -131,7 +137,8 @@
         <br><?= $submitter ?>
       </div>
 
-      <button type="submit" class="btn">Submit Entry</button>
+      <button type="submit" class="btn btn-primary">Submit Entry</button>
+      <button type="cancel" class="btn btn-default" onclick="window.history.back()">Cancel</button>
     </form>
   </div> <!-- class=row -->  
 </div> <!-- class=container -->

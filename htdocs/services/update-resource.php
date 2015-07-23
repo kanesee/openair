@@ -8,7 +8,7 @@ if( !empty($_POST['id'])
 &&  !empty($_POST['description'])
 &&  !empty($_POST['categories'])
 &&  !empty($_POST['type']) 
-&&  !empty($_POST['license'])
+//&&  !empty($_POST['license'])
 ) {
 
 //	$result = mysql_query("SELECT * FROM resource_type WHERE name='$_POST[resource]'");
@@ -67,9 +67,9 @@ if( !empty($_POST['id'])
 //		
 	$r = mysql_query("SELECT * FROM resource WHERE id ='$id'");
   	$row = mysql_fetch_array($r);
-  	if($result && $row['approved_date'] == '')
-  		redirect("/pending.php");
-	else if($result)
+//  	if($result && $row['approved_date'] == '')
+//  		redirect("/pending.php");
+//	else if($result)
 		redirect("/details.php?id=".$id);
 } else {
   
@@ -79,7 +79,7 @@ if( !empty($_POST['id'])
   if( empty($_POST['description']) ) echo '<br>Requires description.';
   if( empty($_POST['categories']) ) echo '<br>Requires categories.';
   if( empty($_POST['type'])  ) echo '<br>Requires type.';
-  if( empty($_POST['license']) ) echo '<br>Requires license.';
+//  if( empty($_POST['license']) ) echo '<br>Requires license.';
   
   $backLink = '/index.php';
   if(isset($_POST['id'])){

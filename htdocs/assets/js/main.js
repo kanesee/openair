@@ -61,6 +61,22 @@ function attachEvents() {
 //      $(this).find('.hover-show').hide();
     }
   );
+  
+//  $('.editor-initial').each(function(index) {
+//    var bgColor = $(this).attr('data-bgcolor').slice(1);
+//    var fontColor = invertHexColor(bgColor);
+//    console.log(bgColor+' : '+fontColor);
+//    $(this).css('color','#'+fontColor);
+//  });
+  
+  $('.editor-name').hover(
+    function(evt) {
+      $(this).children('.editor-name-partial').show(500);
+    },
+    function(evt) {
+      $(this).children('.editor-name-partial').hide(500);
+    }
+  );
 
 }
 
@@ -80,18 +96,42 @@ $(document).ready(function(){
   attachEvents();
 });
 
-/*******************************************
- * Pending Resource scripts
- ******************************************/
 
-
-function deleteResource(id) {
-  var r=confirm("Are you sure you want to delete this resource?");
-  if (r==true) {
-    window.location = window.location.origin+"/services/delete_resource.php?id="+id;
-  }
+function getParameterByName(name) {
+  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+  var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+      results = regex.exec(location.search);
+  return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-function editResource(id) {
-  window.location = window.location.origin+"/edit_resource.php?id="+id;
+function invertHexColor(hexnum){
+  if(hexnum.length != 6) {
+    alert("Hex color must be six hex numbers in length.");
+    return false;
+  }
+	
+  hexnum = hexnum.toUpperCase();
+  var splitnum = hexnum.split("");
+  var resultnum = "";
+  var simplenum = "FEDCBA9876".split("");
+  var complexnum = new Array();
+  complexnum.A = "5";
+  complexnum.B = "4";
+  complexnum.C = "3";
+  complexnum.D = "2";
+  complexnum.E = "1";
+  complexnum.F = "0";
+	
+  for(i=0; i<6; i++){
+    if(!isNaN(splitnum[i])) {
+      resultnum += simplenum[splitnum[i]]; 
+    } else if(complexnum[splitnum[i]]){
+      resultnum += complexnum[splitnum[i]]; 
+    } else {
+      alert("Hex colors must only include hex numbers 0-9, and A-F");
+      return false;
+    }
+  }
+	
+  return resultnum;
 }

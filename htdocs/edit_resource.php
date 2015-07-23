@@ -75,7 +75,7 @@ $resource = mysql_fetch_array($r);
       <div class="row">
         <div class="col-sm-6">
           <div class="form-group">
-            <label for="type">Entry Type:<br></label>
+            <label for="type">Resource Type: (e.g. Code, Data, Service)<br></label>
             <input type="text" class="form-control" name="type" required="required" value="<?= $resource['resource_type'] ?>">
           </div>
         </div>
@@ -83,7 +83,7 @@ $resource = mysql_fetch_array($r);
         <div class="col-sm-6">
           <div class="form-group">
             <label for="license">License Type:<br></label>
-            <input type="text" class="form-control" name="license" required="required" value="<?= $resource['license_type'] ?>">
+            <input type="text" class="form-control" name="license" value="<?= $resource['license_type'] ?>">
           </div>
         </div>
       </div>
@@ -150,7 +150,7 @@ $resource = mysql_fetch_array($r);
         <br><?= $submitter ?>
       </div>
 
-      <button type="submit" class="btn btn-primary">Submit Changes</button>
+      <button type="submit" class="btn btn-primary">Save Changes</button>
       <button type="cancel" class="btn btn-default" onclick="window.history.back()">Cancel</button>
     </form>
   </div> <!-- class=row -->  
