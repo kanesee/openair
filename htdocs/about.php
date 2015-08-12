@@ -98,6 +98,11 @@
             David Rajaratnam
           </div>
         </div>
+        <div class="row">
+          <div class="list-item col-xs-6">
+            Yaron Meirovitch
+          </div>
+        </div>
       </div>
     </div>
     <div class="section-footer row">

@@ -67,6 +67,13 @@
       <div class="row">
         <div class="col-sm-6">
           <div class="form-group">
+            <label for="license">License Type:<br></label>
+            <input type="text" class="form-control" name="license">
+          </div>
+        </div>
+        
+        <div class="col-sm-6">
+          <div class="form-group">
             <label for="type">Resource Type (check all that apply):<br></label>
             <p>
 <!--            <input type="text" class="form-control" name="type" required="required">-->
@@ -75,13 +82,6 @@
               <label><input type="checkbox" name="type[]" value="Service"> Service</label>
               <label><input type="checkbox" name="type[]" value="Data"> Data</label>
             </p>
-          </div>
-        </div>
-
-        <div class="col-sm-6">
-          <div class="form-group">
-            <label for="license">License Type:<br></label>
-            <input type="text" class="form-control" name="license">
           </div>
         </div>
       </div>
@@ -132,13 +132,20 @@
     $submitter = '<div>'.$user->name.'</div>'.'<img src="'.$user->image.'">';
   }
 ?>
-      <div class="form-group">
-        <label for="submitter">Submitter:<br></label>
-        <br><?= $submitter ?>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="submitter">Submitter:<br></label>
+            <br><?= $submitter ?>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group action-btn-container">
+            <button type="cancel" class="btn btn-default" onclick="window.history.back()">Cancel</button>
+            <button type="submit" class="btn btn-primary">Submit Entry</button>
+          </div>
+        </div>
       </div>
-
-      <button type="submit" class="btn btn-primary">Submit Entry</button>
-      <button type="cancel" class="btn btn-default" onclick="window.history.back()">Cancel</button>
     </form>
   </div> <!-- class=row -->  
 </div> <!-- class=container -->

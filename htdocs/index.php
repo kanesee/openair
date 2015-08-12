@@ -111,31 +111,20 @@ if(isAdmin()) {
         if( !empty($cat) && $cat != 0 && mysql_num_rows($editorRs) ) {
 ?>
         <div id="editors">
-          <div class="editor-heading">Editors: </div>
-<?php     while($editorRow = mysql_fetch_array($editorRs)) { ?>
-<!--
-          <a href="<?=$editorRow{'profile_url'}?>">
-            <img class="editor" src="<?=$editorRow{'image_url'}?>">
-          </a>
--->
-<!--          <a href="<?=$editorRow{'profile_url'}?>">-->
-            <?=$editorRow{'name'}?>,
-<!--          </a>-->
+          <div class="editor-heading"><b>Editors</b> </div>
 <?php
-          $editorName = $editorRow{'name'};                   
-//          $editorBgColor = stringToColorCode($editorName);
-          $editorInitial = substr($editorName, 0, 1);
+          $isFirst = true;
+          while($editorRow = mysql_fetch_array($editorRs)) {
+            $editorName = $editorRow{'name'};
+
+            if( $isFirst ) {
+              $isFirst = false;
+            } else {
+              echo ', ';
+            }
+            echo $editorName;
+          } // while($editorRow = mysql_fetch_array($editorRs)
 ?>
-<!--
-          <a href=""
-             class="editor-name">
-            <span class="editor-initial"
-                  xstyle="background-color: <?=$editorBgColor?>"
-                  data-bgcolor="<?=$editorBgColor?>"><?=$editorInitial?></span>
-            <span class="editor-name-partial"><?=substr($editorName,1)?></span>
-          </a>
--->
-<?php     } // while($editorRow = mysql_fetch_array($editorRs) ?>
         </div>
 <?php   } // if( !empty($cat) && $cat != 0 ) ?>
 

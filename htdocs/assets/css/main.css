@@ -457,6 +457,16 @@ img.submitter {
 }
 
 /**************************
+ * Add Resource
+ **************************/
+
+.action-btn-container {
+  position: absolute;
+  bottom: -110px;
+  right: 15px;
+}
+
+/**************************
  * Edit Resource
  **************************/
 
