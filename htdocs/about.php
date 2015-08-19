@@ -66,7 +66,7 @@
     </div>
     <div class="row">
       <div class="col-xs-12 about-desc">
-        <p>The content on Open AI Research is curated and reviewed by our  editor, all of whom contribute their time on a volunteer basis.  If you are interested in becoming and editor of open AI  and have experience in the field, contact us at<img src="/assets/img/contact-email.png" height="25"></p>
+        <p>The content on Open AI Research is curated and reviewed by our editors, all of whom contribute their time on a volunteer basis.  If you are interested in becoming and editor of open AI  and have experience in the field, contact us at <img src="/assets/img/contact-email.png" height="25"></p>
       </div>
     </div>
     <div class="row">
@@ -74,7 +74,7 @@
         <div class="section-subheader">Managing Editor</div>
         <div class="row">
           <div class="list-item col-xs-12">
-            Isaac Cowhey
+            Steve Minton
           </div>
         </div>
       </div>
@@ -92,7 +92,7 @@
         </div>
         <div class="row">
           <div class="list-item col-xs-6">
-            Jonathan May
+            Nafiseh Sedaghat
           </div>
           <div class="list-item col-xs-6">
             David Rajaratnam
@@ -102,7 +102,23 @@
           <div class="list-item col-xs-6">
             Yaron Meirovitch
           </div>
+          <div class="list-item col-xs-6">
+            Dylan Sherry
+          </div>
         </div>
+        <div class="row">
+          <div class="list-item col-xs-6">
+            Pawan Gupta
+          </div>
+          <div class="list-item col-xs-6">
+            Karthik Narasimhan
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <center>Thanks also to our <a href="retired.php">past editors</a>.</center>
       </div>
     </div>
     <div class="section-footer row">
