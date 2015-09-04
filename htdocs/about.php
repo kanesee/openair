@@ -114,6 +114,22 @@
             Karthik Narasimhan
           </div>
         </div>
+        <div class="row">
+          <div class="list-item col-xs-6">
+            Soheila Dehghanzadeh
+          </div>
+          <div class="list-item col-xs-6">
+            Marissa LaMadrid-Herrmannsfeldt
+          </div>
+        </div>
+        <div class="row">
+          <div class="list-item col-xs-6">
+            Bo Wu
+          </div>
+          <div class="list-item col-xs-6">
+            Yao-Yi Chiang
+          </div>
+        </div>
       </div>
     </div>
     <div class="row">

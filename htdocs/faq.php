@@ -35,13 +35,13 @@
 		    <p style="font-weight: normal;">Currently a Facebook or Twitter account is required for sign in (to prevent spam "Likes", "Comments" or "Suggestions").  In the near future , we hope to add other ways to sign in.</p>
 		    </li>
 		    <li>What if I have trouble accessing the site?
-		      <p style="font-weight: normal;">If you experience any technical difficulties while browsing the directory, please contact us at<img src="/assets/img/contact-email.png" height="" width="175"/></p>
+		      <p style="font-weight: normal;">If you experience any technical difficulties while browsing the directory, please contact us at<img src="/assets/img/contact-email-blue.png" height="" width="175"/></p>
 		    </li>
 		    <li>How can I send comments?
-		      <p style="font-weight: normal;">Please feel free to send us comments at<img src="/assets/img/contact-email.png" height="" width="175"/></p>
+		      <p style="font-weight: normal;">Please feel free to send us comments at<img src="/assets/img/contact-email-blue.png" height="" width="175"/></p>
             </li>
 		    <li>How can I become an Editor?
-		    <p style="font-weight: normal;">We are looking for individuals who are interested in volunteering as editors.  The main requirement is that you have some familiarity with AI, either as a working practitioner, or as a gradutate student or faculty member.  It doesn't take much time, just a few hours a month. Please contact us at<img src="/assets/img/contact-email.png" height="" width="175"/></p>
+		    <p style="font-weight: normal;">We are looking for individuals who are interested in volunteering as editors.  The main requirement is that you have some familiarity with AI, either as a working practitioner, or as a gradutate student or faculty member.  It doesn't take much time, just a few hours a month. Please contact us at<img src="/assets/img/contact-email-blue.png" height="" width="175"/></p>
 		    </li>
 		    <li>How can I support this work financially?
 		    <p style="font-weight: normal;">Please help us by making a donation to AI Access Foundation. AI Access is a tax-exempt 501(c)(3) public benefit corporation located in Los Angeles, California.</p>
