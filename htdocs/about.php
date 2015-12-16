@@ -7,6 +7,7 @@
   <style>
     body {
 /*
+    // We aren't currently going to use this background image
       background-image: url('http://www.adweek.com/files/imagecache/node-blog/blogs/istock-unfinished-business-hed-2015.jpg');
       background-repeat: no-repeat;
       background-size: contain;
