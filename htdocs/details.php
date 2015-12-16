@@ -16,7 +16,7 @@
     }
     
     .editBtn-group {
-      position: absolute;
+      position: absolute; // not relative
       top: -20px;
     }
   </style>
