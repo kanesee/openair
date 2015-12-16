@@ -74,7 +74,7 @@
         <div class="section-subheader">Managing Editor</div>
         <div class="row">
           <div class="list-item col-xs-12">
-            Steve Minton
+            Alfred Krzywicki
           </div>
         </div>
       </div>
@@ -84,7 +84,7 @@
         <div class="section-subheader">Editors</div>
         <div class="row">
           <div class="list-item col-xs-6">
-            Alfred Krzywicki
+            Sanqiang Zhao
           </div>
           <div class="list-item col-xs-6">
             Bianca Pereira
@@ -128,6 +128,30 @@
           </div>
           <div class="list-item col-xs-6">
             Yao-Yi Chiang
+          </div>
+        </div>
+        <div class="row">
+          <div class="list-item col-xs-6">
+            Roni Stern
+          </div>
+          <div class="list-item col-xs-6">
+            Kobi Gal
+          </div>
+        </div>
+        <div class="row">
+          <div class="list-item col-xs-6">
+            Nir Lipovetzky
+          </div>
+          <div class="list-item col-xs-6">
+            Andreas Mueller
+          </div>
+        </div>
+        <div class="row">
+          <div class="list-item col-xs-6">
+            Paul Weng
+          </div>
+          <div class="list-item col-xs-6">
+            Manushaqe Muco
           </div>
         </div>
       </div>
