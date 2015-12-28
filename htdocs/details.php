@@ -146,25 +146,40 @@
     
     <!-- ############## Project & Paper Links ############### -->
 <?php
+    $MAX_LINK_LEN = 40;
     $author = '';
     if( !empty($row{'author'}) )
-        $author = "by ".$row{'author'}." ";
+        $author = "by ".$row{'author'};
     $owner = '';
     if( !empty($row{'owner'}) )
-        $owner = $row{'owner'};
+        $owner = "from ".$row{'owner'};
 ?>
     <div class="row">
-<?php   if( !empty($row{'link'}) ) { ?>
+<?php
+        if( !empty($row{'link'}) ) {
+          $proj_url = $row{'link'};
+          if( strlen($proj_url) > $MAX_LINK_LEN )  {
+            $proj_url = substr($proj_url, 0, $MAX_LINK_LEN).'...';
+          }
+?>
       <div class="col-xs-6">
-        Project: <a class="link" href="<?=$row{'link'}?>" target='_blank'>
-          <?=$row{'link'}?>
+        Project:
+        <a class="link" href="<?=$row{'link'}?>" target='_blank'>
+          <?= $proj_url ?>
         </a>
       </div>
 <?php   } ?>
-<?php   if( !empty($row{'paper_url'}) ) { ?>
+<?php   
+        if( !empty($row{'paper_url'}) ) {
+          $paper_url = $row{'paper_url'};
+          if( strlen($paper_url) > $MAX_LINK_LEN )  {
+            $paper_url = substr($paper_url, 0, $MAX_LINK_LEN).'...';
+          }
+?>
       <div class="col-xs-6">
-        Paper: <a class="link" href="<?=$row{'paper_url'}?>" target='_blank'>
-          <?=$row{'paper_url'}?>
+        Paper:
+        <a class="link" href="<?=$row{'paper_url'}?>" target='_blank'>
+          <?= $paper_url ?>
         </a>
       </div>
 <?php   } ?>
