@@ -16,7 +16,7 @@
     }
     
     .editBtn-group {
-      position: absolute; // not relative
+      position: absolute;
       top: -20px;
     }
   </style>
@@ -146,11 +146,12 @@
     
     <!-- ############## Project & Paper Links ############### -->
 <?php
-    $attribution = "";
+    $author = '';
     if( !empty($row{'author'}) )
-        $attribution = "by ".$row{'author'}." ";
+        $author = "by ".$row{'author'}." ";
+    $owner = '';
     if( !empty($row{'owner'}) )
-        $attribution .= "from ".$row{'owner'};
+        $owner = $row{'owner'};
 ?>
     <div class="row">
 <?php   if( !empty($row{'link'}) ) { ?>
@@ -172,7 +173,8 @@
     <!-- ############## Author/ Owner ############### -->
     <div class="row">
       <div class="col-xs-12">
-        <?= $attribution ?>
+        <span class="author"><?= $author ?></span>
+        <span class="owner"><?= $owner ?></span>
       </div>
     </div>
 
