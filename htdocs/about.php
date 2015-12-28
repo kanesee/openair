@@ -88,7 +88,7 @@
             Sanqiang Zhao
           </div>
           <div class="list-item col-xs-6">
-            Bianca Pereira
+            Manushaqe Muco
           </div>
         </div>
         <div class="row">
@@ -101,7 +101,7 @@
         </div>
         <div class="row">
           <div class="list-item col-xs-6">
-            Yaron Meirovitch
+            Paul Weng
           </div>
           <div class="list-item col-xs-6">
             Dylan Sherry
@@ -145,14 +145,6 @@
           </div>
           <div class="list-item col-xs-6">
             Andreas Mueller
-          </div>
-        </div>
-        <div class="row">
-          <div class="list-item col-xs-6">
-            Paul Weng
-          </div>
-          <div class="list-item col-xs-6">
-            Manushaqe Muco
           </div>
         </div>
       </div>

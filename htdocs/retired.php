@@ -44,6 +44,7 @@
         <h4>Retired Editors</h4>
         <ul>
           <li>Jonathan May</li>
+          <li>Bianca Pereira</li>
         </ul>
       </div>
     </div>
