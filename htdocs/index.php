@@ -45,7 +45,7 @@ if( !empty($catImg) ) {
 //ONLY PRINT THIS JAVASCRIPT IF THEY ARE AN ADMIN
 if(isAdmin()) {
 ?>
-<script>
+<script type="text/javascript">
 	function deleteCategory() {
 		var r=confirm("Are you sure you want to delete <?= $catTitle; ?> and all of the child categories beneath it?");
 		if (r==true) {
@@ -294,6 +294,9 @@ if($count==0) {
       </div> <!-- id=main -->
     </div> <!-- class=row -->
   </div> <!-- class=container -->
+  
+  <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/updates-marquee.php'); ?>
+
   <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/footer.php'); ?>
   
 </body>

@@ -11,6 +11,7 @@ $app->contentType("application/json");
 /************************
  * Routes
  ***********************/
+$app->get('/category/updates/:withinMonths','getCategoryUpdates');
 $app->get('/resource/:id','getResource');
 $app->delete('/resource/:id'
   , requireAdmin($app)
@@ -33,6 +34,20 @@ function requireAdmin($app) {
       $app->halt(401, 'Admin Privileges Required');
     }
   };
+}
+
+function getCategoryUpdates($withinMonths) {
+  $r=mysql_query(getCategoryUpdatesSQL($withinMonths));
+  $updates = [];
+  while( $row = mysql_fetch_array($r) ) {
+    array_push($updates, array(
+        "name" => $row{'name'}
+      , "image" => $row{'image'}
+      , "numNew" => $row{'numNew'}
+      ));
+  }
+
+  echo json_encode($updates);
 }
 
 
