@@ -596,11 +596,12 @@ img.submitter {
   font-size: 12px;
 }
 
+
 /**************************
  * Footer CSS
  **************************/
 
-#footer-spacer {
+.footer-spacer {
   height: 50px;
 }
 

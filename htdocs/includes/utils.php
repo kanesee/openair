@@ -90,6 +90,18 @@ function isAdmin() {
  * Topic/Category stuff
  ****************************************/
 
+function getCategoryUpdatesSQL($withinMonths) {
+  $sqlStatement="
+    SELECT c.*, count(distinct r.id) AS numNew
+    FROM resource r, resource_category rc, category c
+    WHERE r.approved_date > DATE_SUB(now(), INTERVAL $withinMonths MONTH)
+    AND r.id = rc.resource_id
+    AND c.id = rc.category_id
+    GROUP BY c.id"
+    ;
+  return $sqlStatement;
+}
+
 function writeTopicEntry($catHref, $row, $countOf, $selectedCat, $level) {
   $id = $row{'id'};
   $name = $row{'name'};

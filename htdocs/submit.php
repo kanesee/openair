@@ -78,7 +78,7 @@
             <p>
 <!--            <input type="text" class="form-control" name="type" required="required">-->
               <label><input type="checkbox" name="type[]" value="Code"> Code</label>
-              <label><input type="checkbox" name="type[]" value="Project"> Project</label>
+<!--              <label><input type="checkbox" name="type[]" value="Project"> Project</label>-->
               <label><input type="checkbox" name="type[]" value="Service"> Service</label>
               <label><input type="checkbox" name="type[]" value="Data"> Data</label>
             </p>

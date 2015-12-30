@@ -13,11 +13,10 @@
 
 <div id="index" class="span7">
 	<div id="resourceinfo">
-		<div id="resourcetitle">Sorry</div>
-		<div id="resourcedescription">
-          You are not authorized to view that page.<br>
-          Please sign in with an account that is authorized to view that page.
-		</div>
+		<h3>
+          Sorry, you do not have access to that page.<br>
+          Please <b>Sign In</b> with an account that is authorized to view that page.
+		</h3>
 	</div>
 
 <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/footer.php'); ?>

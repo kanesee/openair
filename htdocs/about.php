@@ -7,6 +7,7 @@
   <style>
     body {
 /*
+    // We aren't currently going to use this background image
       background-image: url('http://www.adweek.com/files/imagecache/node-blog/blogs/istock-unfinished-business-hed-2015.jpg');
       background-repeat: no-repeat;
       background-size: contain;
@@ -74,7 +75,7 @@
         <div class="section-subheader">Managing Editor</div>
         <div class="row">
           <div class="list-item col-xs-12">
-            Steve Minton
+            Alfred Krzywicki
           </div>
         </div>
       </div>
@@ -84,10 +85,10 @@
         <div class="section-subheader">Editors</div>
         <div class="row">
           <div class="list-item col-xs-6">
-            Alfred Krzywicki
+            Sanqiang Zhao
           </div>
           <div class="list-item col-xs-6">
-            Bianca Pereira
+            Manushaqe Muco
           </div>
         </div>
         <div class="row">
@@ -100,7 +101,7 @@
         </div>
         <div class="row">
           <div class="list-item col-xs-6">
-            Yaron Meirovitch
+            Paul Weng
           </div>
           <div class="list-item col-xs-6">
             Dylan Sherry
@@ -128,6 +129,22 @@
           </div>
           <div class="list-item col-xs-6">
             Yao-Yi Chiang
+          </div>
+        </div>
+        <div class="row">
+          <div class="list-item col-xs-6">
+            Roni Stern
+          </div>
+          <div class="list-item col-xs-6">
+            Kobi Gal
+          </div>
+        </div>
+        <div class="row">
+          <div class="list-item col-xs-6">
+            Nir Lipovetzky
+          </div>
+          <div class="list-item col-xs-6">
+            Andreas Mueller
           </div>
         </div>
       </div>
