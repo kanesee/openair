@@ -11,6 +11,7 @@ $app->contentType("application/json");
 /************************
  * Routes
  ***********************/
+
 $app->get('/resource/:id','getResource');
 $app->delete('/resource/:id'
   , requireAdmin($app)
@@ -49,6 +50,12 @@ function getResource($id) {
 
 function delResource($id) {
   $user_id = $_SESSION["user"]->id;
+
+  //Gets name of entry for logging
+  $r = mysql_query("SELECT `name` FROM resource WHERE id = ".$id); 
+  $row = mysql_fetch_array($r);
+  $entry_name = $row['name'];
+
   if(!empty($id)) {
     $pending = false;
 
@@ -75,13 +82,28 @@ function delResource($id) {
 
     //Then delete this actual entry
 	$r = mysql_query("DELETE FROM resource WHERE id = ".$id);
+
+  if(!$r) {
+      halt(500, "ERROR running UPDATE");
+      $hasError = true;
+  }
+  
+    //Then logs the deletion
+  $r = mysql_query("SELECT `name` FROM user WHERE id = ".$user_id); 
+  $row = mysql_fetch_array($r);
+  $user_name = $row['name'];
+
+
+  $r = mysql_query("INSERT INTO user_action (user_id, username, entry_id, entry_name, action) VALUES ('".$user_id."','".$user_name."','".$id."','".$entry_name."','delete')");
+
 	if(!$r) {
       halt(500, "ERROR running UPDATE");
       $hasError = true;
 	}
-    
+
   }
   echo '{"status":"deleted"}';
+
 }
 
 function approveResource($id) {
@@ -92,7 +114,22 @@ function approveResource($id) {
              approved_by = '$user_id'
        WHERE id=$id
        ");
+   //Then logs the approval 
 
+  $r = mysql_query("SELECT `name` FROM user WHERE id = $user_id"); 
+  $row = mysql_fetch_array($r);
+  $user_name = $row['name'];
+
+  $r = mysql_query("SELECT `name` FROM resource WHERE id = $id"); 
+  $row = mysql_fetch_array($r);
+  $entry_name = $row['name'];
+
+  $r = mysql_query("INSERT INTO user_action (user_id, username, entry_id, entry_name, action) VALUES ('".$user_id."','".$user_name."','".$id."','".$entry_name."','approval')");
+
+  if(!$r) {
+      halt(500, "ERROR running UPDATE");
+      $hasError = true;
+  }
   updateCount($id);
 
   echo '{"status":"approved"}';
