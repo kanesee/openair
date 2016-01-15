@@ -49,6 +49,24 @@ if( !empty($_POST['id'])
       ." WHERE id=$id";
 
 	$result = mysql_query($updateSql);
+
+     //Then logs the edit
+  $user_id = $_SESSION["user"]->id;
+  
+  $r = mysql_query("SELECT `name` FROM user WHERE id = $user_id"); 
+  $row = mysql_fetch_array($r);
+  $user_name = $row['name'];
+
+  $r = mysql_query("SELECT `name` FROM resource WHERE id = $id"); 
+  $row = mysql_fetch_array($r);
+  $entry_name = $row['name'];
+
+  $r = mysql_query("INSERT INTO user_action (user_id, username, entry_id, entry_name, action) VALUES ('".$user_id."','".$user_name."','".$id."','".$entry_name."','edit')");
+
+  if(!$r) {
+      halt(500, "ERROR running UPDATE");
+      $hasError = true;
+  }
   
   
     // Manage resource categories
