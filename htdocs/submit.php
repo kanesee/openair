@@ -102,7 +102,7 @@
       <hr>
       
       <div class="form-group">
-        <label for="link">Link to data website:</label>
+        <label for="link">Project Website:</label>
         <input type="url" class="form-control" name="link" required="required">
       </div>
 

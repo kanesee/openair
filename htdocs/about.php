@@ -72,6 +72,16 @@
     </div>
     <div class="row">
       <div class="col-xs-12">
+        <div class="section-subheader">Director</div>
+        <div class="row">
+          <div class="list-item col-xs-12">
+            Steven Minton
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
         <div class="section-subheader">Managing Editor</div>
         <div class="row">
           <div class="list-item col-xs-12">
