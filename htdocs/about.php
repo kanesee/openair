@@ -6,21 +6,14 @@
 
   <style>
     body {
-/*
-    // We aren't currently going to use this background image
-      background-image: url('http://www.adweek.com/files/imagecache/node-blog/blogs/istock-unfinished-business-hed-2015.jpg');
-      background-repeat: no-repeat;
-      background-size: contain;
-*/
+      font-family: Georgia, 'Times New Roman', Times, serif;
     }
 
+/*
     .section-odd {
       background-color: white;
     }
-
-    .section-even {
-      background-color: rgba(0, 0, 0, 0.28);
-    }
+*/
     
     #about-content .row {
       margin-left: 0;
@@ -46,9 +39,11 @@
       <div class="col-xs-12 about-desc">
         <p>Open AI Resources is a directory of open source software and open access data for the AI research community. The site was initially developed by the <a href="http://allenai.org/">Allen Institute for Artificial Intelligence</a> and <a href="http://www.inferlink.com">InferLink Corporation</a>, and is currently managed by <a href="https://www.jair.org/aiaf.html">AI Access Foundation</a>. Please consider helping us out by submitting a new resource, becoming an editor, or making a financial contribution.</p>
       </div>
+<!--
       <div class="about-anchor-link col-xs-12 col-sm-4"><a href="#editor">Our Editors</a></div>
       <div class="about-anchor-link col-xs-12 col-sm-4"><a href="#advisory-board">Our Advisory Board</a></div>
       <div class="about-anchor-link col-xs-12 col-sm-4"><a href="#sponsors">Our Sponsors</a> </div>
+-->
     </div>
     <div class="section-footer row">
       <div class="col-xs-12">
@@ -62,12 +57,13 @@
   <div class="about-section section-even">
     <div class="row">
       <div class="col-xs-12">
-        <h2 class="section-header" style="color:white">Editors</h2>
+        <hr>
+        <h2 class="section-header">Editors</h2>
       </div>
     </div>
     <div class="row">
       <div class="col-xs-12 about-desc">
-        <p>The content on Open AI Research is curated and reviewed by our editors, all of whom contribute their time on a volunteer basis.  If you are interested in becoming and editor of open AI  and have experience in the field, contact us at <img src="/assets/img/contact-email.png" height="25"></p>
+        <p>The content on Open AI Research is curated and reviewed by our editors, all of whom contribute their time on a volunteer basis.  If you are interested in becoming and editor of open AI  and have experience in the field, contact us at <img src="/assets/img/contact-email-blue.png" height="20"></p>
       </div>
     </div>
     <div class="row">
@@ -176,6 +172,7 @@
   <div class="about-section section-odd">
     <div class="row">
       <div class="col-xs-12">
+        <hr>
         <h2 class="section-header" style="color:black">Advisory Board</h2>
       </div>
     </div>
@@ -225,7 +222,8 @@
   <div class="sponsor-section section-even">
     <div class="row">
       <div class="col-xs-12">
-        <h2 class="section-header" style="color:white">Sponsors</h2>
+        <hr>
+        <h2 class="section-header">Sponsors</h2>
       </div>
       <div class="col-xs-12 about-desc">
         <p>Our sponsors include <a href="http://www.inferlink.com">InferLink Corporation</a>, which developed the initial site,  the <a href="http://allenai.org/">Allen Institute for Artificial Intelligence</a>, which collected the directory of resources.

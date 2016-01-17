@@ -543,19 +543,20 @@ img.submitter {
 
 .section-header {
   text-align: center;
-  color: #FF0000;
+/*  color: #FF0000;*/
 }
 
 .section-subheader {
   text-align: center;
   font-size: 1.5em;
   font-style: italic;
-  margin: 10px 0;
+/*  margin: 10px 0;*/
 }
 
 .about-desc {
   padding: 30px;
-  font-size: large;
+  margin: 0 20px;
+  font-size: medium;
 }
 
 .about-anchor-link {
@@ -576,8 +577,8 @@ img.submitter {
 }
 
 .section-even {
-  background-color: rgba(162, 210, 239, 1);
-  color: white;  
+/*  background-color: rgba(162, 210, 239, 1);*/
+/*  color: white;  */
 }
 
 /*
