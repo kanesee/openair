@@ -274,7 +274,7 @@ if($totalPages>0) {
                   <a href="<?=$row{'profile_url'}?>">
                     <img class="submitter" src="<?=$row{'image_url'}?>">
                   </a>
-                  on <?= date('M d Y', strtotime($row{'approved_date'})) ?>
+                  on <?= date('M d Y', strtotime($row{'last_edited_date'})) ?>
                 </div>
                 
 

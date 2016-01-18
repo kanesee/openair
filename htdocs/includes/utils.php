@@ -430,7 +430,7 @@ function getPendingResourceSQL($subcatString, $query, $startIdx, $MAX_RESULTS) {
   SELECT DISTINCT r.id, r.name, r.description, 
          r.owner, r.link, r.paper_url,
          r.license_type, r.resource_type,
-         r.author, r.approved_date,
+         r.author, r.last_edited_date, r.approved_date,
          r.num_views, r.num_likes, r.num_comments,
          u.image_url, u.profile_url
     FROM resource r
