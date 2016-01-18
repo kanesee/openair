@@ -180,8 +180,8 @@
       <div class="col-xs-12">
         <div class="section-subheader">Co-Chairs</div>
         <div class="row">
-          <div class="list-item col-xs-6">Oren Etzioni</div>
-          <div class="list-item col-xs-6">Steven Minton</div>
+          <div class="list-item col-xs-6"><a href="http://oren-etzioni.people.allenai.org/">Oren Etzioni</a></div>
+          <div class="list-item col-xs-6"><a href="http://www.inferlink.com/stevenminton/">Steven Minton</a></div>
         </div>
       </div>
     </div>
@@ -189,23 +189,23 @@
       <div class="col-xs-12">
         <div class="section-subheader">Advisors</div>
         <div class="row">
-          <div class="list-item col-xs-6">Wolfram Burgard</div>
-          <div class="list-item col-xs-6">Eric Horvitz</div>
+          <div class="list-item col-xs-6"><a href="http://www2.informatik.uni-freiburg.de/~burgard/">Wolfram Burgard</a></div>
+          <div class="list-item col-xs-6"><a href="http://research.microsoft.com/en-us/um/people/horvitz/">Eric Horvitz</a></div>
         </div>
         <div class="row">
-          <div class="list-item col-xs-6">Leslie Kaebling</div>
-          <div class="list-item col-xs-6">Craig Knoblock</div>
+          <div class="list-item col-xs-6"><a href="http://people.csail.mit.edu/lpk/">Leslie Kaebling</a></div>
+          <div class="list-item col-xs-6"><a href="http://usc-isi-i2.github.io/knoblock/">Craig Knoblock</a></div>
         </div>
         <div class="row">
-          <div class="list-item col-xs-6">Peter Norvig</div>
-          <div class="list-item col-xs-6">David Smith</div>
+          <div class="list-item col-xs-6"><a href="http://norvig.com/">Peter Norvig</a></div>
+          <div class="list-item col-xs-6"><a href="http://ti.arc.nasa.gov/profile/de2smith/">David Smith</a></div>
         </div>
         <div class="row">
-          <div class="list-item col-xs-6">Manuela Veloso</div>
-          <div class="list-item col-xs-6">Toby Walsh</div>
+          <div class="list-item col-xs-6"><a href="https://www.cmu.edu/me/people/veloso.html">Manuela Veloso</a></div>
+          <div class="list-item col-xs-6"><a href="http://www.cse.unsw.edu.au/~tw/">Toby Walsh</a></div>
         </div>
         <div class="row">
-          <div class="list-item col-xs-6">Dan Weld</div>
+          <div class="list-item col-xs-6"><a href="http://www.cs.washington.edu/people/faculty/weld">Dan Weld</a></div>
           <div class="list-item col-xs-6">Chris White</div>
         </div>
       </div>
