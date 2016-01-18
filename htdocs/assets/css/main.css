@@ -597,6 +597,23 @@ img.submitter {
   font-size: 12px;
 }
 
+.borderless tbody tr td, .borderless tbody tr th, .borderless thead tr th {
+    border: none;
+}
+
+.contributor-col {
+  text-align: right;
+  width: 50%;
+}
+
+.affiliate-col {
+  text-align: left;
+  width: 50%;
+}
+
+.affiliate-logo {
+  height: 25px;
+}
 
 /**************************
  * Footer CSS

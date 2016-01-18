@@ -180,14 +180,114 @@
       <div class="col-xs-12">
         <div class="section-subheader">Co-Chairs</div>
         <div class="row">
-          <div class="list-item col-xs-6"><a href="http://oren-etzioni.people.allenai.org/">Oren Etzioni</a></div>
-          <div class="list-item col-xs-6"><a href="http://www.inferlink.com/stevenminton/">Steven Minton</a></div>
+          <div class="list-item col-xs-12">
+            <table class="table borderless">
+              <tbody>
+                <tr>
+                  <td class="contributor-col">
+                    <a href="http://oren-etzioni.people.allenai.org/">Oren Etzioni</a>
+                  </td>
+                  <td class="affiliate-col">
+                    <img class="affiliate-logo"
+                         src="http://oren-etzioni.people.allenai.org/_/rsrc/1405541460181/config/AI2Logo.png.1403492057472.png">
+                  </td>
+                </tr>
+                <tr>
+                  <td class="contributor-col">
+                    <a href="http://www.inferlink.com/stevenminton/">Steven Minton</a>
+                  </td>
+                  <td class="affiliate-col">
+                    <img class="affiliate-logo" 
+                         src="http://static1.squarespace.com/static/53cede1ae4b0de9f6e919b11/t/53cee0eae4b007d752955c2d/1451440445000/?format=1500w">
+                  </td>
+                </tr>
+              </tbody>
+            </table>
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col-xs-12">
         <div class="section-subheader">Advisors</div>
+        <div class="row">
+          <div class="list-item col-xs-6">
+            <table class="table borderless">
+              <tbody>
+<?php
+  $contributors = array(
+    array("Wolfram Burgard"
+     , "http://www2.informatik.uni-freiburg.de/~burgard/"
+     , "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Siegel_der_Albert-Ludwigs-Universit%C3%A4t_Freiburg.svg/240px-Siegel_der_Albert-Ludwigs-Universit%C3%A4t_Freiburg.svg.png"),
+    array("Leslie Kaebling"
+     , "http://people.csail.mit.edu/lpk/"
+     , "http://web.mit.edu/files/images/homepage/default/mit_logo.gif?v=1453093210"),
+    array("Peter Norvig"
+     , "http://norvig.com/"
+     , "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Google2013logo.svg/228px-Google2013logo.svg.png"),
+    array("Manuela Veloso"
+     , "https://www.cmu.edu/me/people/veloso.html"
+     , "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/CMU_logo_stack_cmyk_red.jpg/320px-CMU_logo_stack_cmyk_red.jpg"),
+    array("Dan Weld"
+     , "http://www.cs.washington.edu/people/faculty/weld"
+     , "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/University_of_Washington_signature.svg/320px-University_of_Washington_signature.svg.png")
+  );
+  for($i=0; $i<count($contributors); $i++) {
+?>
+                <tr>
+                  <td class="contributor-col">
+                    <a href="<?=$contributors[$i][1]?>"><?=$contributors[$i][0]?></a>
+                  </td>
+                  <td class="affiliate-col">
+                    <img class="affiliate-logo"
+                         src="<?=$contributors[$i][2]?>">
+                  </td>
+                </tr>
+<?php
+  }
+?>
+              </tbody>
+            </table>
+          </div>
+          <div class="list-item col-xs-6">
+            <table class="table borderless">
+              <tbody>
+<?php
+  $contributors = array(
+    array("Eric Horvitz"
+     , "http://research.microsoft.com/en-us/um/people/horvitz/"
+     , "https://assets.onestore.ms/cdnfiles/onestorerolling-1512-09001/shell/v3/images/logo/microsoft.png"),
+    array("Craig Knoblock"
+     , "http://usc-isi-i2.github.io/knoblock/"
+     , "http://www.isi.edu/sites/all/themes/custom/isi2014/images/logos/usc_logo.jpg"),
+    array("David Smith"
+     , "http://ti.arc.nasa.gov/profile/de2smith/"
+     , "http://www.nasa.gov/sites/all/themes/custom/nasatwo/images/nasa-logo.svg"),
+    array("Toby Walsh"
+     , "http://www.cse.unsw.edu.au/~tw/"
+     , "https://www.unsw.edu.au/sites/default/files/UNSW.png"),
+    array("Chris White"
+     , "http://research.microsoft.com/en-us/people/chwh/"
+     , "https://assets.onestore.ms/cdnfiles/onestorerolling-1512-09001/shell/v3/images/logo/microsoft.png")
+  );
+  for($i=0; $i<count($contributors); $i++) {
+?>
+                <tr>
+                  <td class="contributor-col">
+                    <a href="<?=$contributors[$i][1]?>"><?=$contributors[$i][0]?></a>
+                  </td>
+                  <td class="affiliate-col">
+                    <img class="affiliate-logo"
+                         src="<?=$contributors[$i][2]?>">
+                  </td>
+                </tr>
+<?php
+  }
+?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+<!--
         <div class="row">
           <div class="list-item col-xs-6"><a href="http://www2.informatik.uni-freiburg.de/~burgard/">Wolfram Burgard</a></div>
           <div class="list-item col-xs-6"><a href="http://research.microsoft.com/en-us/um/people/horvitz/">Eric Horvitz</a></div>
@@ -206,8 +306,9 @@
         </div>
         <div class="row">
           <div class="list-item col-xs-6"><a href="http://www.cs.washington.edu/people/faculty/weld">Dan Weld</a></div>
-          <div class="list-item col-xs-6">Chris White</div>
+          <div class="list-item col-xs-6"><a href="http://research.microsoft.com/en-us/people/chwh/">Chris White</a></div>
         </div>
+-->
       </div>
     </div>
     <div class="section-footer row">
