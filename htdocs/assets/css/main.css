@@ -546,19 +546,20 @@ img.submitter {
 
 .section-header {
   text-align: center;
-  color: #FF0000;
+/*  color: #FF0000;*/
 }
 
 .section-subheader {
   text-align: center;
   font-size: 1.5em;
   font-style: italic;
-  margin: 10px 0;
+/*  margin: 10px 0;*/
 }
 
 .about-desc {
   padding: 30px;
-  font-size: large;
+  margin: 0 20px;
+  font-size: medium;
 }
 
 .about-anchor-link {
@@ -579,8 +580,8 @@ img.submitter {
 }
 
 .section-even {
-  background-color: rgba(162, 210, 239, 1);
-  color: white;  
+/*  background-color: rgba(162, 210, 239, 1);*/
+/*  color: white;  */
 }
 
 /*
@@ -599,6 +600,23 @@ img.submitter {
   font-size: 12px;
 }
 
+.borderless tbody tr td, .borderless tbody tr th, .borderless thead tr th {
+    border: none;
+}
+
+.contributor-col {
+  text-align: right;
+  width: 50%;
+}
+
+.affiliate-col {
+  text-align: left;
+  width: 50%;
+}
+
+.affiliate-logo {
+  height: 25px;
+}
 
 /**************************
  * Footer CSS
