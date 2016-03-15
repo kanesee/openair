@@ -465,6 +465,9 @@ img.submitter {
   bottom: -110px;
   right: 15px;
 }
+.controls > .help-block {
+  color: red;
+}
 
 /**************************
  * Edit Resource

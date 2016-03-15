@@ -138,6 +138,7 @@ if(isAdmin()) {
     <div class="row">
       <div id="search" class="col-xs-12">
         <form id="searchform" class="form-search form-group" method="GET" action=".">
+          <!-- <h1> DEVELOPMENT </h1> -->
           <div class="row">
             <div class="col-lg-12">
               <div class="input-group">

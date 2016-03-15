@@ -21,7 +21,7 @@ if( !empty($_POST['dbname'])
 &&  !empty($_POST['link'])
 &&  !empty($_POST['description'])
 &&  !empty($_POST['categories'])
-&&  !empty($_POST['type']) 
+// &&  !empty($_POST['type']) 
 //&&  !empty($_POST['license'])
 ) {
 

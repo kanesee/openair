@@ -7,6 +7,8 @@
   
   <script src="/assets/js/jquery.jstree-1.0.js"></script>
   <script src="/assets/js/select-categories.js"></script>
+  <script src="/assets/js/jqBootstrapValidation.js"></script>
+
   <script>
     var category_json = <?=buildJSTreeJson($cat, true, 'approved_count')?>;
   </script>
@@ -71,16 +73,29 @@
             <input type="text" class="form-control" name="license">
           </div>
         </div>
-        
+        <script>
+          $(function () { $("input,select,textarea").not("[type=submit]").jqBootstrapValidation(); } );
+        </script>
         <div class="col-sm-6">
-          <div class="form-group">
+          <div class="form-group control-group">
+<!--             <label for="type">Resource Type: (e.g. Code, Data, Service)<br></label>
+            <input type="text" class="form-control" name="type" required="required" value="<?= $resource['resource_type'] ?>">   -->
             <label for="type">Resource Type (check all that apply):<br></label>
             <p>
-<!--            <input type="text" class="form-control" name="type" required="required">-->
-              <label><input type="checkbox" name="type[]" value="Code"> Code</label>
-<!--              <label><input type="checkbox" name="type[]" value="Project"> Project</label>-->
-              <label><input type="checkbox" name="type[]" value="Service"> Service</label>
-              <label><input type="checkbox" name="type[]" value="Data"> Data</label>
+
+                <div class="controls">
+                  <label >
+                   <input 
+                      type="checkbox" 
+                      name="type[]" 
+                      data-validation-minchecked-minchecked="1" 
+                      data-validation-minchecked-message="Choose at least one" 
+                      value="Code" id = "codeCheck" /> Code</label>
+                  <label >
+                    <input type="checkbox" name="type[]" value="Service" id = "serviceCheck"  /> Service</label>
+                 <label >
+                    <input type="checkbox" name="type[]" value="Data" id = "dataCheck" /> Data</label>
+                </div>
             </p>
           </div>
         </div>

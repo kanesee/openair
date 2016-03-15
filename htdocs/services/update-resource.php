@@ -7,7 +7,7 @@ if( !empty($_POST['id'])
 &&  !empty($_POST['link'])
 &&  !empty($_POST['description'])
 &&  !empty($_POST['categories'])
-&&  !empty($_POST['type']) 
+// &&  !empty($_POST['type']) 
 //&&  !empty($_POST['license'])
 ) {
 
@@ -25,7 +25,9 @@ if( !empty($_POST['id'])
 	$dbname = addslashes($_POST['dbname']);
 	$prog_lang = addslashes($_POST['prog_lang']);
 	$dataformat = addslashes($_POST['dataformat']);
-	$type = addslashes($_POST['type']);
+	// $type = addslashes($_POST['type']);
+  $type = addslashes(implode(', ', $_POST['type']));
+
 	$license = addslashes($_POST['license']);
 	$description = addslashes($_POST['description']);
 	$link = addslashes($_POST['link']);

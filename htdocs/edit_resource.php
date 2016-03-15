@@ -7,9 +7,13 @@
   
   <script src="/assets/js/jquery.jstree-1.0.js"></script>
   <script src="/assets/js/select-categories.js"></script>
+  <script src="/assets/js/jqBootstrapValidation.js"></script>
+
   <script>
     var category_json = <?=buildJSTreeJson($cat, true, 'approved_count')?>;
   </script>
+
+
 
 <?php
 $id = $_GET['id'];
@@ -41,6 +45,8 @@ $resource = mysql_fetch_array($r);
   
 <body>
 
+
+
 <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/nav.php'); ?>
 
 
@@ -49,6 +55,25 @@ $resource = mysql_fetch_array($r);
   	<h2>Edit <?= $resource['name']; ?></h2>
 
   	<form name="form" action="./services/update-resource.php" method="POST" onsubmit="return preprocessForm();">
+<!-- ||||||||||||||||||||||||||| -->
+  <!-- <div class="control-group">
+    <label for="type[]">Resource Type (check all that apply):<br></label>
+
+    <div class="controls">
+      <label class="checkbox">
+        <input 
+          type="checkbox" 
+          name="type[]" 
+          data-validation-minchecked-minchecked="1" 
+          data-validation-minchecked-message="Choose at least one" 
+          value="Code" id = "codeCheck" <?php echo checkedCode() ?> /> Code</label>
+      <label class="checkbox">
+        <input type="checkbox" name="type[]" value="Service" id = "serviceCheck" <?php echo checkedService() ?> /> Service</label>
+      <label class="checkbox">
+        <input type="checkbox" name="type[]" value="Data" id = "dataCheck" <?php echo checkedData() ?> /> Data</label>
+    </div>
+  </div> -->
+<!-- |||||||||||||||||||||||||||||||||| -->
       <input type=hidden name="id" value="<?= $id ?>">
       
       <div class="form-group">
@@ -71,12 +96,87 @@ $resource = mysql_fetch_array($r);
           </div>
         </div>
       </div>
+
+      <script>
+        $(function () { $("input,select,textarea").not("[type=submit]").jqBootstrapValidation(); } );
+      </script>
       
+           <?php
+              function checkedCode(){
+                $id = $_GET['id'];
+                $r = mysql_query("SELECT `resource_type` FROM resource WHERE id = $id");
+                $row = mysql_fetch_array($r);
+                $resource_type = $row['resource_type'];
+                if(strpos($resource_type, 'Code') !== false){
+                  return "checked";
+               } else {
+                return "unchecked";
+               }
+              }
+
+              function checkedService(){
+                $id = $_GET['id'];
+                $r = mysql_query("SELECT `resource_type` FROM resource WHERE id = $id");
+                $row = mysql_fetch_array($r);
+                $resource_type = $row['resource_type'];
+                if(strpos($resource_type, 'Service') !== false){
+                  return "checked";
+               } else {
+                return "unchecked";
+               }
+              }
+
+              function checkedData(){
+                $id = $_GET['id'];
+                $r = mysql_query("SELECT `resource_type` FROM resource WHERE id = $id");
+                $row = mysql_fetch_array($r);
+                $resource_type = $row['resource_type'];
+                if(strpos($resource_type, 'Data') !== false){
+                  return "checked";
+               } else {
+                return "";
+               }
+              }
+
+              // function isChecked(){
+                // $id = $_GET['id'];
+                // $r = mysql_query("SELECT `resource_type` FROM resource WHERE id = $id");
+                // $row = mysql_fetch_array($r);
+                // $resource_type = $row['resource_type'];
+                // if(strpos($resource_type, 'Code') == true || strpos($resource_type, 'Service') == true || strpos($resource_type, 'Data') == true){
+                  // return "";                  
+                // } else {
+                  // return "required = 'required'";
+                // }
+
+              // }
+                   
+            ?> 
+
+            
+
       <div class="row">
         <div class="col-sm-6">
-          <div class="form-group">
-            <label for="type">Resource Type: (e.g. Code, Data, Service)<br></label>
-            <input type="text" class="form-control" name="type" required="required" value="<?= $resource['resource_type'] ?>">
+          <div class="form-group control-group">
+<!--             <label for="type">Resource Type: (e.g. Code, Data, Service)<br></label>
+            <input type="text" class="form-control" name="type" required="required" value="<?= $resource['resource_type'] ?>">   -->
+            <label for="type">Resource Type (check all that apply):<br></label>
+            <p>
+
+                <div class="controls">
+                  <label >
+                   <input 
+                      type="checkbox" 
+                      name="type[]" 
+                      data-validation-minchecked-minchecked="1" 
+                      data-validation-minchecked-message="Choose at least one" 
+                      value="Code" id = "codeCheck" <?php echo checkedCode() ?> /> Code</label>
+                  <label >
+                    <input type="checkbox" name="type[]" value="Service" id = "serviceCheck" <?php echo checkedService() ?> /> Service</label>
+                 <label >
+                    <input type="checkbox" name="type[]" value="Data" id = "dataCheck" <?php echo checkedData() ?> /> Data</label>
+                </div>
+            </p>
           </div>
         </div>
 
@@ -159,6 +259,7 @@ $resource = mysql_fetch_array($r);
 <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/footer.php'); ?>
   
 <script type="text/javascript">
+
 //  $('.drilldown').selectHierarchy({ hideOriginal: true });
 </script>
 
