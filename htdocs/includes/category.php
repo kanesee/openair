@@ -1,11 +1,19 @@
-      <button id="topic-browser-btn" type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="bottom">
-        <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true">
-          <span class="topic-name-text">
-            <?= ($cat == 0) ? 'Choose subtopic' : 'Choose new topic' ?>
-          </span>
-        </span>
-      </button>
-    
+<div class="dropdown input-group-addon">
+
+
+<span id="topic-browser-btn" 
+      data-container="body" data-toggle="dropdown"
+      data-placement="bottom" >
+    <span class="glyphicon glyphicon-triangle-bottom"
+          aria-hidden="true">
+      <span class="topic-name-text">
+        <?= $catTitle ?>
+      </span>
+    </span>
+</span>
+
+
+
 <?php
   if( !isset($countOf) ) { $countOf = 'approved_count'; }
   if( !isset($catHref) ) { $catHref = '/'; }
@@ -18,36 +26,28 @@
   $sqlQuery.= " ORDER BY id";
   $r = mysql_query($sqlQuery);
 
-  $topicHtml = "<ul>";
+  $topicHtml = "";
   while ($catrow = mysql_fetch_array($r)) {
     $subtopicHtml = writeTopicEntry($catHref, $catrow, $countOf, $cat, 0);
     $topicHtml .= $subtopicHtml;
   }
-  $topicHtml .= "</ul>";
 
 ?>
-      <div id="topic-browser" style="display: none">
-        
-        <div class="tree" >
-          <a href="<?= $catHref ?>">Artificial Intelligence</a>
-<!--
-          <ul>
-            <li>
-              <span class="glyphicon glyphicon-plus"></span>
-              <a href="">Goes somewhere (187)</a>
-              <ul>
-                <li>
-                  <span class="glyphicon glyphicon-plus"></span>
-                  <a href="">Goes somewhere</a>
-                </li>
-                <li>
-                  <span class="glyphicon glyphicon-minus"></span>
-                  <a href="">Goes somewhere (5)</a>
-                </li>
+
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            <li><a tabindex="-1" href="/">Artificial Intelligence</a></li>
+<!-- 
+            <li><a tabindex="-1" href="#">Regular link</a></li>
+            <li class="dropdown-submenu">
+              <a tabindex="-1" href="#">More options</a>
+              <ul class="dropdown-menu">
+                <li><a tabindex="-1" href="#">Art</a></li>
+                <li><a tabindex="-1" href="#">Bottles</a></li>
               </ul>
             </li>
+ -->            
+            <?= $topicHtml ?>
           </ul>
--->
-          <?= $topicHtml ?>
-        </div>
-      </div>
+
+
+</div>

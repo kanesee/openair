@@ -77,7 +77,7 @@ if(isAdmin()) {
     });
   </script>
   
-  <title>Open AIR Home</title>
+  <title>Open AIR</title>
 
 </head>
   
@@ -89,20 +89,45 @@ if(isAdmin()) {
 <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/search-tip.php'); ?>
 
   <div id="heading" class="hero-unit">
+
+    <!-- ############### search bar ################## -->
     <div class="row">
-      <div class="col-xs-9">
+      <div id="search" class="col-xs-12">
+        <form id="searchform" class="form-search form-group" method="GET" action=".">
+
         <div id="topic-name">
   <?php if( isAdmin() && $cat>0 ) { ?>
           <a href='javascript:deleteCategory()' >
             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
           </a>
   <?php } ?>
-          <span class="topic-name-text"><?= $catTitle ?></span>
-        
-          <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/category.php'); ?>
         </div>
 
-        <!-- ############## Editors ############## -->
+          <div class="row">
+            <div class="col-lg-12">
+              <div id="search-bar" class="input-group">
+                <input name='cat' type='hidden' value="<?php echo $cat ?>"></input>
+                <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/category.php'); ?>
+                <input id="search-input" type="text" class="form-control"
+                       name='q' value="<?= $query ?>" 
+                       placeholder="Search within <?= $catTitle ?>">
+                <span class="input-group-addon">
+                  <button type="submit" class="btn btn-danger">Search</button>
+                </span>
+              </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+          </div><!-- /.row -->
+        </form>
+      </div>
+    </div>
+
+
+    <a href="" id="search-tip"
+       data-toggle="modal"
+       data-target="#search-tip-modal">Advanced Search Tips</a>
+  </div> <!-- end id=heading -->
+  
+    <!-- ############## Editors ############## -->
 <?php
         $editorRs = mysql_query("
           SELECT image_url,name, profile_url FROM editor e, user u
@@ -110,8 +135,11 @@ if(isAdmin()) {
           AND e.editor_id = u.id");
         if( !empty($cat) && $cat != 0 && mysql_num_rows($editorRs) ) {
 ?>
-        <div id="editors">
-          <div class="editor-heading"><b>Editors</b> </div>
+    <div id="editors" class="row">
+      <div class="col-xs-12">
+
+        <div>
+          <span class="editor-heading"><b><?= $catTitle ?> Editors:</b> </span>
 <?php
           $isFirst = true;
           while($editorRow = mysql_fetch_array($editorRs)) {
@@ -126,41 +154,12 @@ if(isAdmin()) {
           } // while($editorRow = mysql_fetch_array($editorRs)
 ?>
         </div>
+      </div>
+    </div>  
 <?php   } // if( !empty($cat) && $cat != 0 ) ?>
 
-      </div>
-      <div class="col-xs-3">
-        <?= $topicImageElement ?>
-      </div>
-    </div>
-    
-    <!-- ############### search bar ################## -->
-    <div class="row">
-      <div id="search" class="col-xs-12">
-        <form id="searchform" class="form-search form-group" method="GET" action=".">
-          <!-- <h1> DEVELOPMENT </h1> -->
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="input-group">
-                <input name='cat' type='hidden' value="<?php echo $cat ?>"></input>
-                <span class="input-group-btn">
-                  <button type="submit" class="btn btn-danger">Search</button>
-                </span>
-                <input type="text" class="form-control" name='q' value="<?= $query ?>" placeholder="Search within <?= $catTitle ?>">
-              </div><!-- /input-group -->
-            </div><!-- /.col-lg-6 -->
-          </div><!-- /.row -->
-        </form>
-      </div>
-    </div>
-    <a href="" data-toggle="modal" data-target="#search-tip-modal">Advanced Search Tips</a>
-    <div id="search-tip">
-    </div>
-  
-  </div> <!-- end id=heading -->
-  <div class="arrow_box"></div>
-  
-  
+
+
 <!-- search results -->  
 <div class="container">
   <span class="anchor" id="results"></span>
@@ -169,19 +168,33 @@ if(isAdmin()) {
     
     <div id="main" class="col-xs-12 col-sm-12">
       <div id="index" class="span7">
-          
+
+        <div id="">
+          <div id="page-control-top">
+            <ul class="pagination pagination-sm"></ul>
+          </div>
+          <div id="sub-header-right">
+            <span id="resultTotal"><?= $numResult ?> results in "<?= $catTitle ?>"</span>
+            <?= $topicImageElement ?>
+          </div>
+        </div>
+
         <table id='searchresults' class="table table-striped">
-          <thead>
+<!--
+           <thead>
             <tr>
               <th id="result-header" colspan="2">
                 <div id="page-control-top">
                   <ul class="pagination pagination-sm"></ul>
                 </div>
-                <div id="resultTotal"><?= $numResult ?> results in "<?= $catTitle ?>"</div>
+                <div id="resultTotal">
+                  <?= $numResult ?> results in "<?= $catTitle ?>"<?= $topicImageElement ?>
+                </div>
               </th>
             </tr>
           </thead>
-          <tbody>
+ -->
+           <tbody>
 
 <?php
         // ########## print search results
@@ -296,8 +309,6 @@ if($count==0) {
     </div> <!-- class=row -->
   </div> <!-- class=container -->
   
-  <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/updates-marquee.php'); ?>
-
   <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/footer.php'); ?>
   
 </body>

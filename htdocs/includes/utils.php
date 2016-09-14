@@ -112,12 +112,6 @@ function writeTopicEntry($catHref, $row, $countOf, $selectedCat, $level) {
     $name .= ' (' . $row{'approved_count'} . ')';
   }
   $icon = ($level == 0) ? 'glyphicon-plus' : 'glyphicon-minus';
-  $class = ($level == 0) ? 'parent_li' : '';
-  if( !empty($selectedCat) && $selectedCat == $id ) { $class .= ' selected-topic'; }
-  $topic = "<li data-level='$level' class='$class'>
-              <span class='glyphicon $icon'></span>
-              <a href='$catHref?cat=$id'>$name</a>
-            ";
 
   $children = "";
   $filter_id = 0;
@@ -128,8 +122,13 @@ function writeTopicEntry($catHref, $row, $countOf, $selectedCat, $level) {
   $sqlQuery.= " ORDER BY id";
 
   $r_sub = mysql_query($sqlQuery);
-  if( mysql_num_rows($r_sub) > 0 ) {
-    $topic .= "<ul>";
+  if( mysql_num_rows($r_sub) == 0 ) {
+    $topic = "<li><a tabindex='-1' href='$catHref?cat=$id'>$name</a></li>";
+  } else {
+    $topic = "<li class='dropdown-submenu'>
+                <a tabindex='-1' href='$catHref?cat=$id'>$name</a>
+              ";
+    $topic .= "<ul class='dropdown-menu'>";
     while ($row_sub = mysql_fetch_array($r_sub)) {
       $topic .= writeTopicEntry($catHref, $row_sub, $countOf, $selectedCat, $level+1);
     }

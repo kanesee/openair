@@ -16,9 +16,6 @@
           <?php if(isAdmin()) { ?><li><a href="pending.php">Pending</a></li><?php } ?>
           <li><a href="about.php">About</a></li>
           <li><a href="faq.php">FAQ</a></li>
-        </ul>
-
-        <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">
             <?php if( !isLoggedIn() ) { ?>
               <a href="#" class="hide-after-auth dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -53,6 +50,12 @@
                 </li>
               <?php } ?>
               </ul>              
+          </li>          
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/new-item-updates.php'); ?>
           </li>
         </ul>
 

@@ -29,7 +29,7 @@ body {
 }
 
 #nav ul.navbar-nav > li > a {
-/*  color: white;*/
+  color: white;
 }
 
 #nav .active > a {
@@ -44,14 +44,17 @@ body {
   height: 50px;
 }
 
-#nav .navbar-right {
-  margin-right: 0;
-}
 
 
 /***********************************
  * CATEGORY CSS
  ***********************************/
+
+#topic-browser-btn {
+  border-radius: 0;
+  border-right: transparent;
+  cursor: pointer;
+}
 
 #sidebar {
   position: fixed;
@@ -149,9 +152,10 @@ body {
 }
 
 #heading {
-  padding: 10px 50px;
-  background: #f3f3f3;
+  padding: 50px 50px;
   position: relative;
+  background-image: url('/assets/img/Hero_Image.jpg');
+  background-size: cover;
 }
 
 /*********************
@@ -194,6 +198,25 @@ body {
   padding-right: 50px;
 }
 
+/*********************
+ * Search Area
+ ********************/
+
+#search-bar .input-group-addon {
+  background-color: white;
+}
+
+#search-input {
+  height: 50px;
+  border-left: transparent;
+  border-right: transparent;
+}
+
+#search-tip {
+  color: white;
+  text-decoration: underline;
+}
+
 #topic-name {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -216,24 +239,17 @@ body {
   clear: left;
 }
 
-.topic-img {
-  float: right;
-  height: 100px;
-}
 
-.topic-img-none {
-  float: right;
-  padding-left: 10px;
-  height: 100px;
-  width: 100px;
-  color: white;
-  font-size: 5em;
+#editors {
   text-align: center;
+  background-color: #d2d2d2;
+  padding: 15px 5px
 }
 
 .editor-heading {
-  float: left;
+/*  float: left;
   padding-right: 10px;
+*/
 }
 
 .editor {
@@ -277,8 +293,10 @@ body {
  ***********************************/
 .anchor {
   display: block;
-  height: 105px; /*same height as header*/
-  margin-top: -105px; /*same height as header*/
+  /*same height as header*/
+  /*height: 105px; */
+  /*same height as header*/
+  /*margin-top: -105px;*/
   visibility: hidden;
 }
 
@@ -286,10 +304,35 @@ body {
   position: relative;
 }
 
+#sub-header-right {
+  float: right;
+}
+
 #resultTotal {
-  position: absolute;
-  right: 0;
-  top: -10px;
+  font-weight: bold;
+  line-height: 6em;
+}
+
+.topic-img {
+  /*float: right;*/
+  height: 80px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-left: 20px;
+}
+
+.topic-img-none {
+  float: right;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 20px;
+  line-height: 80px;
+  height: 80px;
+  width: 80px;
+  color: white;
+  font-size: 5em;
+  font-weight: bold;
+  text-align: center;
 }
 
 .page-controls {
@@ -297,9 +340,8 @@ body {
 }
 
 #page-control-top {
-  position: absolute;
-  left: 0;
-  top: -40px;
+  float: left;
+  margin-top: 10px;
 }
 
 #page-control-bottom {
@@ -638,3 +680,50 @@ img.submitter {
   width: 100%;
   z-index: 2000;
 }
+
+/****************************
+ * dropdown-submenu support
+ ****************************/
+.dropdown-submenu {
+    position:relative;
+}
+.dropdown-submenu>.dropdown-menu {
+    top:0;
+    left:100%;
+    margin-top:-6px;
+    margin-left:-1px;
+    -webkit-border-radius:0 6px 6px 6px;
+    -moz-border-radius:0 6px 6px 6px;
+    border-radius:0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+    display:block;
+}
+.dropdown-submenu>a:after {
+    display:block;
+    content:" ";
+    float:right;
+    width:0;
+    height:0;
+    border-color:transparent;
+    border-style:solid;
+    border-width:5px 0 5px 5px;
+    border-left-color:#cccccc;
+    margin-top:5px;
+    margin-right:-10px;
+}
+.dropdown-submenu:hover>a:after {
+    border-left-color:#ffffff;
+}
+.dropdown-submenu.pull-left {
+    float:none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+    left:-100%;
+    margin-left:10px;
+    -webkit-border-radius:6px 0 6px 6px;
+    -moz-border-radius:6px 0 6px 6px;
+    border-radius:6px 0 6px 6px;
+}
+
+
