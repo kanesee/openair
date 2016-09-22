@@ -43,12 +43,12 @@
     
   $r=mysql_query(getResourceSQL($id));
 
-  $row = mysql_fetch_assoc($r);
+  $resourceRs = mysql_fetch_assoc($r);
 
   $catStmt="
   SELECT c.id, c.name FROM resource_category rc
   LEFT JOIN category c ON rc.category_id = c.id
-  WHERE rc.resource_id = ".$row{'id'};
+  WHERE rc.resource_id = ".$resourceRs{'id'};
 
   $catRs = mysql_query($catStmt);
 
@@ -64,7 +64,7 @@
 
     $likedRs = mysql_query("
       SELECT COUNT(*) as cnt FROM resource_likes
-      WHERE resource_id=".$row{'id'}."
+      WHERE resource_id=".$resourceRs{'id'}."
       AND user_id=$user_id
       ");
     $likedRow = mysql_fetch_array($likedRs);
@@ -74,38 +74,14 @@
   }
 ?>
    
-  <title><?=$row{'name'}?></title>
+  <title><?=$resourceRs{'name'}?></title>
 </head>
   
 <body>
 
   <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/nav.php'); ?>
 
-  <div id="detail-heading" class="hero-unit">
-
-    <!-- ############### search bar ################## -->
-    <div class="row">
-      <div id="search-detail" class="col-xs-12">
-        <form id="searchform" class="form-search form-group" method="GET" action=".">
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="input-group">
-                <input name='cat' type='hidden' value="<?php echo $cat ?>"></input>
-                <span class="input-group-btn">
-                  <button type="submit" class="btn btn-danger">Search</button>
-                </span>
-                <input type="text" class="form-control" name='q' value="" placeholder="Search within <?= $catTitle ?>">
-                <span class="input-group-btn">
-                  <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/category.php'); ?>
-                </span>
-              </div><!-- /input-group -->
-            </div><!-- /.col-lg-6 -->
-          </div><!-- /.row -->
-        </form>
-      </div>
-    </div>  
-  </div> <!-- end id=heading -->
-  <div class="arrow_box"></div>
+  <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/search-section.php'); ?>
   
   <div class="container">
     
@@ -117,20 +93,20 @@
         <h2 id="detail-title">
           <?php if( isAdmin() ) { ?>
 <!--          <form method="post" action="./services/pending-approve.php">-->
-            <input type="hidden" name="id" value="<?= $row{'id'} ?>" />
+            <input type="hidden" name="id" value="<?= $resourceRs{'id'} ?>" />
             <div class="editBtn-group">
               <span class="editBtn">
-                <a class="btn btn-default" href="/edit_resource.php?id=<?=$row{'id'}?>">Edit</a>
+                <a class="btn btn-default" href="/edit_resource.php?id=<?=$resourceRs{'id'}?>">Edit</a>
               </span>
               <span class="editBtn">
                 <a id="deleteBtn" class="btn btn-danger" href="#"
-                   onclick="return deleteResource('<?=$row{'id'}?>')">Delete</a>
+                   onclick="return deleteResource('<?=$resourceRs{'id'}?>')">Delete</a>
                 <span id="deleteSuccess">Deleted</span>
               </span>
-              <?php if( empty($row{'approved_date'}) ) { ?>
+              <?php if( empty($resourceRs{'approved_date'}) ) { ?>
               <span class="editBtn">
                 <a id="approveBtn" class="btn btn-success" href="#"
-                   onclick="return approveResource('<?=$row{'id'}?>')">Approve</a>
+                   onclick="return approveResource('<?=$resourceRs{'id'}?>')">Approve</a>
                 <span id="approveSuccess">Approved</span>
               </span>
               <?php } ?>
@@ -139,7 +115,7 @@
           <?php } ?>
           
           
-          <?=$row{'name'}?>
+          <?=$resourceRs{'name'}?>
         </h2>
       </div>
     </div>
@@ -148,37 +124,37 @@
 <?php
     $MAX_LINK_LEN = 40;
     $author = '';
-    if( !empty($row{'author'}) )
-        $author = "by ".$row{'author'};
+    if( !empty($resourceRs{'author'}) )
+        $author = "by ".$resourceRs{'author'};
     $owner = '';
-    if( !empty($row{'owner'}) )
-        $owner = "from ".$row{'owner'};
+    if( !empty($resourceRs{'owner'}) )
+        $owner = "from ".$resourceRs{'owner'};
 ?>
     <div class="row">
 <?php
-        if( !empty($row{'link'}) ) {
-          $proj_url = $row{'link'};
+        if( !empty($resourceRs{'link'}) ) {
+          $proj_url = $resourceRs{'link'};
           if( strlen($proj_url) > $MAX_LINK_LEN )  {
             $proj_url = substr($proj_url, 0, $MAX_LINK_LEN).'...';
           }
 ?>
       <div class="col-xs-6">
         Project:
-        <a class="link" href="<?=$row{'link'}?>" target='_blank'>
+        <a class="link" href="<?=$resourceRs{'link'}?>" target='_blank'>
           <?= $proj_url ?>
         </a>
       </div>
 <?php   } ?>
 <?php   
-        if( !empty($row{'paper_url'}) ) {
-          $paper_url = $row{'paper_url'};
+        if( !empty($resourceRs{'paper_url'}) ) {
+          $paper_url = $resourceRs{'paper_url'};
           if( strlen($paper_url) > $MAX_LINK_LEN )  {
             $paper_url = substr($paper_url, 0, $MAX_LINK_LEN).'...';
           }
 ?>
       <div class="col-xs-6">
         Paper:
-        <a class="link" href="<?=$row{'paper_url'}?>" target='_blank'>
+        <a class="link" href="<?=$resourceRs{'paper_url'}?>" target='_blank'>
           <?= $paper_url ?>
         </a>
       </div>
@@ -197,10 +173,10 @@
     <div class="row detail-submission">
       <div class="col-xs-12">
         Submitted by
-        <a href="<?=$row{'profile_url'}?>">
-          <img class="submitter" src="<?=$row{'image_url'}?>">
+        <a href="<?=$resourceRs{'profile_url'}?>">
+          <img class="submitter" src="<?=$resourceRs{'image_url'}?>">
         </a>
-        on <?= date('M d Y', strtotime($row{'approved_date'})) ?>
+        on <?= date('M d Y', strtotime($resourceRs{'approved_date'})) ?>
       </div>
     </div>
   </div>
@@ -208,7 +184,7 @@
     <!-- ############## Links and Meta ############### -->
 <?php
   $mailto = 'admin@airesources.org';
-  $subject = 'Post-' . $row{'id'} . ' Flagged';
+  $subject = 'Post-' . $resourceRs{'id'} . ' Flagged';
   $who = "";
   if( isLoggedIn() ) {
     $who = $_SESSION["user"]->name . ' (' . $_SESSION["user"]->id . ') has';
@@ -220,7 +196,7 @@
 ?>    
     <div class="row">
       <div class="col-xs-12">
-        <span class="glyphicon glyphicon-thumbs-up action-link like <?=$likedClass?>" aria-hidden="true" data-resource-id="<?=$row{'id'}?>"> <?=$row{'num_likes'}?></span>
+        <span class="glyphicon glyphicon-thumbs-up action-link like <?=$likedClass?>" aria-hidden="true" data-resource-id="<?=$resourceRs{'id'}?>"> <?=$resourceRs{'num_likes'}?></span>
       
         <a href="https://twitter.com/share" class="twitter-share-button" data-via="OpenAIResources">Tweet</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
@@ -243,7 +219,7 @@
               <a href="#summary" aria-controls="summary" role="tab" data-toggle="tab">Summary</a>
             </li>
             <li role="presentation">
-              <a href="#comments" aria-controls="comments" role="tab" data-toggle="tab">Comments (<span id="comment-count"><?=$row{'num_comments'}?></span>)</a>
+              <a href="#comments" aria-controls="comments" role="tab" data-toggle="tab">Comments (<span id="comment-count"><?=$resourceRs{'num_comments'}?></span>)</a>
             </li>
           </ul>
         </div>
@@ -255,7 +231,7 @@
 
             <!-- ############## Resource Types / License ############### -->
 <?php
-            $types = explode(",", $row{'resource_type'});
+            $types = explode(",", $resourceRs{'resource_type'});
             $typeHtml = '';
             foreach($types as $type) {
               $type = trim($type);
@@ -272,7 +248,7 @@
               </div>
               <div class="col-xs-2 detail-field">License:</div>
               <div class="col-xs-4">
-                <?= $row{'license_type'} ?>
+                <?= $resourceRs{'license_type'} ?>
               </div>
             </div>
 
@@ -280,11 +256,11 @@
             <div class="row">
               <div class="col-xs-2 detail-field">Language:</div>
               <div class="col-xs-4">
-                <?= $row{'programming_lang'} ?>
+                <?= $resourceRs{'programming_lang'} ?>
               </div>
               <div class="col-xs-2 detail-field">Data Format:</div>
               <div class="col-xs-4">
-                <?= $row{'data_format'} ?>
+                <?= $resourceRs{'data_format'} ?>
               </div>
             </div>
 
@@ -296,7 +272,7 @@
             </div>
             <div id="detail-desc" class="row">
               <div class="col-xs-12">
-                <?= strip_tags($row{'description'}) ?>
+                <?= strip_tags($resourceRs{'description'}) ?>
               </div>
             </div>
 
@@ -315,7 +291,7 @@
             <!-- comment form -->
             <div class="new-com-cnt">
               <textarea id="comment-area" class="the-new-com"></textarea>
-              <div data-resource-id="<?=$row{'id'}?>" class="bt-add-com">Post comment</div>
+              <div data-resource-id="<?=$resourceRs{'id'}?>" class="bt-add-com">Post comment</div>
               <div class="bt-cancel-com">Cancel</div>
             </div>
             <div class="clear"></div>
@@ -325,7 +301,7 @@
 
             $sql = mysql_query("SELECT * FROM comments c
                                 LEFT JOIN user u ON c.userid=u.id
-                                WHERE resource_id = ".$row{'id'}
+                                WHERE resource_id = ".$resourceRs{'id'}
                               ." ORDER BY c.date DESC")
                     or die(mysql_error());;
             while($affcom = mysql_fetch_assoc($sql)){
