@@ -70,19 +70,13 @@
     
     <div id="detail-brief">
 
-    <!-- ############## Admin Functions ############### -->
-    <?php if( isAdmin() ) { ?>
     <div class="row">
       <div class="col-xs-12">
-      </div>
-    </div>
-    <?php } ?>
-    
-    <!-- ############## Header ############### -->
-    <div class="row">
-      <div class="col-xs-12">
+        <!-- ############## Header ############### -->
         <h2 id="detail-title"><?=$resourceRs{'name'}?></h2>
 
+        <!-- ############## Admin Functions ############### -->
+        <?php if( isAdmin() ) { ?>
         <input type="hidden" name="id" value="<?= $resourceRs{'id'} ?>" />
         <div class="editBtn-group">
           <span class="editBtn">
@@ -104,7 +98,7 @@
           </span>
           <?php } ?>
         </div>
-
+        <?php } ?>
       </div>
     </div>
 
