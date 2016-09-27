@@ -4,23 +4,6 @@
 
   <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/header.php'); ?>
   
-  <style>
-    .arrow_box {
-      margin-bottom: 30px;
-    }
-    
-    .action-link {
-      padding-left: 10px;
-      padding-right: 5px;
-      vertical-align: super;
-    }
-    
-    .editBtn-group {
-      position: absolute;
-      top: -20px;
-    }
-  </style>
-
   <link rel="stylesheet" href="/assets/css/comments.css" type="text/css">
   <script src="/assets/js/comments.js"></script>
 
@@ -86,116 +69,70 @@
   <div class="container">
     
     <div id="detail-brief">
+
+    <!-- ############## Admin Functions ############### -->
+    <?php if( isAdmin() ) { ?>
+    <div class="row">
+      <div class="col-xs-12">
+      </div>
+    </div>
+    <?php } ?>
     
     <!-- ############## Header ############### -->
     <div class="row">
       <div class="col-xs-12">
-        <h2 id="detail-title">
-          <?php if( isAdmin() ) { ?>
-<!--          <form method="post" action="./services/pending-approve.php">-->
-            <input type="hidden" name="id" value="<?= $resourceRs{'id'} ?>" />
-            <div class="editBtn-group">
-              <span class="editBtn">
-                <a class="btn btn-default" href="/edit_resource.php?id=<?=$resourceRs{'id'}?>">Edit</a>
-              </span>
-              <span class="editBtn">
-                <a id="deleteBtn" class="btn btn-danger" href="#"
-                   onclick="return deleteResource('<?=$resourceRs{'id'}?>')">Delete</a>
-                <span id="deleteSuccess">Deleted</span>
-              </span>
-              <?php if( empty($resourceRs{'approved_date'}) ) { ?>
-              <span class="editBtn">
-                <a id="approveBtn" class="btn btn-success" href="#"
-                   onclick="return approveResource('<?=$resourceRs{'id'}?>')">Approve</a>
-                <span id="approveSuccess">Approved</span>
-              </span>
-              <?php } ?>
-            </div>
-<!--          </form>-->
+        <h2 id="detail-title"><?=$resourceRs{'name'}?></h2>
+
+        <input type="hidden" name="id" value="<?= $resourceRs{'id'} ?>" />
+        <div class="editBtn-group">
+          <span class="editBtn">
+            <a class="admin-href" href="#"
+               href="/edit_resource.php?id=<?=$resourceRs{'id'}?>">Edit</a>
+          </span>
+          <span class="editBtn">
+            <a id="deleteBtn"
+               class="admin-href" href="#"
+               onclick="return deleteResource('<?=$resourceRs{'id'}?>')">Delete</a>
+            <span id="deleteSuccess">Deleted</span>
+          </span>
+          <?php if( empty($resourceRs{'approved_date'}) ) { ?>
+          <span class="editBtn">
+            <a id="approveBtn"
+               class="admin-href" href="#"
+               onclick="return approveResource('<?=$resourceRs{'id'}?>')">Approve</a>
+            <span id="approveSuccess">Approved</span>
+          </span>
           <?php } ?>
-          
-          
-          <?=$resourceRs{'name'}?>
-        </h2>
-      </div>
-    </div>
-    
-    <!-- ############## Project & Paper Links ############### -->
-<?php
-    $MAX_LINK_LEN = 40;
-    $author = '';
-    if( !empty($resourceRs{'author'}) )
-        $author = "by ".$resourceRs{'author'};
-    $owner = '';
-    if( !empty($resourceRs{'owner'}) )
-        $owner = "from ".$resourceRs{'owner'};
-?>
-    <div class="row">
-<?php
-        if( !empty($resourceRs{'link'}) ) {
-          $proj_url = $resourceRs{'link'};
-          if( strlen($proj_url) > $MAX_LINK_LEN )  {
-            $proj_url = substr($proj_url, 0, $MAX_LINK_LEN).'...';
-          }
-?>
-      <div class="col-xs-6">
-        Project:
-        <a class="link" href="<?=$resourceRs{'link'}?>" target='_blank'>
-          <?= $proj_url ?>
-        </a>
-      </div>
-<?php   } ?>
-<?php   
-        if( !empty($resourceRs{'paper_url'}) ) {
-          $paper_url = $resourceRs{'paper_url'};
-          if( strlen($paper_url) > $MAX_LINK_LEN )  {
-            $paper_url = substr($paper_url, 0, $MAX_LINK_LEN).'...';
-          }
-?>
-      <div class="col-xs-6">
-        Paper:
-        <a class="link" href="<?=$resourceRs{'paper_url'}?>" target='_blank'>
-          <?= $paper_url ?>
-        </a>
-      </div>
-<?php   } ?>
-    </div>
+        </div>
 
-    <!-- ############## Author/ Owner ############### -->
-    <div class="row">
-      <div class="col-xs-12">
-        <span class="author"><?= $author ?></span>
-        <span class="owner"><?= $owner ?></span>
       </div>
     </div>
 
-    <!-- ############## Submitter ############### -->
-    <div class="row detail-submission">
+    <div class="row ">
       <div class="col-xs-12">
-        Submitted by
-        <a href="<?=$resourceRs{'profile_url'}?>">
-          <img class="submitter" src="<?=$resourceRs{'image_url'}?>">
-        </a>
-        on <?= date('M d Y', strtotime($resourceRs{'approved_date'})) ?>
-      </div>
-    </div>
-  </div>
-    
-    <!-- ############## Links and Meta ############### -->
-<?php
-  $mailto = 'admin@airesources.org';
-  $subject = 'Post-' . $resourceRs{'id'} . ' Flagged';
-  $who = "";
-  if( isLoggedIn() ) {
-    $who = $_SESSION["user"]->name . ' (' . $_SESSION["user"]->id . ') has';
-  } else {
-    $who = "I have";
-  }
-    $body = "$who the following comment about this post: ";
-    $mail_link = 'mailto:'.$mailto.'?subject='.$subject.'&body='.$body;
-?>    
-    <div class="row">
-      <div class="col-xs-12">
+
+        <!-- ############## Submitter ############### -->
+        <span class="detail-submission">
+          Submitted by
+          <a href="<?=$resourceRs{'profile_url'}?>">
+            <img class="submitter" src="<?=$resourceRs{'image_url'}?>">
+          </a>
+          on <?= date('M d Y', strtotime($resourceRs{'approved_date'})) ?>
+        </span>
+
+        <!-- ############## Links and Meta ############### -->
+        <?php
+          $mailto = 'admin@airesources.org';
+          $subject = 'Post-' . $resourceRs{'id'} . ' Flagged';
+          $who = "";
+          if( isLoggedIn() ) {
+            $who = $_SESSION["user"]->name . ' (' . $_SESSION["user"]->id . ') has';
+          } else {
+            $who = "I have";
+          }
+            $body = "$who the following comment about this post: ";
+            $mail_link = 'mailto:'.$mailto.'?subject='.$subject.'&body='.$body;
+        ?>
         <span class="glyphicon glyphicon-thumbs-up action-link like <?=$likedClass?>" aria-hidden="true" data-resource-id="<?=$resourceRs{'id'}?>"> <?=$resourceRs{'num_likes'}?></span>
       
         <a href="https://twitter.com/share" class="twitter-share-button" data-via="OpenAIResources">Tweet</a>
@@ -205,8 +142,68 @@
           <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
           Suggest Revision
         </a>
+
       </div>
     </div>
+
+
+
+    <!-- ############## Author/ Owner ############### -->
+    <!-- ############## Project & Paper Links ############### -->
+<?php
+    $MAX_LINK_LEN = 40;
+    $author = '';
+    if( !empty($resourceRs{'author'}) )
+        $author = " ".$resourceRs{'author'};
+    $owner = '';
+    if( !empty($resourceRs{'owner'}) )
+        $owner = "".$resourceRs{'owner'};
+
+    if( !empty($resourceRs{'link'}) ) {
+      $proj_url = $resourceRs{'link'};
+      if( strlen($proj_url) > $MAX_LINK_LEN )  {
+        $proj_url = substr($proj_url, 0, $MAX_LINK_LEN).'...';
+      }
+    }
+
+    if( !empty($resourceRs{'paper_url'}) ) {
+      $paper_url = $resourceRs{'paper_url'};
+      if( strlen($paper_url) > $MAX_LINK_LEN )  {
+        $paper_url = substr($paper_url, 0, $MAX_LINK_LEN).'...';
+      }
+    }
+?>
+
+    <div class="row">
+      <div class="col-xs-6">
+        <span class="author"><b>By:</b> <?= $resourceRs{'author'} ?></span>
+      </div>
+
+      <div class="col-xs-6">
+        <b>Project:</b>
+        <a class="link" href="<?=$resourceRs{'link'}?>" target='_blank'>
+          <?= $proj_url ?>
+        </a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-6">
+        <span class="owner"><b>From:</b> <?= $resourceRs{'owner'} ?></span>
+      </div>
+      <div class="col-xs-6">
+        <b>Paper:</b>
+        <a class="link" href="<?=$resourceRs{'paper_url'}?>" target='_blank'>
+          <?= $paper_url ?>
+        </a>
+      </div>
+    </div>
+
+
+
+  </div>
+    
+
     
     
     <!-- ############## Tab Area ############### -->

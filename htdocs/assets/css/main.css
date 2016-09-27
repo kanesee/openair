@@ -8,16 +8,14 @@ body {
 /*  background-image: url('http://s3.amazonaws.com/digitaltrends-uploads-prod/2014/01/google-deepmind-artificial-intelligence.jpg');*/
 }
 
+a.admin-href {
+  color: #ff9100;
+}
+
 
 /**************************
  * Header Nav
  **************************/
-/*
-#header {
-  border-bottom: 5px solid #6a6a6a;
-  margin-bottom: 20px;
-}
-*/
 #nav {
 /*  background-image: url('/assets/img/banner.jpg');*/
   background-position: -180px 0px;
@@ -107,7 +105,7 @@ body {
     padding-top:0;
   }
 }
-/**/
+
 #category {
   min-width: 250px;
   background-color: #7D7D7D;
@@ -157,6 +155,7 @@ body {
   background-image: url('/assets/img/Hero_Image.jpg');
   background-size: cover;
 }
+
 
 /*********************
  * Heading arrow
@@ -455,7 +454,7 @@ table > tbody > tr > td.meta-resource-column {
   margin-right: 5px;
 }
 
-a.link {
+.resource a.link {
   padding-right: 5px;
   font-size: small;
   color: rgb(67, 137, 67);
@@ -528,54 +527,6 @@ img.submitter {
 */
 
 
-/**************************
- * Detail CSS
- **************************/
-
-#detail-heading {
-  text-align: center;
-  padding: 10px 50px;
-  background: #f3f3f3;
-  position: relative;
-}
-
-#flag-resource {
-  position: absolute;
-  right: 20px;
-  color: red;
-}
-
-#detail-brief {
-  border-bottom: 1px solid gainsboro;
-  padding: 10px;
-  margin-bottom: 5px;
-}
-
-#detail-title {
-  float: left;
-  margin-bottom: 0;
-}
-
-.detail-submission {
-  font-size: 10px;
-  color: #bbb;
-}
-
-.tab-content {
-  padding: 10px;
-}
-
-#detail-tabpanel {
-  margin-top: 20px;
-}
-
-.detail-field {
-  font-weight: bold;
-}
-
-#detail-desc {
-  padding-bottom: 10px;
-}
 
 
 /**************************
