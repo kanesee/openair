@@ -439,7 +439,16 @@ function getPendingResourceSQL($subcatString, $query, $startIdx, $MAX_RESULTS) {
   AND rc.category_id IN ".$subcatString."
   ";
 
-  $sqlStatement.=" ORDER BY r.name LIMIT ".$startIdx.", ".$MAX_RESULTS;
+  if(!empty($query)) {
+    $query = mysql_escape_string($query);
+//    $sqlStatement.=" AND (r.name like '%".$query."%' OR r.description like '%".$query."%')";
+    $queryCond = "MATCH(r.name,description,owner,author) AGAINST ('$query' IN BOOLEAN MODE)";
+    $sqlStatement.=" AND $queryCond";
+    $sqlStatement.=" ORDER BY $queryCond DESC, num_likes DESC, r.name";
+  } else {
+    $sqlStatement.=" ORDER BY r.name ASC, r.name";    
+  }
+  $sqlStatement.=" LIMIT $startIdx, $MAX_RESULTS";
   
   return $sqlStatement;
 }

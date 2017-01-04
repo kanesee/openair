@@ -86,55 +86,49 @@ if(isAdmin()) {
 
 <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/nav.php'); ?>
   
-  
-  <div id="heading" class="hero-unit">
-    <div class="row">
-      <div class="col-xs-9">
-        <div id="topic-name">
-  <?php if( isAdmin() && $cat>0 ) { ?>
-          <a href='javascript:deleteCategory()' >
-            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-          </a>
-  <?php } ?>
-          <span class="topic-name-text"><?= $catTitle ?></span>
-        
-          <?php $countOf = 'pending_count'; ?>
-          <?php $catHref = 'pending.php'; ?>
-          <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/category.php'); ?>
-        </div>
+<?php $countOf = 'pending_count'; ?>
+<?php $catHref = 'pending.php'; ?>
+<?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/search-tip.php'); ?>
+<?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/search-section.php'); ?>
 
-        <!-- ############## Editors ############## -->
+    <!-- ############## Editors ############## -->
 <?php
         $editorRs = mysql_query("
-          SELECT image_url, profile_url FROM editor e, user u
+          SELECT image_url,name, profile_url FROM editor e, user u
           WHERE category_id = $cat
           AND e.editor_id = u.id");
         if( !empty($cat) && $cat != 0 && mysql_num_rows($editorRs) ) {
 ?>
-        <div id="editors">
-          <div class="editor-heading">Editors: </div>
-<?php     while($editorRow = mysql_fetch_array($editorRs)) { ?>
-          <a href="<?=$editorRow{'profile_url'}?>">
-            <img class="editor" src="<?=$editorRow{'image_url'}?>">
-          </a>
-<?php     } // while($editorRow = mysql_fetch_array($editorRs) ?>
+    <div id="editors" class="row">
+      <div class="col-xs-12">
+
+        <div>
+          <span class="editor-heading"><b><?= $catTitle ?> Editors:</b> </span>
+<?php
+          $isFirst = true;
+          while($editorRow = mysql_fetch_array($editorRs)) {
+            $editorName = $editorRow{'name'};
+
+            if( $isFirst ) {
+              $isFirst = false;
+            } else {
+              echo ', ';
+            }
+            echo $editorName;
+          } // while($editorRow = mysql_fetch_array($editorRs)
+?>
         </div>
+      </div>
+    </div>  
 <?php   } // if( !empty($cat) && $cat != 0 ) ?>
 
-      </div>
-      <div class="col-xs-3">
-        <?= $topicImageElement ?>
-      </div>
-    </div>
-    <div class="row">
-      <div id="search" class="alert alert-success col-xs-12" role="alert">
+    <div class="">
+      <div class="alert alert-success col-xs-12" role="alert">
         Please review the resources below
       </div>
     </div>
-  
-  </div> <!-- end id=heading -->
-  <div class="arrow_box"></div>  
-  
+
+
 <!-- search results -->  
 <div class="container">
   <div class="row row-offcanvas row-offcanvas-left">
@@ -143,35 +137,33 @@ if(isAdmin()) {
     <div id="main" class="col-xs-12 col-sm-12">
       <div id="index" class="span7">
         
-<!--        <div id="resultTotal"></div>-->
-<?php
-if($totalPages>0) {
-?>
-<!--
-        <div class="page-controls">
-          <div class="row-fluid">
-            <div class="col-xs-3 text-left"><?php if ($page > 1) {echo "<a href=index.php?p=".($page-1).$urlAdd.">&lt; Previous Page</a>";} else { echo "&lt; Previous Page";} ?></div>
-            <div class="col-xs-6 text-center">Page <?php echo $page." of ". $totalPages; ?> </div>
-            <div class="col-xs-3 text-right"><?php if ($page < $totalPages) {echo "<a href=index.php?p=".($page+1).$urlAdd.">Next Page &gt;</a>";} else { echo "Next Page &gt;";} ?></div>
+        <div id="">
+          <div id="page-control-top">
+            <ul class="pagination pagination-sm"></ul>
+          </div>
+          <div id="sub-header-right">
+            <span id="resultTotal"><?= $numResult ?> results in "<?= $catTitle ?>"</span>
+            <?= $topicImageElement ?>
           </div>
         </div>
--->
-<?php
-}
-?>
-  
+
         <table id='searchresults' class="table table-striped">
+<!--
           <thead>
             <tr>
               <th id="result-header" colspan="2">
                 <div id="page-control-top">
                   <ul class="pagination pagination-sm"></ul>
                 </div>
-                <div id="resultTotal"><?= $numResult ?> results in "<?= $catTitle ?>"</div>
+                <div id="sub-header-right">
+                  <span id="resultTotal"><?= $numResult ?> results in "<?= $catTitle ?>"</span>
+                  <?= $topicImageElement ?>
+                </div>
               </th>
             </tr>
           </thead>
-          <tbody>
+-->
+           <tbody>
 
 <?php
         // ########## print search results

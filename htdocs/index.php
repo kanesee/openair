@@ -77,7 +77,7 @@ if(isAdmin()) {
     });
   </script>
   
-  <title>Open AIR</title>
+  <title>AI Resources</title>
 
 </head>
   

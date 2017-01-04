@@ -3,12 +3,12 @@
     <!-- ############### search bar ################## -->
     <div class="row">
       <div id="search" class="col-xs-12">
-        <form id="searchform" class="form-search form-group" method="GET" action=".">
+        <form id="searchform" class="form-search form-group" method="GET" action="<?= $catHref ?>">
 
           <div class="row">
             <div class="col-lg-12">
               <div id="search-bar" class="input-group">
-                <input name='cat' type='hidden' value="<?php echo $cat ?>"></input>
+                <input name='cat' type='hidden' value="<?= $cat ?>"></input>
                 <?php include ($_SERVER['DOCUMENT_ROOT'].'/includes/category.php'); ?>
                 <input id="search-input" type="text" class="form-control"
                        name='q' value="<?= $query ?>" 

@@ -35,7 +35,7 @@
 ?>
 
           <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-            <li><a tabindex="-1" href="/">Artificial Intelligence</a></li>
+            <li><a tabindex="-1" href="<?=$catHref?>">Artificial Intelligence</a></li>
 <!-- 
             <li><a tabindex="-1" href="#">Regular link</a></li>
             <li class="dropdown-submenu">
