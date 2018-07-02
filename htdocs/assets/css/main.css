@@ -38,6 +38,10 @@ a.admin-href {
   padding: 0;
 }
 
+#nav img.profileImg {
+  height: 50px;
+}
+
 .header-spacer {
   height: 50px;
 }
